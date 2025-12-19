@@ -7,7 +7,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 class EnergyLSTM(pl.LightningModule):
     """Baseline LSTM model for building energy forecasting"""
     
-    def __init__(self, input_size, hidden_size=64, num_layers=2, 
+    def __init__(self, input_size, hidden_size=128, num_layers=3, 
                  dropout=0.2, learning_rate=1e-3):
         super().__init__()
         self.save_hyperparameters()

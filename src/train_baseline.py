@@ -10,7 +10,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from data_loader import preprocess_building_data, create_dataloaders
 from models import EnergyLSTM
 
-def train_baseline(building_id, epochs=50, seq_length=24):
+def train_baseline(building_id, epochs=50, seq_length=2160):
     """Train baseline LSTM on single building"""
     
     # Load data (Windows paths with r'' or \\ escaping)
@@ -32,8 +32,8 @@ def train_baseline(building_id, epochs=50, seq_length=24):
     input_size = train_loader.dataset.features.shape[1]
     model = EnergyLSTM(
         input_size=input_size,
-        hidden_size=64,
-        num_layers=2,
+        hidden_size=128,
+        num_layers=3,
         dropout=0.2,
         learning_rate=1e-3
     )

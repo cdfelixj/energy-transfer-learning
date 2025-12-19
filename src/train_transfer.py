@@ -12,7 +12,7 @@ from data_loader import preprocess_building_data, create_dataloaders
 from models import EnergyLSTM
 
 def train_transfer(source_building, target_building, 
-                   source_model_path, epochs=20, seq_length=24):
+                   source_model_path, epochs=20, seq_length=168):
     """Transfer learning: fine-tune on target building"""
     
     print(f"\n{'='*60}")
@@ -42,6 +42,7 @@ def train_transfer(source_building, target_building,
         input_size=source_model.hparams.input_size,
         hidden_size=source_model.hparams.hidden_size,
         num_layers=source_model.hparams.num_layers,
+        dropout=0.2,
         learning_rate=1e-4  # Lower learning rate for fine-tuning
     )
     transfer_model.load_state_dict(source_model.state_dict())
