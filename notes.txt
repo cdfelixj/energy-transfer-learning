@@ -1,0 +1,3 @@
+run train _baseline.py
+then run train_transfer.py
+then run

@@ -1,0 +1,16 @@
+building_id,site_id,building_id_kaggle,site_id_kaggle,primaryspaceusage,sub_primaryspaceusage,sqm,sqft,lat,lng,timezone,electricity,hotwater,chilledwater,steam,water,irrigation,solar,gas,industry,subindustry,heatingtype,yearbuilt,date_opened,numberoffloors,occupants,energystarscore,eui,site_eui,source_eui,leed_level,rating
+Eagle_education_Raul,Eagle,1288.0,14.0,Education,Research,15255.2,164206.0,,,US/Eastern,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,
+Lamb_education_Lazaro,Lamb,738.0,5.0,Education,Primary/Secondary Classroom,8866.0,95433.0,51.49783804108846,-3.186245571244898,Europe/London,Yes,,,,,,,Yes,Government,Primary/Secondary School,Gas,1966.0,,4.0,1173.0,,,,,,D
+Rat_education_Adell,Rat,481.0,3.0,Education,K-12 School,9689.2,104294.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,1976.0,,,,,,,,,
+Lamb_office_Maggie,Lamb,686.0,5.0,Office,Office,1134.0,12206.0,51.49783804108846,-3.186245571244898,Europe/London,Yes,,,,,,,,Government,"City, County, State",Gas,1976.0,,2.0,,,,,,,
+Lamb_office_Corine,Lamb,,5.0,Office,Office,501.0,5393.0,51.49783804108846,-3.186245571244898,Europe/London,Yes,,,,,,,,Government,"City, County, State",Gas,1919.0,,2.0,,,,,,,
+Hog_office_Shon,Hog,1122.0,13.0,Office,Office,7837.8,84365.0,44.97878184783975,-93.2553976421019,US/Central,Yes,,Yes,,,,,,,,,,,,,72,86.3,122.1,86.8,,
+Rat_assembly_Silvia,Rat,381.0,3.0,Entertainment/public assembly,Other - Recreation,172.6,1858.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,
+Bull_assembly_Beau,Bull,913.0,9.0,Entertainment/public assembly,Conference Center,46789.1,503634.0,30.26719999999989,-97.7430999999998,US/Central,Yes,,Yes,Yes,,,,,,,,,,,,,,,,,
+Bear_assembly_Jose,Bear,640.0,4.0,Entertainment/public assembly,Entertainment/public assembly,3361.2,36180.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,1966.0,,9.0,,,,,,,
+Rat_public_Sean,Rat,316.0,3.0,Public services,Other - Public Services,7297.5,78550.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,
+Bear_public_Valorie,Bear,597.0,4.0,Public services,Public services,17598.2,189425.0,37.87190340000004,-122.26072860000008,US/Pacific,Yes,,,,,,,,,,,1994.0,,4.0,,,,,,,
+Cockatoo_public_Shad,Cockatoo,1431.0,15.0,Public services,Library,10345.7,111360.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,2000.0,,,,,,,,,
+Cockatoo_lodging_Emory,Cockatoo,1401.0,15.0,Lodging/residential,Dormitory,15681.2,168791.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,Yes,,,,,,Education,College/University,,1946.0,,,,,,,,,
+Rat_lodging_Ted,Rat,357.0,3.0,Lodging/residential,Other - Lodging/Residential,185.8,2000.0,38.9035039800032,-77.0053494170663,US/Eastern,Yes,,,,,,,,,,,,,,,,,,,,
+Cockatoo_lodging_Olga,Cockatoo,1417.0,15.0,Lodging/residential,Dormitory,3758.0,40451.0,42.45983685925793,-76.4852915864667,US/Eastern,Yes,,,Yes,,,,,Education,College/University,,1975.0,,,,,,,,,
