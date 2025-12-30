@@ -20,7 +20,13 @@ class EnergyLSTM(pl.LightningModule):
             dropout=dropout if num_layers > 1 else 0
         )
         
-        self.fc = nn.Linear(hidden_size, 1)
+        # Deeper MLP head for better prediction
+        self.fc = nn.Sequential(
+            nn.Linear(hidden_size, hidden_size // 2),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(hidden_size // 2, 1)
+        )
         self.criterion = nn.MSELoss()
         
     def forward(self, x):

@@ -24,13 +24,31 @@ def train_transfer(source_building, target_building,
     electricity = pd.read_csv(electricity_path, index_col=0)
     electricity.index = pd.to_datetime(electricity.index)
     
+    # Load weather data
+    weather_path = r'../data/raw/building-data-genome-project-2/data/weather/weather.csv'
+    metadata_path = r'../data/raw/building-data-genome-project-2/data/metadata/metadata.csv'
+    try:
+        weather = pd.read_csv(weather_path)
+        weather['timestamp'] = pd.to_datetime(weather['timestamp'])
+        weather = weather.set_index('timestamp')
+        
+        # Get site_id for target building
+        metadata = pd.read_csv(metadata_path)
+        site_id = metadata[metadata['building_id'] == target_building]['site_id'].values[0]
+        weather_building = weather[weather['site_id'] == site_id].drop(columns=['site_id'])
+        weather_building = weather_building.reindex(electricity.index)
+        print(f"Weather data loaded for site: {site_id}")
+    except Exception as e:
+        print(f"Warning: Could not load weather data: {e}")
+        weather_building = None
+    
     # Preprocess target building
-    target_data, target_scaler = preprocess_building_data(electricity, target_building)
+    target_data, target_scaler = preprocess_building_data(electricity, target_building, weather_building)
     print(f"Target data shape: {target_data.shape}")
     
-    # Create dataloaders
+    # Create dataloaders (smaller batch size)
     train_loader, val_loader, test_loader = create_dataloaders(
-        target_data, seq_length=seq_length, batch_size=256
+        target_data, seq_length=seq_length, batch_size=32
     )
     
     # Load pre-trained model
@@ -68,7 +86,8 @@ def train_transfer(source_building, target_building,
         accelerator='cpu',
         devices=1,
         callbacks=[checkpoint_callback, early_stop],
-        log_every_n_steps=5
+        log_every_n_steps=5,
+        gradient_clip_val=1.0
     )
     
     print("\nStarting transfer learning...")

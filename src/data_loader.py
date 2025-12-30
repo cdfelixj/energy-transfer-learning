@@ -32,27 +32,55 @@ def preprocess_building_data(electricity_df, building_id, weather_df=None):
     data['energy'] = electricity_df[building_id]
     
     # Handle missing values
+    data['was_interpolated'] = data['energy'].isna().astype(int)
     data = data.interpolate(method='linear', limit=3)
     data = data.dropna()
     
-    # Add time features
-    data['hour'] = data.index.hour
-    data['day_of_week'] = data.index.dayofweek
-    data['month'] = data.index.month
-    data['day_of_year'] = data.index.dayofyear
+    # Add cyclical time features (so hour 23 is close to hour 0)
+    data['hour_sin'] = np.sin(2 * np.pi * data.index.hour / 24)
+    data['hour_cos'] = np.cos(2 * np.pi * data.index.hour / 24)
+    data['day_of_week_sin'] = np.sin(2 * np.pi * data.index.dayofweek / 7)
+    data['day_of_week_cos'] = np.cos(2 * np.pi * data.index.dayofweek / 7)
+    data['month_sin'] = np.sin(2 * np.pi * data.index.month / 12)
+    data['month_cos'] = np.cos(2 * np.pi * data.index.month / 12)
+    data['day_of_year_sin'] = np.sin(2 * np.pi * data.index.dayofyear / 365)
+    data['day_of_year_cos'] = np.cos(2 * np.pi * data.index.dayofyear / 365)
     
-    # Add lag features
-    for lag in [1, 2, 24, 168]:
+    # Add weekend and business hours flags
+    data['is_weekend'] = (data.index.dayofweek >= 5).astype(int)
+    data['is_business_hours'] = ((data.index.hour >= 8) & (data.index.hour <= 18)).astype(int)
+    
+    # Add more comprehensive lag features
+    for lag in [1, 2, 24, 48, 72, 168, 336, 720]:
         data[f'lag_{lag}'] = data['energy'].shift(lag)
     
-    # Add rolling statistics
+    # Add multiple rolling statistics
     data['rolling_mean_24h'] = data['energy'].rolling(window=24, min_periods=1).mean()
     data['rolling_std_24h'] = data['energy'].rolling(window=24, min_periods=1).std()
+    data['rolling_mean_168h'] = data['energy'].rolling(window=168, min_periods=1).mean()
+    data['rolling_std_168h'] = data['energy'].rolling(window=168, min_periods=1).std()
+    data['rolling_min_24h'] = data['energy'].rolling(window=24, min_periods=1).min()
+    data['rolling_max_24h'] = data['energy'].rolling(window=24, min_periods=1).max()
+    
+    # Add weather features if available
+    if weather_df is not None:
+        try:
+            # Merge weather data
+            weather_features = ['airTemperature', 'dewTemperature', 'cloudCoverage', 
+                              'precipDepth1HR', 'seaLvlPressure', 'windSpeed']
+            
+            for feature in weather_features:
+                if feature in weather_df.columns:
+                    data[feature] = weather_df[feature]
+                    # Interpolate missing weather values
+                    data[feature] = data[feature].interpolate(method='linear', limit=6)
+        except Exception as e:
+            print(f"Warning: Could not add weather features: {e}")
     
     # Drop NaN
     data = data.dropna()
     
-    # Normalize
+    # Normalize features (but not energy target)
     scaler = StandardScaler()
     feature_cols = [col for col in data.columns if col != 'energy']
     data[feature_cols] = scaler.fit_transform(data[feature_cols])
