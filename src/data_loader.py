@@ -29,12 +29,20 @@ def preprocess_building_data(electricity_df, building_id, weather_df=None):
     
     # Extract single building
     data = pd.DataFrame()
+    
+    # Check if building exists
+    if building_id not in electricity_df.columns:
+        raise ValueError(f"Building '{building_id}' not found in electricity data. "
+                        f"Available buildings: {list(electricity_df.columns)[:10]}...")
+    
     data['energy'] = electricity_df[building_id]
     
     # Data Quality Report
     initial_size = len(data)
+    initial_non_null = data['energy'].notna().sum()
     print(f"\n=== Data Quality Report for {building_id} ===")
     print(f"Initial data points: {initial_size}")
+    print(f"Initial non-null values: {initial_non_null} ({initial_non_null/initial_size*100:.2f}%)")
     
     # 1. Remove duplicate timestamps
     duplicates = data.index.duplicated().sum()
@@ -124,13 +132,29 @@ def preprocess_building_data(electricity_df, building_id, weather_df=None):
             for feature in weather_features:
                 if feature in weather_df.columns:
                     data[feature] = weather_df[feature]
-                    # Interpolate missing weather values
-                    data[feature] = data[feature].interpolate(method='linear', limit=6)
+                    
+                    # Check if feature is mostly missing
+                    missing_pct = data[feature].isna().sum() / len(data) * 100
+                    if missing_pct > 95:
+                        print(f"Dropping weather feature '{feature}' ({missing_pct:.1f}% missing)")
+                        data = data.drop(columns=[feature])
+                    else:
+                        # Interpolate missing weather values (more aggressive for partially missing)
+                        data[feature] = data[feature].interpolate(method='linear', limit_direction='both')
+                        # Fill any remaining NaN with median
+                        if data[feature].isna().any():
+                            median_val = data[feature].median()
+                            data[feature] = data[feature].fillna(median_val)
+                            print(f"Filled remaining NaN in '{feature}' with median: {median_val:.2f}")
         except Exception as e:
             print(f"Warning: Could not add weather features: {e}")
     
     # Drop NaN
     data = data.dropna()
+    
+    if len(data) == 0:
+        raise ValueError(f"All data was dropped after removing NaN values. "
+                        f"This building may have insufficient data or too many missing values.")
     
     # Normalize features (but not energy target)
     scaler = StandardScaler()
@@ -165,11 +189,8 @@ def create_dataloaders(data, seq_length=24, batch_size=256,
     test_data = data.iloc[val_end:]
     
     print(f"\n=== DataLoader Creation ===")
-    print(f"Total data after preprocessing: {n}")
-    print(f"Sequence length: {seq_length}")
-    print(f"Train data: {len(train_data)}, Dataset length: {len(train_data) - seq_length}")
-    print(f"Val data: {len(val_data)}, Dataset length: {len(val_data) - seq_length}")
-    print(f"Test data: {len(test_data)}, Dataset length: {len(test_data) - seq_length}")
+    print(f"Total data: {n}, Sequence length: {seq_length}")
+    print(f"Train: {len(train_data)}, Val: {len(val_data)}, Test: {len(test_data)}")
     
     # Validate that each split has enough data
     min_required_size = seq_length + 1

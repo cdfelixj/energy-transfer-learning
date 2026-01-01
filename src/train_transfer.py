@@ -46,14 +46,43 @@ def train_transfer(source_building, target_building,
     target_data, target_scaler = preprocess_building_data(electricity, target_building, weather_building)
     print(f"Target data shape: {target_data.shape}")
     
+    # Load pre-trained model first to get expected input size
+    print(f"Loading pre-trained model from: {source_model_path}")
+    source_model = EnergyLSTM.load_from_checkpoint(source_model_path)
+    expected_input_size = source_model.hparams.input_size
+    print(f"Source model expects {expected_input_size} input features")
+    
+    # Check if target data has the right number of features
+    actual_input_size = target_data.shape[1] - 1  # -1 for energy column
+    print(f"Target data has {actual_input_size} features (excluding energy)")
+    
+    if actual_input_size != expected_input_size:
+        print(f"\n⚠️  Feature mismatch detected!")
+        print(f"Source model expects: {expected_input_size} features")
+        print(f"Target data has: {actual_input_size} features")
+        print(f"Target features: {[col for col in target_data.columns if col != 'energy']}")
+        
+        # Adjust features to match
+        feature_cols = [col for col in target_data.columns if col != 'energy']
+        
+        if actual_input_size < expected_input_size:
+            # Add missing features as zeros
+            missing_count = expected_input_size - actual_input_size
+            print(f"Adding {missing_count} zero-filled feature(s) to match source model")
+            for i in range(missing_count):
+                target_data[f'missing_feature_{i}'] = 0.0
+        else:
+            # Remove extra features (keep only the first expected_input_size)
+            print(f"Removing {actual_input_size - expected_input_size} extra feature(s)")
+            features_to_keep = feature_cols[:expected_input_size]
+            target_data = target_data[['energy'] + features_to_keep]
+        
+        print(f"Adjusted target data shape: {target_data.shape}")
+    
     # Create dataloaders (smaller batch size)
     train_loader, val_loader, test_loader = create_dataloaders(
         target_data, seq_length=seq_length, batch_size=32
     )
-    
-    # Load pre-trained model
-    print(f"Loading pre-trained model from: {source_model_path}")
-    source_model = EnergyLSTM.load_from_checkpoint(source_model_path)
     
     # Create transfer model (clone weights)
     transfer_model = EnergyLSTM(
