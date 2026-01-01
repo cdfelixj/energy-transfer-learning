@@ -135,8 +135,15 @@ def train_transfer(source_building, target_building,
 if __name__ == '__main__':
     # Load selected buildings
     selected_buildings = pd.read_csv('../data/processed/selected_buildings.csv')
-    source_building = selected_buildings['building_id'].iloc[0]
-    target_building = selected_buildings['building_id'].iloc[1]
+    
+    # Use first education building as source (has baseline model)
+    education_buildings = selected_buildings[selected_buildings['primaryspaceusage'] == 'Education']
+    source_building = education_buildings['building_id'].iloc[0]  # Eagle_education_Raul
+    
+    # Use an education-related building NOT used in baseline training
+    # Cockatoo_lodging_Emory is a dormitory for College/University (education industry)
+    # but primaryspaceusage is "Lodging/residential" so it wasn't trained in baseline
+    target_building = 'Cockatoo_lodging_Emory'
     
     # Automatically find the latest baseline model
     model_files = glob.glob('../models/baseline_*.ckpt')
@@ -151,7 +158,8 @@ if __name__ == '__main__':
     
     print(f"\nFound {len(model_files)} baseline model(s)")
     print(f"Using: {os.path.basename(source_model_path)}")
-    print(f"Source building: {source_building}")
-    print(f"Target building: {target_building}")
+    print(f"Source building: {source_building} (Education - has baseline model)")
+    print(f"Target building: {target_building} (Dormitory - NO baseline model)")
+    print("This ensures proper transfer learning evaluation!\n")
     
     train_transfer(source_building, target_building, source_model_path, epochs=20)
