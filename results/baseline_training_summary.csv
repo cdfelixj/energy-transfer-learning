@@ -1,2 +1,2 @@
 model_type,buildings,num_buildings,test_rmse,test_mae,test_loss,status
-Combined Education Buildings,"Eagle_education_Raul, Lamb_education_Lazaro, Rat_education_Adell",3,240.3108673095703,229.9290313720703,84543.4375,Success
+Combined Education Buildings,"Eagle_education_Raul, Lamb_education_Lazaro, Rat_education_Adell",3,141.41326904296875,131.92945861816406,23421.267578125,Success
