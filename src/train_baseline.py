@@ -100,48 +100,9 @@ def train_baseline(building_id, epochs=50, seq_length=2160):
     return model, results
 
 if __name__ == '__main__':
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Train baseline LSTM on building energy data')
-    parser.add_argument('--building', type=str, default=None, 
-                        help='Building ID to train on. If not specified, uses first building from selected_buildings.csv')
-    parser.add_argument('--building_index', type=int, default=None,
-                        help='Index of building in selected_buildings.csv (0-based). Overrides --building if both specified.')
-    parser.add_argument('--epochs', type=int, default=50, help='Number of training epochs')
-    parser.add_argument('--seq_length', type=int, default=2160, help='Sequence length for LSTM')
-    
-    args = parser.parse_args()
-    
     # Load selected buildings
     selected_buildings = pd.read_csv('../data/processed/selected_buildings.csv')
-    
-    # Determine which building to use
-    if args.building_index is not None:
-        # Use specified index
-        if args.building_index < 0 or args.building_index >= len(selected_buildings):
-            raise ValueError(f"Building index {args.building_index} out of range. Must be 0-{len(selected_buildings)-1}")
-        source_building = selected_buildings['building_id'].iloc[args.building_index]
-        print(f"Using building at index {args.building_index}: {source_building}")
-    elif args.building is not None:
-        # Use specified building name
-        if args.building not in selected_buildings['building_id'].values:
-            print(f"Error: Building '{args.building}' not found in selected buildings.")
-            print(f"Available buildings:")
-            for idx, bld in enumerate(selected_buildings['building_id']):
-                print(f"  [{idx}] {bld}")
-            sys.exit(1)
-        source_building = args.building
-        print(f"Using specified building: {source_building}")
-    else:
-        # Default to first building
-        source_building = selected_buildings['building_id'].iloc[0]
-        print(f"Using default (first) building: {source_building}")
-    
-    print(f"\nAvailable buildings in dataset:")
-    for idx, bld in enumerate(selected_buildings['building_id']):
-        marker = " <-- SELECTED" if bld == source_building else ""
-        print(f"  [{idx}] {bld}{marker}")
-    print()
+    source_building = selected_buildings['building_id'].iloc[0]
     
     print(f"Training baseline on building: {source_building}")
-    model, results = train_baseline(source_building, epochs=args.epochs, seq_length=args.seq_length)
+    model, results = train_baseline(source_building, epochs=50)
