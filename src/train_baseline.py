@@ -10,8 +10,14 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from data_loader import preprocess_building_data, create_dataloaders
 from models import EnergyLSTM
 
-def train_baseline(building_id, epochs=50, seq_length=2160):
-    """Train baseline LSTM on single building"""
+def train_baseline(building_id, epochs=50, seq_length=336):
+    """Train baseline LSTM on single building
+    
+    Args:
+        building_id: Building identifier
+        epochs: Number of training epochs
+        seq_length: Sequence length in hours (default 336 = 2 weeks)
+    """
     
     # Load data (Windows paths with r'' or \\ escaping)
     print(f"Loading data for building: {building_id}")

@@ -141,8 +141,19 @@ def preprocess_building_data(electricity_df, building_id, weather_df=None):
 
 
 def create_dataloaders(data, seq_length=24, batch_size=256, 
-                       train_split=0.7, val_split=0.15):
-    """Create train/val/test DataLoaders"""
+                       train_split=0.6, val_split=0.2):
+    """Create train/val/test DataLoaders
+    
+    Args:
+        data: Preprocessed dataframe with features and target
+        seq_length: Length of input sequences in hours
+        batch_size: Batch size for dataloaders
+        train_split: Proportion of data for training (default 0.6)
+        val_split: Proportion of data for validation (default 0.2)
+        
+    Returns:
+        train_loader, val_loader, test_loader
+    """
     
     # Split data
     n = len(data)
@@ -152,6 +163,22 @@ def create_dataloaders(data, seq_length=24, batch_size=256,
     train_data = data.iloc[:train_end]
     val_data = data.iloc[train_end:val_end]
     test_data = data.iloc[val_end:]
+    
+    print(f"\n=== DataLoader Creation ===")
+    print(f"Total data after preprocessing: {n}")
+    print(f"Sequence length: {seq_length}")
+    print(f"Train data: {len(train_data)}, Dataset length: {len(train_data) - seq_length}")
+    print(f"Val data: {len(val_data)}, Dataset length: {len(val_data) - seq_length}")
+    print(f"Test data: {len(test_data)}, Dataset length: {len(test_data) - seq_length}")
+    
+    # Validate that each split has enough data
+    min_required_size = seq_length + 1
+    if len(val_data) < min_required_size:
+        raise ValueError(f"Validation data ({len(val_data)}) is too small for sequence length {seq_length}. "
+                        f"Need at least {min_required_size} samples. Consider reducing seq_length or val_split.")
+    if len(test_data) < min_required_size:
+        raise ValueError(f"Test data ({len(test_data)}) is too small for sequence length {seq_length}. "
+                        f"Need at least {min_required_size} samples. Consider reducing seq_length or test_split.")
     
     # Create datasets
     train_dataset = BuildingEnergyDataset(train_data, seq_length)
