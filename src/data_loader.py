@@ -25,16 +25,68 @@ class BuildingEnergyDataset(Dataset):
 
 
 def preprocess_building_data(electricity_df, building_id, weather_df=None):
-    """Preprocess single building's data"""
+    """Preprocess single building's data with comprehensive cleaning"""
     
     # Extract single building
     data = pd.DataFrame()
     data['energy'] = electricity_df[building_id]
     
-    # Handle missing values
+    # Data Quality Report
+    initial_size = len(data)
+    print(f"\n=== Data Quality Report for {building_id} ===")
+    print(f"Initial data points: {initial_size}")
+    
+    # 1. Remove duplicate timestamps
+    duplicates = data.index.duplicated().sum()
+    if duplicates > 0:
+        print(f"Removing {duplicates} duplicate timestamps ({duplicates/initial_size*100:.2f}%)")
+        data = data[~data.index.duplicated(keep='first')]
+    
+    # 2. Validate data types and convert to numeric
+    data['energy'] = pd.to_numeric(data['energy'], errors='coerce')
+    
+    # 3. Data validation and cleaning
+    # Check for negative values
+    negative_count = (data['energy'] < 0).sum()
+    if negative_count > 0:
+        print(f"Warning: Found {negative_count} negative energy values ({negative_count/len(data)*100:.2f}%) - setting to NaN")
+        data.loc[data['energy'] < 0, 'energy'] = np.nan
+    
+    # Check for extreme outliers (values > 10x the 95th percentile)
+    valid_data = data['energy'].dropna()
+    if len(valid_data) > 0:
+        percentile_95 = valid_data.quantile(0.95)
+        extreme_threshold = percentile_95 * 10
+        extreme_count = (data['energy'] > extreme_threshold).sum()
+        if extreme_count > 0:
+            print(f"Warning: Found {extreme_count} extreme outliers (>10x 95th percentile) - setting to NaN")
+            data.loc[data['energy'] > extreme_threshold, 'energy'] = np.nan
+    
+    # Check for extended zero periods (more than 72 consecutive hours)
+    zero_mask = (data['energy'] == 0)
+    if zero_mask.any():
+        zero_groups = (zero_mask != zero_mask.shift()).cumsum()
+        zero_lengths = zero_mask.groupby(zero_groups).transform('sum')
+        extended_zeros = (zero_lengths > 72) & zero_mask
+        extended_zero_count = extended_zeros.sum()
+        if extended_zero_count > 0:
+            print(f"Warning: Found {extended_zero_count} values in extended zero periods (>72 hours) - setting to NaN")
+            data.loc[extended_zeros, 'energy'] = np.nan
+    
+    # 4. Handle missing values
+    missing_count = data['energy'].isna().sum()
+    print(f"Missing/invalid values after validation: {missing_count} ({missing_count/len(data)*100:.2f}%)")
+    
     data['was_interpolated'] = data['energy'].isna().astype(int)
     data = data.interpolate(method='linear', limit=3)
     data = data.dropna()
+    
+    final_size = len(data)
+    removed = initial_size - final_size
+    print(f"Final data points: {final_size} (removed {removed}, {removed/initial_size*100:.2f}%)")
+    print(f"Energy range: [{data['energy'].min():.2f}, {data['energy'].max():.2f}]")
+    print(f"Energy mean: {data['energy'].mean():.2f}, std: {data['energy'].std():.2f}")
+    print("=" * 50 + "\n")
     
     # Add cyclical time features (so hour 23 is close to hour 0)
     data['hour_sin'] = np.sin(2 * np.pi * data.index.hour / 24)
