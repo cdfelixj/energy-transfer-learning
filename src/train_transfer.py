@@ -57,7 +57,7 @@ def train_transfer(source_building, target_building,
     print(f"Target data has {actual_input_size} features (excluding energy)")
     
     if actual_input_size != expected_input_size:
-        print(f"\n⚠️  Feature mismatch detected!")
+        print(f"\nFeature mismatch detected!")
         print(f"Source model expects: {expected_input_size} features")
         print(f"Target data has: {actual_input_size} features")
         print(f"Target features: {[col for col in target_data.columns if col != 'energy']}")
