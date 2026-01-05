@@ -1,0 +1,2 @@
+model_type,building,data_years,test_rmse,test_mae,test_loss,status
+"Baseline (Single Building, 2 Years)",Rat_education_Colin,2,15.21358585357666,9.782135963439941,309.2908020019531,Success
