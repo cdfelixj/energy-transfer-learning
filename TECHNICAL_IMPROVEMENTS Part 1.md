@@ -8,18 +8,57 @@
 
 ## Table of Contents
 
-1. [Initial Problem Discovery](#initial-problem-discovery)
-2. [Baseline Model Issues & Fixes](#baseline-model-issues--fixes)
-3. [Pre-Transfer Model Collapse](#pre-transfer-model-collapse)
-4. [Data Distribution Mismatch](#data-distribution-mismatch)
-5. [Architecture Optimization](#architecture-optimization)
-6. [Training Configuration Improvements](#training-configuration-improvements)
-7. [Evaluation Framework Enhancement](#evaluation-framework-enhancement)
-8. [Summary of All Changes](#summary-of-all-changes)
+1. [Training Data Summary](#training-data-summary)
+2. [Initial Problem Discovery](#initial-problem-discovery)
+3. [Baseline Model Issues & Fixes](#baseline-model-issues--fixes)
+4. [Pre-Transfer Model Collapse](#pre-transfer-model-collapse)
+5. [Data Distribution Mismatch](#data-distribution-mismatch)
+6. [Architecture Optimization](#architecture-optimization)
+7. [Training Configuration Improvements](#training-configuration-improvements)
+8. [Evaluation Framework Enhancement](#evaluation-framework-enhancement)
+9. [Summary of All Changes](#summary-of-all-changes)
 
 ---
 
-## 1. Initial Problem Discovery
+## 1. Training Data Summary
+
+### Current Configuration (Final)
+
+| Model | Building | Training Data | Hours | Architecture | Purpose |
+|-------|----------|--------------|-------|--------------|---------|
+| **Baseline** | Rat_education_Colin | 2 years (2016-2017) | ~17,520 | 3 layers, 128 hidden, seq=168h | Learn general patterns from abundant data |
+| **Pre-Transfer** | Rat_education_Denise | 2 months | ~1,440 | 2 layers, 64 hidden, seq=24h | Control group - train from scratch on limited data |
+| **Transfer** | Rat_education_Denise | 2 months | ~1,440 | 2 layers, 64 hidden, seq=24h | Experimental group - fine-tune baseline on limited data |
+
+### Evolution of Data Amounts
+
+**Original Design (Failed)**:
+- Baseline: 2 years ✅ (working)
+- Pre-Transfer: **1 month** ❌ (model collapsed, Std=0.00)
+- Transfer: **1 month** ⚠️ (worked but unfair comparison)
+
+**Current Design (Fixed)**:
+- Baseline: 2 years ✅ (working)
+- Pre-Transfer: **2 months** ✅ (fixed model collapse)
+- Transfer: **2 months** ✅ (fair comparison with pre-transfer)
+
+**Why the Change from 1→2 Months**:
+1. **Model Collapse Issue**: With 1 month (720 hours) and 353k parameters → 490:1 parameter-to-sample ratio
+2. **Too Few Samples**: Rule of thumb is 10-100 samples per parameter; we had 0.002 samples per parameter
+3. **Solution**: Increased to 2 months (1,440 hours) + simplified architecture (88k parameters) → 61:1 ratio
+4. **Experimental Validity**: Both Pre-Transfer and Transfer must use identical data amounts
+
+### Key Principle
+
+**Pre-Transfer and Transfer models MUST use exactly the same data amount** to isolate the effect of transfer learning. The only difference should be:
+- Pre-Transfer: Random initialization
+- Transfer: Initialized with baseline weights
+
+Any difference in performance = **pure transfer learning benefit**
+
+---
+
+## 2. Initial Problem Discovery
 
 ### 1.1 Negative R² Scores
 
