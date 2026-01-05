@@ -19,7 +19,7 @@ from models import EnergyLSTM
 
 
 def train_pretransfer(target_building, epochs=50, seq_length=24, 
-                     data_limit_months=1, architecture_match=None):
+                     data_limit_weeks=4, architecture_match=None):
     """
     Train a model from scratch on limited data from the target building.
     
@@ -27,14 +27,14 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
         target_building: Building ID to train on (with limited data)
         epochs: Number of training epochs
         seq_length: Sequence length in hours (default 24 = 1 day, suitable for limited data)
-        data_limit_months: Number of months of data to use (default 1)
+        data_limit_weeks: Number of weeks of data to use (default 4)
         architecture_match: Optional path to baseline model to match architecture
     """
     
     print(f"\n{'='*70}")
     print(f"  PRE-TRANSFER MODEL: Training from scratch on limited data")
     print(f"  Target Building: {target_building}")
-    print(f"  Data limit: {data_limit_months} month(s)")
+    print(f"  Data limit: {data_limit_weeks} week(s)")
     print(f"{'='*70}")
     
     # Load filtered data (Education + Rat site + Electricity only)
@@ -74,11 +74,11 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
     )
     print(f"Full target data shape: {target_data.shape}")
     
-    # Limit data to simulate limited availability (e.g., 1 month)
-    # Take the first N months of data
-    hours_to_keep = data_limit_months * 30 * 24  # Approximate
+    # Limit data to simulate limited availability (e.g., 8 weeks)
+    # Take the first N weeks of data
+    hours_to_keep = data_limit_weeks * 7 * 24  # 7 days per week, 24 hours per day
     target_data = target_data.iloc[:hours_to_keep]
-    print(f"Limited to {data_limit_months} month(s): {target_data.shape}")
+    print(f"Limited to {data_limit_weeks} week(s): {target_data.shape}")
     print(f"Date range: {target_data.index[0]} to {target_data.index[-1]}")
     
     # If architecture_match is provided, match the baseline model's architecture
@@ -234,7 +234,7 @@ if __name__ == '__main__':
             target_building=target_building,
             epochs=100,  # Increased from 50 for better convergence
             seq_length=24,  # Use 24 hours (1 day) for limited data
-            data_limit_months=2,  # Increased to 2 months for more stable training
+            data_limit_weeks=8,  # 8 weeks of data
             architecture_match=baseline_model_path
         )
         

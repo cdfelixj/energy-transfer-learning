@@ -12,7 +12,7 @@ from data_loader import preprocess_building_data, create_dataloaders, load_elect
 from models import EnergyLSTM
 
 def train_transfer(source_building, target_building, 
-                   source_model_path, epochs=20, seq_length=24, data_limit_months=1):
+                   source_model_path, epochs=20, seq_length=24, data_limit_weeks=4):
     """Transfer learning: fine-tune on target building with limited data
     
     Args:
@@ -21,13 +21,13 @@ def train_transfer(source_building, target_building,
         source_model_path: Path to pre-trained baseline model
         epochs: Number of fine-tuning epochs
         seq_length: Sequence length in hours (default 24 = 1 day, suitable for limited data)
-        data_limit_months: Number of months of target data to use (default 1)
+        data_limit_weeks: Number of weeks of target data to use (default 4)
     """
     
     print(f"\n{'='*70}")
     print(f"  TRANSFER LEARNING: Fine-tuning on limited data")
     print(f"  {source_building} → {target_building}")
-    print(f"  Data limit: {data_limit_months} month(s)")
+    print(f"  Data limit: {data_limit_weeks} week(s)")
     print(f"{'='*70}")
     
     # Load filtered data (Education + Rat site + Electricity only)
@@ -69,9 +69,9 @@ def train_transfer(source_building, target_building,
     print(f"Full target data shape: {target_data.shape}")
     
     # Limit data to simulate limited availability (same as pre-transfer model)
-    hours_to_keep = data_limit_months * 30 * 24  # Approximate
+    hours_to_keep = data_limit_weeks * 7 * 24  # 7 days per week, 24 hours per day
     target_data = target_data.iloc[:hours_to_keep]
-    print(f"Limited to {data_limit_months} month(s): {target_data.shape}")
+    print(f"Limited to {data_limit_weeks} week(s): {target_data.shape}")
     print(f"Date range: {target_data.index[0]} to {target_data.index[-1]}")
     
     # Load pre-trained model first to get expected input size
@@ -190,6 +190,6 @@ if __name__ == '__main__':
     print(f"Target building: {target_building} (Dormitory - NO baseline model)")
     print("This ensures proper transfer learning evaluation!\n")
     
-    # Train transfer model with same limited data as pre-transfer (2 months)
+    # Train transfer model with same limited data as pre-transfer (8 weeks)
     train_transfer(source_building, target_building, source_model_path, 
-                  epochs=20, seq_length=24, data_limit_months=2)
+                  epochs=20, seq_length=24, data_limit_weeks=8)
