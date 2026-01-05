@@ -1,12 +1,52 @@
 """
-Comprehensive 3-Model Evaluation Script
+Comprehensive Transfer Learning Evaluation Script
 
-Compares three models on the same target building with limited data:
-1. Baseline Model - Trained on 2 years of data from source building
-2. Pre-Transfer Model - Trained from scratch on limited target data (1 month)
-3. Transfer Model - Fine-tuned from baseline on limited target data (1 month)
+EVALUATION SETUP:
+==================
 
-This demonstrates the value of transfer learning.
+MODELS EVALUATED:
+1. Baseline Model (2 evaluations):
+   - Baseline-Source: Evaluated on SOURCE building (Rat_education_Colin) where it was trained
+     * Purpose: Shows best-case performance with abundant training data
+   - Baseline-Target: Evaluated on TARGET building (Rat_education_Denise) - NEW building
+     * Purpose: Shows cross-building generalization (domain shift)
+
+2. Pre-Transfer Model:
+   - Trained from scratch on 1 month of TARGET building data
+   - Evaluated on TARGET building
+   - Purpose: Control group - performance WITHOUT transfer learning
+
+3. Transfer Model:
+   - Fine-tuned from baseline on 1 month of TARGET building data
+   - Evaluated on TARGET building
+   - Purpose: Experimental group - performance WITH transfer learning
+
+KEY COMPARISONS:
+================
+
+1. Baseline-Source vs Baseline-Target:
+   → Measures domain shift penalty (how much performance drops on new building)
+
+2. Pre-Transfer vs Transfer (MAIN COMPARISON):
+   → Measures transfer learning effectiveness
+   → Both use SAME limited data (1 month)
+   → Both evaluated on SAME building (target)
+   → Difference shows pure benefit of transfer learning
+
+3. Baseline-Target vs Pre-Transfer:
+   → Compares: lots of data on different building vs little data on same building
+
+4. Baseline-Target vs Transfer:
+   → Shows if fine-tuning baseline on limited target data beats using baseline as-is
+
+EXPECTED RESULTS:
+=================
+Baseline-Source: Best performance (trained and tested on same building)
+Baseline-Target: Moderate (domain shift from Colin to Denise)
+Pre-Transfer: Variable (limited data, no transfer)
+Transfer: Should beat Pre-Transfer (transfer learning benefit)
+
+Ideal outcome: Transfer > Pre-Transfer (proves transfer learning helps!)
 """
 
 import sys
@@ -91,13 +131,15 @@ def print_evaluation_results(results):
     print(f"{'='*70}")
 
 
-def compare_all_models(baseline_results, pretransfer_results, transfer_results):
-    """Compare all three models"""
-    print(f"\n{'='*90}")
-    print(f"  THREE-MODEL COMPARISON: Transfer Learning Effectiveness")
-    print(f"{'='*90}")
-    print(f"{'Metric':<25} {'Baseline':<15} {'Pre-Transfer':<15} {'Transfer':<15} {'Improvement'}")
-    print(f"{'-'*90}")
+def compare_all_models(baseline_source_results, baseline_target_results, pretransfer_results, transfer_results):
+    """Compare all models with baseline evaluated on both source and target buildings"""
+    print(f"\n{'='*110}")
+    print(f"  COMPREHENSIVE MODEL COMPARISON: Transfer Learning Effectiveness")
+    print(f"{'='*110}")
+    print(f"\nNOTE: All models evaluated on TARGET building (Rat_education_Denise) test set,")
+    print(f"      except 'Baseline-Source' which is evaluated on SOURCE building (Rat_education_Colin).")
+    print(f"\n{'Metric':<20} {'Baseline-Source':<17} {'Baseline-Target':<17} {'Pre-Transfer':<15} {'Transfer':<15} {'TL Gain'}")
+    print(f"{'-'*110}")
     
     metrics = [
         ('MAE (kWh)', 'mae'),
@@ -110,7 +152,8 @@ def compare_all_models(baseline_results, pretransfer_results, transfer_results):
     improvements = {}
     
     for metric_name, metric_key in metrics:
-        baseline_val = baseline_results[metric_key]
+        baseline_source_val = baseline_source_results[metric_key]
+        baseline_target_val = baseline_target_results[metric_key]
         pretransfer_val = pretransfer_results[metric_key]
         transfer_val = transfer_results[metric_key]
         
@@ -127,21 +170,25 @@ def compare_all_models(baseline_results, pretransfer_results, transfer_results):
         improvements[metric_key] = improvement
         
         # Handle NaN values
-        baseline_str = f"{baseline_val:.4f}" if not np.isnan(baseline_val) else "N/A"
+        baseline_source_str = f"{baseline_source_val:.4f}" if not np.isnan(baseline_source_val) else "N/A"
+        baseline_target_str = f"{baseline_target_val:.4f}" if not np.isnan(baseline_target_val) else "N/A"
         pretransfer_str = f"{pretransfer_val:.4f}" if not np.isnan(pretransfer_val) else "N/A"
         transfer_str = f"{transfer_val:.4f}" if not np.isnan(transfer_val) else "N/A"
         
-        print(f"{metric_name:<25} {baseline_str:>13} {pretransfer_str:>13} {transfer_str:>13}   "
+        print(f"{metric_name:<20} {baseline_source_str:>15} {baseline_target_str:>15} {pretransfer_str:>13} {transfer_str:>13}   "
               f"{improvement:>6.1f}% {better}")
     
-    print(f"{'='*90}")
+    print(f"{'='*110}")
     
     # Summary
-    print(f"\nKEY FINDINGS:")
-    print(f"1. Baseline Model: Trained on 2 years of source building data")
-    print(f"2. Pre-Transfer Model: Trained from scratch on 1 month of target building data")
-    print(f"3. Transfer Model: Fine-tuned baseline on 1 month of target building data")
-    print(f"\nTransfer Learning Improvement:")
+    print(f"\n" + "="*110)
+    print(f"  KEY FINDINGS & INTERPRETATION")
+    print(f"="*110)
+    print(f"\n1. Baseline-Source: Baseline model on its training building (best-case performance)")
+    print(f"2. Baseline-Target: Baseline model on NEW building (cross-building generalization)")
+    print(f"3. Pre-Transfer: Train from scratch on 1 month of target building data")
+    print(f"4. Transfer: Fine-tune baseline on 1 month of target building data")
+    print(f"\nTRANSFER LEARNING EFFECTIVENESS (Transfer vs Pre-Transfer):")
     
     if improvements['rmse'] > 0:
         print(f"  ✓ RMSE reduced by {improvements['rmse']:.1f}% compared to pre-transfer")
@@ -269,32 +316,50 @@ def main():
     transfer_model = EnergyLSTM.load_from_checkpoint(transfer_model_path)
     print("✓ All models loaded")
     
-    # Prepare test data
-    print("\nPreparing test data...")
+    # Prepare test data for SOURCE building (where baseline was trained)
+    print("\nPreparing test data for SOURCE building (Rat_education_Colin)...")
+    source_building = 'Rat_education_Colin'
+    # Use full 2 years for source building evaluation
+    source_train_loader, source_val_loader, source_test_loader = prepare_test_data(
+        source_building, data_limit_months=24, seq_length=336, architecture_match=baseline_model_path
+    )
+    print(f"✓ Source building test data ready: {len(source_test_loader.dataset)} samples")
+    
+    # Prepare test data for TARGET building
+    print("\nPreparing test data for TARGET building (Rat_education_Denise)...")
     train_loader, val_loader, test_loader = prepare_test_data(
         target_building, data_limit_months, seq_length, baseline_model_path
     )
-    print(f"✓ Test data ready: {len(test_loader.dataset)} samples")
+    print(f"✓ Target building test data ready: {len(test_loader.dataset)} samples")
     
     # Evaluate all models
     print("\n" + "="*90)
-    print("  EVALUATING MODELS ON TARGET BUILDING TEST SET")
+    print("  EVALUATING MODELS")
     print("="*90)
     
-    baseline_results = evaluate_model(baseline_model, test_loader, 
-                                     "1. BASELINE MODEL (1 year source data)")
-    print_evaluation_results(baseline_results)
+    print("\n[1/4] Evaluating Baseline on SOURCE building (where it was trained)...")
+    baseline_source_results = evaluate_model(baseline_model, source_test_loader, 
+                                            "BASELINE on SOURCE (Rat_education_Colin)")
+    print_evaluation_results(baseline_source_results)
     
+    print("\n[2/4] Evaluating Baseline on TARGET building (cross-building transfer)...")
+    baseline_target_results = evaluate_model(baseline_model, test_loader, 
+                                           "BASELINE on TARGET (Rat_education_Denise)")
+    print_evaluation_results(baseline_target_results)
+    
+    print("\n[3/4] Evaluating Pre-Transfer on TARGET building...")
     pretransfer_results = evaluate_model(pretransfer_model, test_loader,
-                                        "2. PRE-TRANSFER MODEL (1 month target, no transfer)")
+                                        "PRE-TRANSFER on TARGET (1 month, no transfer)")
     print_evaluation_results(pretransfer_results)
     
+    print("\n[4/4] Evaluating Transfer on TARGET building...")
     transfer_results = evaluate_model(transfer_model, test_loader,
-                                     "3. TRANSFER MODEL (1 month target + transfer)")
+                                     "TRANSFER on TARGET (1 month + transfer)")
     print_evaluation_results(transfer_results)
     
     # Compare all models
-    improvements = compare_all_models(baseline_results, pretransfer_results, transfer_results)
+    improvements = compare_all_models(baseline_source_results, baseline_target_results, 
+                                     pretransfer_results, transfer_results)
     
     # Save results
     print("\nSaving results...")
@@ -303,15 +368,26 @@ def main():
     
     comparison_df = pd.DataFrame([
         {
-            'model': 'Baseline',
-            'description': '2 years source building data',
-            'mae': baseline_results['mae'],
-            'rmse': baseline_results['rmse'],
-            'r2': baseline_results['r2'],
-            'mape': baseline_results['mape']
+            'model': 'Baseline-Source',
+            'building': 'Rat_education_Colin (source)',
+            'description': '2 years, evaluated on training building',
+            'mae': baseline_source_results['mae'],
+            'rmse': baseline_source_results['rmse'],
+            'r2': baseline_source_results['r2'],
+            'mape': baseline_source_results['mape']
+        },
+        {
+            'model': 'Baseline-Target',
+            'building': 'Rat_education_Denise (target)',
+            'description': '2 years source, evaluated on NEW building',
+            'mae': baseline_target_results['mae'],
+            'rmse': baseline_target_results['rmse'],
+            'r2': baseline_target_results['r2'],
+            'mape': baseline_target_results['mape']
         },
         {
             'model': 'Pre-Transfer',
+            'building': 'Rat_education_Denise (target)',
             'description': '1 month target data (no transfer)',
             'mae': pretransfer_results['mae'],
             'rmse': pretransfer_results['rmse'],
@@ -320,6 +396,7 @@ def main():
         },
         {
             'model': 'Transfer',
+            'building': 'Rat_education_Denise (target)',
             'description': '1 month target data + transfer learning',
             'mae': transfer_results['mae'],
             'rmse': transfer_results['rmse'],
