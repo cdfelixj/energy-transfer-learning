@@ -191,8 +191,8 @@ def compare_all_models(baseline_source_results, baseline_target_results, pretran
     print(f"="*110)
     print(f"\n1. Baseline-Source: Baseline model on its training building (best-case performance)")
     print(f"2. Baseline-Target: Baseline model on NEW building (cross-building generalization)")
-    print(f"3. Pre-Transfer: Train from scratch on 1 month of target building data")
-    print(f"4. Transfer: Fine-tune baseline on 1 month of target building data")
+    print(f"3. Pre-Transfer: Train from scratch on 2 months of target building data")
+    print(f"4. Transfer: Fine-tune baseline on 2 months of target building data")
     print(f"\nTRANSFER LEARNING EFFECTIVENESS (Transfer vs Pre-Transfer):")
     
     if improvements['rmse'] > 0:
@@ -354,12 +354,12 @@ def main():
     
     print("\n[3/4] Evaluating Pre-Transfer on TARGET building...")
     pretransfer_results = evaluate_model(pretransfer_model, test_loader,
-                                        "PRE-TRANSFER on TARGET (1 month, no transfer)")
+                                        "PRE-TRANSFER on TARGET (2 months, no transfer)")
     print_evaluation_results(pretransfer_results)
     
     print("\n[4/4] Evaluating Transfer on TARGET building...")
     transfer_results = evaluate_model(transfer_model, test_loader,
-                                     "TRANSFER on TARGET (1 month + transfer)")
+                                     "TRANSFER on TARGET (2 months + transfer)")
     print_evaluation_results(transfer_results)
     
     # Compare all models
@@ -393,7 +393,7 @@ def main():
         {
             'model': 'Pre-Transfer',
             'building': 'Rat_education_Denise (target)',
-            'description': '1 month target data (no transfer)',
+            'description': '2 months target data (no transfer)',
             'mae': pretransfer_results['mae'],
             'rmse': pretransfer_results['rmse'],
             'r2': pretransfer_results['r2'],
@@ -402,7 +402,7 @@ def main():
         {
             'model': 'Transfer',
             'building': 'Rat_education_Denise (target)',
-            'description': '1 month target data + transfer learning',
+            'description': '2 months target data + transfer learning',
             'mae': transfer_results['mae'],
             'rmse': transfer_results['rmse'],
             'r2': transfer_results['r2'],

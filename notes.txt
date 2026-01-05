@@ -1,3 +1,31 @@
-run train _baseline.py
-then run train_transfer.py
-then run
+TRAINING PIPELINE
+=================
+
+1. Train baseline model (source building, 2 years data):
+   python src/train_baseline.py
+   
+2. Train pre-transfer model (target building, 2 months, from scratch):
+   python src/train_pretransfer.py
+   
+3. Train transfer model (target building, 2 months, fine-tuned):
+   python src/train_transfer.py
+   
+4. Evaluate all models:
+   python evaluate_all_models.py
+
+IMPORTANT NOTES
+===============
+
+- All models use STRATIFIED RANDOM SPLIT to avoid distribution mismatch
+- Baseline: 2 years Rat_education_Colin, seq_length=168, 3 layers, 128 hidden
+- Pre-Transfer & Transfer: 2 months Rat_education_Denise, seq_length=24, 2 layers, 64 hidden
+- Pre-Transfer vs Transfer comparison shows pure transfer learning benefit
+
+KNOWN ISSUES FIXED
+==================
+
+✓ Distribution mismatch (52% mean shift train→test) - Fixed with stratified split
+✓ Early stopping too aggressive (patience=10) - Increased to 15
+✓ Sequence too long (336 hours) - Reduced to 168 for baseline, 24 for limited data
+✓ Model collapse in pre-transfer - Fixed with simpler architecture (64/2 vs 128/3)
+✓ Negative R² on baseline - Fixed with stratified split ensuring similar distributions
