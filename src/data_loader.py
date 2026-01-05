@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
 import torch
 from torch.utils.data import Dataset, DataLoader
 import os
@@ -242,7 +243,7 @@ def preprocess_building_data(electricity_df, building_id, weather_df=None):
 
 
 def create_dataloaders(data, seq_length=24, batch_size=256, 
-                       train_split=0.6, val_split=0.2):
+                       train_split=0.6, val_split=0.2, shuffle_split=True):
     """Create train/val/test DataLoaders
     
     Args:
@@ -251,6 +252,8 @@ def create_dataloaders(data, seq_length=24, batch_size=256,
         batch_size: Batch size for dataloaders
         train_split: Proportion of data for training (default 0.6)
         val_split: Proportion of data for validation (default 0.2)
+        shuffle_split: If True, use stratified random split to avoid distribution mismatch
+                      If False, use chronological split (default True)
         
     Returns:
         train_loader, val_loader, test_loader
@@ -261,13 +264,57 @@ def create_dataloaders(data, seq_length=24, batch_size=256,
     train_end = int(n * train_split)
     val_end = int(n * (train_split + val_split))
     
-    train_data = data.iloc[:train_end]
-    val_data = data.iloc[train_end:val_end]
-    test_data = data.iloc[val_end:]
+    if shuffle_split:
+        # Use stratified random split to ensure similar distributions
+        # Group by month to maintain some temporal structure
+        from sklearn.model_selection import train_test_split
+        
+        # Create month-based stratification
+        data['_month'] = data.index.month
+        
+        # First split: train vs (val+test)
+        train_data, temp_data = train_test_split(
+            data, train_size=train_split, random_state=42, 
+            stratify=data['_month'], shuffle=True
+        )
+        
+        # Second split: val vs test
+        val_size = val_split / (val_split + (1 - train_split - val_split))
+        val_data, test_data = train_test_split(
+            temp_data, train_size=val_size, random_state=42,
+            stratify=temp_data['_month'], shuffle=True
+        )
+        
+        # Remove temporary stratification column
+        train_data = train_data.drop(columns=['_month']).sort_index()
+        val_data = val_data.drop(columns=['_month']).sort_index()
+        test_data = test_data.drop(columns=['_month']).sort_index()
+        
+        print(f"\n=== Using STRATIFIED RANDOM SPLIT (avoids distribution mismatch) ===")
+    else:
+        # Original chronological split
+        train_data = data.iloc[:train_end]
+        val_data = data.iloc[train_end:val_end]
+        test_data = data.iloc[val_end:]
+        
+        print(f"\n=== Using CHRONOLOGICAL SPLIT (may have distribution shift) ===")
     
     print(f"\n=== DataLoader Creation ===")
     print(f"Total data: {n}, Sequence length: {seq_length}")
     print(f"Train: {len(train_data)}, Val: {len(val_data)}, Test: {len(test_data)}")
+    
+    # Show distribution stats to verify no mismatch
+    print(f"\nDistribution check:")
+    print(f"  Train - Mean: {train_data['energy'].mean():.2f}, Std: {train_data['energy'].std():.2f}")
+    print(f"  Val   - Mean: {val_data['energy'].mean():.2f}, Std: {val_data['energy'].std():.2f}")
+    print(f"  Test  - Mean: {test_data['energy'].mean():.2f}, Std: {test_data['energy'].std():.2f}")
+    
+    train_mean = train_data['energy'].mean()
+    test_mean = test_data['energy'].mean()
+    mean_shift = ((test_mean - train_mean) / train_mean) * 100
+    print(f"  Mean shift (train→test): {mean_shift:+.1f}%")
+    if abs(mean_shift) > 20:
+        print(f"  ⚠ WARNING: Large distribution shift may cause poor generalization!")
     
     # Validate that each split has enough data
     min_required_size = seq_length + 1

@@ -190,6 +190,6 @@ if __name__ == '__main__':
     print(f"Target building: {target_building} (Dormitory - NO baseline model)")
     print("This ensures proper transfer learning evaluation!\n")
     
-    # Train transfer model with same limited data as pre-transfer (1 month)
+    # Train transfer model with same limited data as pre-transfer (2 months)
     train_transfer(source_building, target_building, source_model_path, 
-                  epochs=20, seq_length=24, data_limit_months=1)
+                  epochs=20, seq_length=24, data_limit_months=2)

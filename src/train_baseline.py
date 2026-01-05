@@ -89,7 +89,7 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
         hidden_size=128,
         num_layers=3,
         dropout=0.2,
-        learning_rate=1e-3
+        learning_rate=5e-4  # Lower learning rate for better convergence
     )
     
     print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
@@ -106,7 +106,7 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     
     early_stop_callback = EarlyStopping(
         monitor='val_loss',
-        patience=10,
+        patience=15,  # Increased from 10 - give model more time to improve
         mode='min'
     )
     
@@ -127,6 +127,40 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     # Test
     print("\nTesting...")
     results = trainer.test(model, test_loader)
+    
+    # DIAGNOSTIC: Check if model is predicting constants
+    print("\n=== DIAGNOSTIC: Model Predictions ===")
+    model.eval()
+    import numpy as np
+    
+    with torch.no_grad():
+        # Get predictions from test set
+        test_preds = []
+        test_actuals = []
+        for batch in test_loader:
+            x, y = batch
+            y_hat = model(x)
+            test_preds.extend(y_hat.squeeze().cpu().numpy())
+            test_actuals.extend(y.squeeze().cpu().numpy())
+    
+    test_preds = np.array(test_preds)
+    test_actuals = np.array(test_actuals)
+    
+    print(f"Test Predictions - Mean: {np.mean(test_preds):.2f}, Std: {np.std(test_preds):.2f}, Range: [{np.min(test_preds):.2f}, {np.max(test_preds):.2f}]")
+    print(f"Test Actuals     - Mean: {np.mean(test_actuals):.2f}, Std: {np.std(test_actuals):.2f}, Range: [{np.min(test_actuals):.2f}, {np.max(test_actuals):.2f}]")
+    
+    # Calculate R²
+    from sklearn.metrics import r2_score
+    r2 = r2_score(test_actuals, test_preds)
+    print(f"Test R²: {r2:.4f}")
+    
+    if np.std(test_preds) < 1.0:
+        print("\n⚠ WARNING: Model is predicting near-constant values!")
+        print("  This indicates model collapse - the model is not learning patterns.")
+    
+    if r2 < 0:
+        print("\n⚠ WARNING: Negative R² indicates model is worse than predicting the mean!")
+        print(f"  Mean prediction would give R² = 0, but this model gives R² = {r2:.4f}")
     
     print(f"\nTraining complete!")
     print(f"Best model: {checkpoint_callback.best_model_path}")
@@ -159,8 +193,9 @@ if __name__ == '__main__':
     print("="*70)
     
     try:
-        # Train baseline model on ALL education buildings
-        model, results = train_baseline(buildings_to_train, epochs=50)
+        # Train baseline model - try shorter sequence length for better convergence
+        # seq_length=168 (1 week) instead of 336 (2 weeks) - easier to learn
+        model, results = train_baseline(buildings_to_train, epochs=50, seq_length=168)
         
         print(f"\n✓ Training complete!")
         print(f"  Test RMSE: {results[0]['test_rmse']:.4f}")

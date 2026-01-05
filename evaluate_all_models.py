@@ -82,6 +82,11 @@ def evaluate_model(model, test_loader, model_name="Model"):
     predictions = np.array(predictions)
     actuals = np.array(actuals)
     
+    # DIAGNOSTIC: Print statistics to identify scale issues
+    print(f"\n  [DIAGNOSTIC] {model_name}:")
+    print(f"    Predictions - Mean: {np.mean(predictions):.2f}, Std: {np.std(predictions):.2f}, Range: [{np.min(predictions):.2f}, {np.max(predictions):.2f}]")
+    print(f"    Actuals     - Mean: {np.mean(actuals):.2f}, Std: {np.std(actuals):.2f}, Range: [{np.min(actuals):.2f}, {np.max(actuals):.2f}]")
+    
     # Calculate metrics
     mae = mean_absolute_error(actuals, predictions)
     rmse = np.sqrt(mean_squared_error(actuals, predictions))
@@ -270,7 +275,7 @@ def main():
     # Configuration
     # Use same target building as training (Rat education building NOT in baseline)
     target_building = 'Rat_education_Denise'
-    data_limit_months = 1
+    data_limit_months = 2  # Changed to 2 months to match training
     seq_length = 24  # Match training (24 hours = 1 day)
     
     print(f"\nTarget Building: {target_building}")

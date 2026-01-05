@@ -1,0 +1,5 @@
+dropout: 0.2
+hidden_size: 128
+input_size: 31
+learning_rate: 0.0005
+num_layers: 3

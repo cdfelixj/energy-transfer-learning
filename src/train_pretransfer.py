@@ -133,18 +133,31 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
     
     # Initialize model from scratch (no pre-trained weights)
     input_size = train_loader.dataset.features.shape[1]
-    model = EnergyLSTM(
-        input_size=input_size,
-        hidden_size=hidden_size,
-        num_layers=num_layers,
-        dropout=0.2,
-        learning_rate=1e-3  # Same as baseline
-    )
     
-    print(f"\nModel initialized from scratch")
+    # Use SIMPLER architecture for limited data to avoid collapse
+    if data_limit_months <= 1:
+        # With very limited data, use smaller/simpler model
+        model = EnergyLSTM(
+            input_size=input_size,
+            hidden_size=64,  # Reduced from 128
+            num_layers=2,    # Reduced from 3
+            dropout=0.1,     # Reduced dropout
+            learning_rate=1e-3
+        )
+        print(f"\nUsing SIMPLIFIED architecture for limited data:")
+        print(f"  Hidden size: 64 (reduced)")
+        print(f"  Num layers: 2 (reduced)")
+    else:
+        # With more data, use full architecture
+        model = EnergyLSTM(
+            input_size=input_size,
+            hidden_size=hidden_size,
+            num_layers=num_layers,
+            dropout=0.2,
+            learning_rate=1e-3
+        )
+    
     print(f"  Input size: {input_size}")
-    print(f"  Hidden size: {hidden_size}")
-    print(f"  Num layers: {num_layers}")
     print(f"  Parameters: {sum(p.numel() for p in model.parameters()):,}")
     
     # Callbacks
@@ -219,9 +232,9 @@ if __name__ == '__main__':
     try:
         model, results = train_pretransfer(
             target_building=target_building,
-            epochs=50,
+            epochs=100,  # Increased from 50 for better convergence
             seq_length=24,  # Use 24 hours (1 day) for limited data
-            data_limit_months=1,
+            data_limit_months=2,  # Increased to 2 months for more stable training
             architecture_match=baseline_model_path
         )
         
