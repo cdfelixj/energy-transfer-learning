@@ -7,7 +7,7 @@ import torch
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
-from data_loader import preprocess_building_data, create_dataloaders
+from data_loader import preprocess_building_data, create_dataloaders, load_electricity_data
 from models import EnergyLSTM
 
 def train_baseline(building_ids, epochs=50, seq_length=336):
@@ -19,31 +19,26 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
         seq_length: Sequence length in hours (default 336 = 2 weeks)
     """
     
-    # Load data
-    print(f"Loading data for {len(building_ids)} buildings...")
+    # Load filtered data (Education + Rat site + Electricity only)
+    electricity, metadata, valid_buildings = load_electricity_data()
     
-    # Get the project root directory (parent of src)
+    # Validate that all requested building_ids are in the filtered set
+    print(f"\nValidating {len(building_ids)} requested buildings...")
+    invalid_buildings = [bid for bid in building_ids if bid not in valid_buildings]
+    if invalid_buildings:
+        raise ValueError(f"The following buildings are not available: {invalid_buildings}. "
+                        f"Available buildings: {valid_buildings[:10]}...")
+    print(f"✓ All buildings validated\n")
+    
+    # Load weather
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
-    
-    electricity_path = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2', 
-                                     'data', 'meters', 'raw', 'electricity.csv')
-    electricity = pd.read_csv(electricity_path, index_col=0)
-    electricity.index = pd.to_datetime(electricity.index)
-    
-    print(f"Using full dataset: {electricity.index[0]} to {electricity.index[-1]}")
-    print(f"Total hours available: {len(electricity)}")
-    
-    # Load weather and metadata
     weather_path = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2',
                                 'data', 'weather', 'weather.csv')
-    metadata_path = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2',
-                                  'data', 'metadata', 'metadata.csv')
     
     weather = pd.read_csv(weather_path)
     weather['timestamp'] = pd.to_datetime(weather['timestamp'])
     weather = weather.set_index('timestamp')
-    metadata = pd.read_csv(metadata_path)
     
     # Combine data from all buildings
     combined_data = []
@@ -103,7 +98,7 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     # Callbacks
     checkpoint_callback = ModelCheckpoint(
         dirpath=os.path.join(project_root, 'models'),
-        filename=f'baseline_combined_education_{{epoch:02d}}_{{val_loss:.4f}}',
+        filename=f'baseline_{buildings_to_train[0][:20]}_2yr_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',
         save_top_k=1
@@ -141,27 +136,26 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     return model, results
 
 if __name__ == '__main__':
-    # Load selected buildings
+    # Load selected buildings from Rat site (only available buildings)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     
-    selected_buildings = pd.read_csv(os.path.join(project_root, 'data', 'processed', 'selected_buildings.csv'))
-    
-    # Filter to only education buildings
-    education_buildings = selected_buildings[selected_buildings['primaryspaceusage'] == 'Education']
-    buildings_to_train = education_buildings['building_id'].tolist()
+    # Use only 1 Rat education building with 2 years of data (2016-2017)
+    # This provides abundant source data for baseline model
+    buildings_to_train = [
+        'Rat_education_Colin'  # Has high data quality (99.57% non-null)
+    ]
     
     print("="*70)
-    print(f"  TRAINING ONE BASELINE MODEL ON {len(buildings_to_train)} EDUCATION BUILDINGS")
+    print(f"  TRAINING BASELINE MODEL ON {len(buildings_to_train)} BUILDING (2 YEARS)")
     print("="*70)
-    print("\nEducation buildings (combined training):")
-    for i, building in enumerate(buildings_to_train, 1):
-        print(f"  {i}. {building}")
+    print(f"\nSource building: {buildings_to_train[0]}")
+    print(f"Data: 2016-2017 (~2 years)")
     print()
     
     # Train single model on all buildings combined
     print("="*70)
-    print("  TRAINING COMBINED BASELINE MODEL")
+    print("  TRAINING BASELINE MODEL ON 2 YEARS OF DATA")
     print("="*70)
     
     try:
@@ -177,9 +171,9 @@ if __name__ == '__main__':
         os.makedirs(results_dir, exist_ok=True)
         
         summary_df = pd.DataFrame([{
-            'model_type': 'Combined Education Buildings',
-            'buildings': ', '.join(buildings_to_train),
-            'num_buildings': len(buildings_to_train),
+            'model_type': 'Baseline (Single Building, 2 Years)',
+            'building': buildings_to_train[0],
+            'data_years': 2,
             'test_rmse': results[0]['test_rmse'],
             'test_mae': results[0]['test_mae'],
             'test_loss': results[0]['test_loss'],

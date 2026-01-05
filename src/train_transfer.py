@@ -8,32 +8,54 @@ import glob
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 
-from data_loader import preprocess_building_data, create_dataloaders
+from data_loader import preprocess_building_data, create_dataloaders, load_electricity_data
 from models import EnergyLSTM
 
 def train_transfer(source_building, target_building, 
-                   source_model_path, epochs=20, seq_length=168):
-    """Transfer learning: fine-tune on target building"""
+                   source_model_path, epochs=20, seq_length=24, data_limit_months=1):
+    """Transfer learning: fine-tune on target building with limited data
     
-    print(f"\n{'='*60}")
-    print(f"Transfer Learning: {source_building} → {target_building}")
-    print(f"{'='*60}")
+    Args:
+        source_building: Building used to train baseline model
+        target_building: Building to transfer to (with limited data)
+        source_model_path: Path to pre-trained baseline model
+        epochs: Number of fine-tuning epochs
+        seq_length: Sequence length in hours (default 24 = 1 day, suitable for limited data)
+        data_limit_months: Number of months of target data to use (default 1)
+    """
     
-    # Load electricity data
-    electricity_path = r'../data/raw/building-data-genome-project-2/data/meters/raw/electricity.csv'
-    electricity = pd.read_csv(electricity_path, index_col=0)
-    electricity.index = pd.to_datetime(electricity.index)
+    print(f"\n{'='*70}")
+    print(f"  TRANSFER LEARNING: Fine-tuning on limited data")
+    print(f"  {source_building} → {target_building}")
+    print(f"  Data limit: {data_limit_months} month(s)")
+    print(f"{'='*70}")
+    
+    # Load filtered data (Education + Rat site + Electricity only)
+    electricity, metadata, valid_buildings = load_electricity_data()
+    
+    # Validate that both buildings are available
+    print(f"\nValidating buildings...")
+    if target_building not in valid_buildings:
+        raise ValueError(f"Target building '{target_building}' is not available. "
+                        f"Available buildings: {valid_buildings[:10]}...")
+    if source_building not in valid_buildings:
+        raise ValueError(f"Source building '{source_building}' is not available. "
+                        f"Available buildings: {valid_buildings[:10]}...")
+    print(f"✓ Both buildings validated\n")
+    
+    # Get the project root directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
     
     # Load weather data
-    weather_path = r'../data/raw/building-data-genome-project-2/data/weather/weather.csv'
-    metadata_path = r'../data/raw/building-data-genome-project-2/data/metadata/metadata.csv'
+    weather_path = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2',
+                                'data', 'weather', 'weather.csv')
     try:
         weather = pd.read_csv(weather_path)
         weather['timestamp'] = pd.to_datetime(weather['timestamp'])
         weather = weather.set_index('timestamp')
         
         # Get site_id for target building
-        metadata = pd.read_csv(metadata_path)
         site_id = metadata[metadata['building_id'] == target_building]['site_id'].values[0]
         weather_building = weather[weather['site_id'] == site_id].drop(columns=['site_id'])
         weather_building = weather_building.reindex(electricity.index)
@@ -44,7 +66,13 @@ def train_transfer(source_building, target_building,
     
     # Preprocess target building
     target_data, target_scaler = preprocess_building_data(electricity, target_building, weather_building)
-    print(f"Target data shape: {target_data.shape}")
+    print(f"Full target data shape: {target_data.shape}")
+    
+    # Limit data to simulate limited availability (same as pre-transfer model)
+    hours_to_keep = data_limit_months * 30 * 24  # Approximate
+    target_data = target_data.iloc[:hours_to_keep]
+    print(f"Limited to {data_limit_months} month(s): {target_data.shape}")
+    print(f"Date range: {target_data.index[0]} to {target_data.index[-1]}")
     
     # Load pre-trained model first to get expected input size
     print(f"Loading pre-trained model from: {source_model_path}")
@@ -101,8 +129,8 @@ def train_transfer(source_building, target_building,
     
     # Train on target
     checkpoint_callback = ModelCheckpoint(
-        dirpath='../models',
-        filename=f'transfer_{source_building[:6]}_{target_building[:6]}_{{epoch:02d}}_{{val_loss:.4f}}',
+        dirpath=os.path.join(project_root, 'models'),
+        filename=f'transfer_{source_building[:15]}_{target_building[:15]}_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',
         save_top_k=1
@@ -133,20 +161,20 @@ def train_transfer(source_building, target_building,
     return transfer_model, results
 
 if __name__ == '__main__':
-    # Load selected buildings
-    selected_buildings = pd.read_csv('../data/processed/selected_buildings.csv')
+    # Get paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(script_dir)
     
-    # Use first education building as source (has baseline model)
-    education_buildings = selected_buildings[selected_buildings['primaryspaceusage'] == 'Education']
-    source_building = education_buildings['building_id'].iloc[0]  # Eagle_education_Raul
+    # Source building: one of the buildings used in baseline
+    source_building = 'Rat_education_Angelica'
     
-    # Use an education-related building NOT used in baseline training
-    # Cockatoo_lodging_Emory is a dormitory for College/University (education industry)
-    # but primaryspaceusage is "Lodging/residential" so it wasn't trained in baseline
-    target_building = 'Cockatoo_lodging_Emory'
+    # Target building: a Rat education building NOT used in baseline training
+    # Baseline uses: Angelica, Moises, Colin
+    # We'll use Denise for transfer (same as pre-transfer)
+    target_building = 'Rat_education_Denise'
     
     # Automatically find the latest baseline model
-    model_files = glob.glob('../models/baseline_*.ckpt')
+    model_files = glob.glob(os.path.join(project_root, 'models', 'baseline_*.ckpt'))
     
     if not model_files:
         print("ERROR: No baseline model found in ../models/")
@@ -162,4 +190,6 @@ if __name__ == '__main__':
     print(f"Target building: {target_building} (Dormitory - NO baseline model)")
     print("This ensures proper transfer learning evaluation!\n")
     
-    train_transfer(source_building, target_building, source_model_path, epochs=20)
+    # Train transfer model with same limited data as pre-transfer (1 month)
+    train_transfer(source_building, target_building, source_model_path, 
+                  epochs=20, seq_length=24, data_limit_months=1)

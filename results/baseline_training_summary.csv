@@ -1,2 +1,2 @@
-model_type,buildings,num_buildings,test_rmse,test_mae,test_loss,status
-Combined Education Buildings,"Eagle_education_Raul, Lamb_education_Lazaro, Rat_education_Adell",3,141.41326904296875,131.92945861816406,23421.267578125,Success
+model_type,building,data_years,test_rmse,test_mae,test_loss,status
+"Baseline (Single Building, 2 Years)",Rat_education_Colin,2,16.990886688232422,15.536443710327148,346.07586669921875,Success

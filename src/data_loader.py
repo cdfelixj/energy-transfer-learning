@@ -3,6 +3,75 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 import torch
 from torch.utils.data import Dataset, DataLoader
+import os
+
+
+def load_electricity_data(data_dir=None):
+    """Load filtered electricity data (Education buildings from Rat site only).
+    
+    Automatically filters for:
+    - Building type: Education (most data: 561 buildings)
+    - Site: Rat (most buildings: 267 buildings)
+    - Meter type: Electricity only (most coverage: 1578 buildings)
+    
+    Args:
+        data_dir: Base directory containing the data. If None, uses default relative path.
+        
+    Returns:
+        electricity_df: Filtered electricity consumption dataframe (only Education + Rat)
+        metadata: Full metadata dataframe
+        valid_buildings: List of valid building IDs after filtering
+    """
+    # Set default paths
+    if data_dir is None:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)
+        data_dir = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2', 'data')
+    
+    metadata_path = os.path.join(data_dir, 'metadata', 'metadata.csv')
+    electricity_path = os.path.join(data_dir, 'meters', 'cleaned', 'electricity_cleaned.csv')
+    
+    print("\n" + "="*70)
+    print("LOADING FILTERED ELECTRICITY DATA")
+    print("="*70)
+    print("Filtering criteria:")
+    print("  ✓ Building type: Education")
+    print("  ✓ Site: Rat")
+    print("  ✓ Meter type: Electricity only")
+    print("="*70 + "\n")
+    
+    # Load metadata
+    metadata = pd.read_csv(metadata_path)
+    
+    # Load electricity data
+    electricity_full = pd.read_csv(electricity_path, index_col=0, parse_dates=True)
+    
+    # Filter for Education buildings from Rat site
+    filtered_metadata = metadata[
+        (metadata['primaryspaceusage'] == 'Education') & 
+        (metadata['site_id'] == 'Rat')
+    ]
+    
+    # Get valid building IDs that exist in both metadata and electricity data
+    valid_buildings = [
+        bid for bid in filtered_metadata['building_id'].values 
+        if bid in electricity_full.columns
+    ]
+    
+    if len(valid_buildings) == 0:
+        raise ValueError("No buildings found matching criteria (Education + Rat site + Electricity)")
+    
+    # Filter electricity dataframe to only include valid buildings
+    electricity_df = electricity_full[valid_buildings].copy()
+    
+    print(f"✓ Loaded {len(valid_buildings)} Education buildings from Rat site")
+    print(f"  Date range: {electricity_df.index.min()} to {electricity_df.index.max()}")
+    print(f"  Total timestamps: {len(electricity_df):,}")
+    print(f"  Buildings: {valid_buildings[:5]}{'...' if len(valid_buildings) > 5 else ''}")
+    print()
+    
+    return electricity_df, metadata, valid_buildings
+
 
 class BuildingEnergyDataset(Dataset):
     """PyTorch Dataset for building energy time series"""
@@ -25,8 +94,16 @@ class BuildingEnergyDataset(Dataset):
 
 
 def preprocess_building_data(electricity_df, building_id, weather_df=None):
-    """Preprocess single building's data with comprehensive cleaning"""
+    """Preprocess single building's data with comprehensive cleaning.
     
+    Note: Assumes electricity_df is already filtered for Education + Rat site buildings.
+    Use load_electricity_data() to get the filtered dataframe.
+    
+    Args:
+        electricity_df: DataFrame with electricity consumption data (filtered)
+        building_id: ID of the building to preprocess
+        weather_df: Optional weather data DataFrame
+    """
     # Extract single building
     data = pd.DataFrame()
     
