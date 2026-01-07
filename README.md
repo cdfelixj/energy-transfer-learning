@@ -34,14 +34,14 @@ A transfer learning framework for building energy consumption forecasting using 
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │ 2. PRE-TRANSFER (Target Building - Limited Data)           │
-│    ├─ Training: 2 months Rat_education_Denise FROM SCRATCH│
+│    ├─ Training: 8 weeks Rat_education_Denise FROM SCRATCH │
 │    ├─ Model: 2-layer LSTM (64 hidden, seq=24h)            │
 │    └─ Purpose: CONTROL - Performance without transfer      │
 └─────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────┐
 │ 3. TRANSFER (Target Building - Limited Data + Transfer)    │
-│    ├─ Training: 2 months Rat_education_Denise + BASELINE  │
+│    ├─ Training: 8 weeks Rat_education_Denise + BASELINE   │
 │    ├─ Model: Fine-tuned from baseline                      │
 │    └─ Purpose: EXPERIMENTAL - Performance with transfer    │
 └─────────────────────────────────────────────────────────────┘
@@ -67,7 +67,10 @@ python src/train_baseline.py       # ~15-25 epochs, 30-60 min
 python src/train_pretransfer.py    # ~100 epochs, 45-90 min
 python src/train_transfer.py       # ~50 epochs, 20-40 min
 
-# Evaluate all models
+# Optional: Train data efficiency models (1w, 2w, 4w, 8w, 16w)
+python train_data_efficiency.py    # ~2-4 hours
+
+# Evaluate all models (includes data efficiency if trained)
 python evaluate_all_models.py
 ```
 
@@ -80,11 +83,15 @@ python evaluate_all_models.py
 │ Model        │ Data Source    │ RMSE     │ R²       │ Notes │
 ├──────────────┼────────────────┼──────────┼──────────┼───────┤
 │ Baseline     │ 2yr Colin      │ <15 kWh  │ >0.6     │ Best  │
-│ Pre-Transfer │ 2mo Denise     │ ~20 kWh  │ ~0.4     │ Ctrl  │
-│ Transfer     │ 2mo Denise+TL  │ <18 kWh  │ >0.6     │ ✓Imp  │
+│ Pre-Transfer │ 8wk Denise     │ ~20 kWh  │ ~0.4     │ Ctrl  │
+│ Transfer     │ 8wk Denise+TL  │ <18 kWh  │ >0.6     │ ✓Imp  │
 └──────────────┴────────────────┴──────────┴──────────┴───────┘
 
 Transfer Learning Improvement: ~15-25% RMSE reduction
+
+DATA EFFICIENCY ANALYSIS:
+  Pre-Transfer:  1w → 2w → 4w → 8w → 16w (improving)
+  Transfer:      1w → 2w → 4w → 8w → 16w (better at all levels)
 ```
 
 ## 📁 Project Structure

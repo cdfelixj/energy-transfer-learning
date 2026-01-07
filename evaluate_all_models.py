@@ -12,12 +12,12 @@ MODELS EVALUATED:
      * Purpose: Shows cross-building generalization (domain shift)
 
 2. Pre-Transfer Model:
-   - Trained from scratch on 1 month of TARGET building data
+   - Trained from scratch on 8 weeks of TARGET building data
    - Evaluated on TARGET building
    - Purpose: Control group - performance WITHOUT transfer learning
 
 3. Transfer Model:
-   - Fine-tuned from baseline on 1 month of TARGET building data
+   - Fine-tuned from baseline on 8 weeks of TARGET building data
    - Evaluated on TARGET building
    - Purpose: Experimental group - performance WITH transfer learning
 
@@ -29,7 +29,7 @@ KEY COMPARISONS:
 
 2. Pre-Transfer vs Transfer (MAIN COMPARISON):
    → Measures transfer learning effectiveness
-   → Both use SAME limited data (1 month)
+   → Both use SAME limited data (8 weeks)
    → Both evaluated on SAME building (target)
    → Difference shows pure benefit of transfer learning
 

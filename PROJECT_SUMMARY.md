@@ -16,21 +16,27 @@ This project implements a **3-model transfer learning framework** for building e
 
 2. **Pre-Transfer Model** (`src/train_pretransfer.py`)
    - **Purpose**: Control group - train from scratch on limited target data
-   - **Training**: 2 months of Rat_education_Denise data (~1,440 hours)
+   - **Training**: 8 weeks of Rat_education_Denise data (~1,344 hours)
    - **Architecture**: Simplified (2 layers, 64 hidden units, seq_length=24)
    - **Data Split**: Stratified random split
 
 3. **Transfer Model** (`src/train_transfer.py`)
    - **Purpose**: Experimental group - fine-tune baseline on limited target data  
-   - **Training**: Same 2 months of Rat_education_Denise
+   - **Training**: Same 8 weeks of Rat_education_Denise
    - **Initialization**: Loaded from baseline model weights
    - **Architecture**: Matches baseline (adapted for shorter sequences)
+
+4. **Data Efficiency Models** (`train_data_efficiency.py`)
+   - **Purpose**: Evaluate how performance scales with data amount
+   - **Training**: Both Pre-Transfer and Transfer with 1, 2, 4, 8, 16 weeks
+   - **Building**: Rat_education_Denise
+   - **Output**: Performance comparison tables for all data amounts
 
 ### Key Design Decisions
 
 ✅ **Stratified Random Split**: All models use stratified random splits by month to ensure train/val/test have similar distributions. This avoids the 52% distribution shift that caused negative R² in early experiments.
 
-✅ **Same Target Data**: Pre-Transfer and Transfer use identical data (2 months) to isolate the effect of transfer learning.
+✅ **Same Target Data**: Pre-Transfer and Transfer use identical data (8 weeks) to isolate the effect of transfer learning.
 
 ✅ **Adaptive Architecture**: Limited-data models use simpler architecture (64 hidden, 2 layers) to prevent overfitting with small datasets.
 

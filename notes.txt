@@ -4,13 +4,16 @@ TRAINING PIPELINE
 1. Train baseline model (source building, 2 years data):
    python src/train_baseline.py
    
-2. Train pre-transfer model (target building, 2 months, from scratch):
+2. Train pre-transfer model (target building, 8 weeks, from scratch):
    python src/train_pretransfer.py
    
-3. Train transfer model (target building, 2 months, fine-tuned):
+3. Train transfer model (target building, 8 weeks, fine-tuned):
    python src/train_transfer.py
+
+4. Optional - Train data efficiency models (1w, 2w, 4w, 8w, 16w):
+   python train_data_efficiency.py
    
-4. Evaluate all models:
+5. Evaluate all models:
    python evaluate_all_models.py
 
 IMPORTANT NOTES
@@ -18,8 +21,9 @@ IMPORTANT NOTES
 
 - All models use STRATIFIED RANDOM SPLIT to avoid distribution mismatch
 - Baseline: 2 years Rat_education_Colin, seq_length=168, 3 layers, 128 hidden
-- Pre-Transfer & Transfer: 2 months Rat_education_Denise, seq_length=24, 2 layers, 64 hidden
+- Pre-Transfer & Transfer: 8 weeks Rat_education_Denise, seq_length=24, 2 layers, 64 hidden
 - Pre-Transfer vs Transfer comparison shows pure transfer learning benefit
+- Data Efficiency: Pre-Transfer & Transfer models with 1, 2, 4, 8, 16 weeks of data
 
 KNOWN ISSUES FIXED
 ==================
