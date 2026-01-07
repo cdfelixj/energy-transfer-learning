@@ -378,8 +378,11 @@ def main():
             'description': '2 years, evaluated on training building',
             'mae': baseline_source_results['mae'],
             'rmse': baseline_source_results['rmse'],
+            'mse': baseline_source_results['mse'],
             'r2': baseline_source_results['r2'],
-            'mape': baseline_source_results['mape']
+            'mape': baseline_source_results['mape'],
+            'median_ae': baseline_source_results['median_ae'],
+            'max_error': baseline_source_results['max_error']
         },
         {
             'model': 'Baseline-Target',
@@ -387,8 +390,11 @@ def main():
             'description': '2 years source, evaluated on NEW building',
             'mae': baseline_target_results['mae'],
             'rmse': baseline_target_results['rmse'],
+            'mse': baseline_target_results['mse'],
             'r2': baseline_target_results['r2'],
-            'mape': baseline_target_results['mape']
+            'mape': baseline_target_results['mape'],
+            'median_ae': baseline_target_results['median_ae'],
+            'max_error': baseline_target_results['max_error']
         },
         {
             'model': 'Pre-Transfer',
@@ -396,8 +402,11 @@ def main():
             'description': '2 months target data (no transfer)',
             'mae': pretransfer_results['mae'],
             'rmse': pretransfer_results['rmse'],
+            'mse': pretransfer_results['mse'],
             'r2': pretransfer_results['r2'],
-            'mape': pretransfer_results['mape']
+            'mape': pretransfer_results['mape'],
+            'median_ae': pretransfer_results['median_ae'],
+            'max_error': pretransfer_results['max_error']
         },
         {
             'model': 'Transfer',
@@ -405,14 +414,47 @@ def main():
             'description': '2 months target data + transfer learning',
             'mae': transfer_results['mae'],
             'rmse': transfer_results['rmse'],
+            'mse': transfer_results['mse'],
             'r2': transfer_results['r2'],
-            'mape': transfer_results['mape']
+            'mape': transfer_results['mape'],
+            'median_ae': transfer_results['median_ae'],
+            'max_error': transfer_results['max_error']
         }
     ])
     
     comparison_path = os.path.join(results_dir, 'three_model_comparison.csv')
     comparison_df.to_csv(comparison_path, index=False)
     print(f"✓ Saved comparison to: {comparison_path}")
+    
+    # Save prediction arrays for detailed visualization
+    print("\nSaving prediction arrays for visualization...")
+    predictions_path = os.path.join(results_dir, 'model_predictions.npz')
+    np.savez(predictions_path,
+             baseline_source_preds=baseline_source_results['predictions'],
+             baseline_source_actuals=baseline_source_results['actuals'],
+             baseline_target_preds=baseline_target_results['predictions'],
+             baseline_target_actuals=baseline_target_results['actuals'],
+             pretransfer_preds=pretransfer_results['predictions'],
+             pretransfer_actuals=pretransfer_results['actuals'],
+             transfer_preds=transfer_results['predictions'],
+             transfer_actuals=transfer_results['actuals'])
+    print(f"✓ Saved prediction arrays to: {predictions_path}")
+    
+    # Save per-sample error analysis
+    print("\nCreating per-sample error analysis...")
+    error_analysis = pd.DataFrame({
+        'sample_id': range(len(baseline_target_results['actuals'])),
+        'actual': baseline_target_results['actuals'],
+        'baseline_target_pred': baseline_target_results['predictions'],
+        'pretransfer_pred': pretransfer_results['predictions'],
+        'transfer_pred': transfer_results['predictions'],
+        'baseline_target_error': np.abs(baseline_target_results['actuals'] - baseline_target_results['predictions']),
+        'pretransfer_error': np.abs(pretransfer_results['actuals'] - pretransfer_results['predictions']),
+        'transfer_error': np.abs(transfer_results['actuals'] - transfer_results['predictions'])
+    })
+    error_analysis_path = os.path.join(results_dir, 'per_sample_errors.csv')
+    error_analysis.to_csv(error_analysis_path, index=False)
+    print(f"✓ Saved per-sample errors to: {error_analysis_path}")
     
     # Create visualization
     try:
