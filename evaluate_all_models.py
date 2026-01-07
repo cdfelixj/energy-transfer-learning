@@ -424,6 +424,61 @@ def main():
     print("\n" + "="*90)
     print("  EVALUATION COMPLETE")
     print("="*90)
+    
+    # ========================================================================
+    # DATA EFFICIENCY EVALUATION
+    # ========================================================================
+    
+    print("\n\n")
+    print("#"*90)
+    print("#" + " "*88 + "#")
+    print("#" + "  DATA EFFICIENCY EVALUATION: Impact of Training Data Amount".center(88) + "#")
+    print("#" + " "*88 + "#")
+    print("#"*90)
+    
+    # Evaluate Pre-Transfer models with different data amounts
+    pretransfer_data_eff_results = evaluate_data_efficiency(
+        model_type='pretransfer',
+        target_building=target_building,
+        weeks_list=[1, 2, 4, 8, 16],
+        seq_length=seq_length
+    )
+    
+    # Display Pre-Transfer comparison table
+    compare_data_efficiency(pretransfer_data_eff_results, 'Pre-Transfer')
+    
+    # Save Pre-Transfer data efficiency results
+    pretransfer_eff_path = os.path.join(results_dir, 'pretransfer_data_efficiency.csv')
+    pretransfer_data_eff_results.to_csv(pretransfer_eff_path, index=False)
+    print(f"\n✓ Saved Pre-Transfer data efficiency results to: {pretransfer_eff_path}")
+    
+    # Evaluate Transfer models with different data amounts
+    transfer_data_eff_results = evaluate_data_efficiency(
+        model_type='transfer',
+        target_building=target_building,
+        weeks_list=[1, 2, 4, 8, 16],
+        seq_length=seq_length
+    )
+    
+    # Display Transfer comparison table
+    compare_data_efficiency(transfer_data_eff_results, 'Transfer')
+    
+    # Save Transfer data efficiency results
+    transfer_eff_path = os.path.join(results_dir, 'transfer_data_efficiency.csv')
+    transfer_data_eff_results.to_csv(transfer_eff_path, index=False)
+    print(f"\n✓ Saved Transfer data efficiency results to: {transfer_eff_path}")
+    
+    # Final summary
+    print("\n" + "#"*90)
+    print("#" + " "*88 + "#")
+    print("#" + "  ALL EVALUATIONS COMPLETE".center(88) + "#")
+    print("#" + " "*88 + "#")
+    print("#"*90)
+    print("\nResults saved:")
+    print(f"  • Main comparison: {comparison_path}")
+    print(f"  • Pre-Transfer data efficiency: {pretransfer_eff_path}")
+    print(f"  • Transfer data efficiency: {transfer_eff_path}")
+    print("#"*90)
 
 
 def create_comparison_plot(df, results_dir):
@@ -461,6 +516,159 @@ def create_comparison_plot(df, results_dir):
     plt.tight_layout()
     plt.savefig(os.path.join(results_dir, 'model_comparison.png'), dpi=300, bbox_inches='tight')
     plt.close()
+
+
+def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16], seq_length=24):
+    """
+    Evaluate pre-transfer or transfer models trained with different data amounts
+    
+    Args:
+        model_type: 'pretransfer' or 'transfer'
+        target_building: Building ID to evaluate on
+        weeks_list: List of week amounts to evaluate
+        seq_length: Sequence length used in training
+    
+    Returns:
+        DataFrame with results for each data amount
+    """
+    print(f"\n{'='*90}")
+    print(f"  DATA EFFICIENCY EVALUATION: {model_type.upper()} Models")
+    print(f"{'='*90}")
+    
+    results = []
+    
+    for weeks in weeks_list:
+        print(f"\n[Evaluating {weeks} week(s) model...]")
+        
+        # Find model checkpoint
+        pattern = f'models/data_efficiency/{model_type}_{target_building[:15]}_{weeks}week_*.ckpt'
+        model_files = glob.glob(pattern)
+        
+        if not model_files:
+            print(f"  ⚠ WARNING: No {model_type} model found for {weeks} week(s)")
+            print(f"  Searched: {pattern}")
+            print(f"  Skipping... (will show N/A in results)")
+            results.append({
+                'weeks': weeks,
+                'mae': np.nan,
+                'rmse': np.nan,
+                'r2': np.nan,
+                'mape': np.nan,
+                'median_ae': np.nan
+            })
+            continue
+        
+        # Load most recent model
+        model_path = max(model_files, key=os.path.getmtime)
+        print(f"  Found: {os.path.basename(model_path)}")
+        
+        try:
+            # Load model
+            model = EnergyLSTM.load_from_checkpoint(model_path)
+            
+            # Prepare test data with same weeks as training
+            train_loader, val_loader, test_loader = prepare_test_data(
+                target_building, 
+                data_limit_months=int(weeks / 4) if weeks >= 4 else 1,  # Convert weeks to months (approx)
+                seq_length=seq_length,
+                architecture_match=model_path
+            )
+            
+            # Evaluate
+            eval_results = evaluate_model(
+                model, test_loader, 
+                f"{model_type.upper()} ({weeks} weeks)"
+            )
+            
+            results.append({
+                'weeks': weeks,
+                'mae': eval_results['mae'],
+                'rmse': eval_results['rmse'],
+                'r2': eval_results['r2'],
+                'mape': eval_results['mape'],
+                'median_ae': eval_results['median_ae']
+            })
+            
+            print(f"  ✓ MAE: {eval_results['mae']:.4f}, RMSE: {eval_results['rmse']:.4f}, R²: {eval_results['r2']:.4f}")
+            
+        except Exception as e:
+            print(f"  ✗ ERROR: Failed to evaluate model: {e}")
+            results.append({
+                'weeks': weeks,
+                'mae': np.nan,
+                'rmse': np.nan,
+                'r2': np.nan,
+                'mape': np.nan,
+                'median_ae': np.nan
+            })
+    
+    return pd.DataFrame(results)
+
+
+def compare_data_efficiency(results_df, model_type):
+    """
+    Print formatted comparison table for data efficiency results
+    
+    Args:
+        results_df: DataFrame with columns [weeks, mae, rmse, r2, mape, median_ae]
+        model_type: 'Pre-Transfer' or 'Transfer' for display
+    """
+    print(f"\n{'='*110}")
+    print(f"  DATA EFFICIENCY ANALYSIS: {model_type} Models")
+    print(f"{'='*110}")
+    print(f"\nComparison of {model_type} model performance with varying amounts of training data:")
+    print(f"(All models trained and evaluated on same building: Rat_education_Denise)")
+    print(f"\n{'Metric':<25} {'1 Week':<15} {'2 Weeks':<15} {'4 Weeks':<15} {'8 Weeks':<15} {'16 Weeks':<15}")
+    print(f"{'-'*110}")
+    
+    metrics = [
+        ('mae', 'MAE (kWh)'),
+        ('rmse', 'RMSE (kWh)'),
+        ('r2', 'R² Score'),
+        ('mape', 'MAPE (%)'),
+        ('median_ae', 'Median AE (kWh)')
+    ]
+    
+    for metric_key, metric_name in metrics:
+        row = f"{metric_name:<25}"
+        
+        for weeks in [1, 2, 4, 8, 16]:
+            week_data = results_df[results_df['weeks'] == weeks]
+            if len(week_data) > 0:
+                value = week_data.iloc[0][metric_key]
+                if np.isnan(value):
+                    row += f"{'N/A':>13}  "
+                else:
+                    row += f"{value:>13.4f}  "
+            else:
+                row += f"{'N/A':>13}  "
+        
+        print(row)
+    
+    print(f"{'='*110}")
+    
+    # Calculate improvement from 1 week to 16 weeks
+    print(f"\n  IMPROVEMENT ANALYSIS (1 Week → 16 Weeks):")
+    
+    week1_data = results_df[results_df['weeks'] == 1].iloc[0] if len(results_df[results_df['weeks'] == 1]) > 0 else None
+    week16_data = results_df[results_df['weeks'] == 16].iloc[0] if len(results_df[results_df['weeks'] == 16]) > 0 else None
+    
+    if week1_data is not None and week16_data is not None:
+        if not np.isnan(week1_data['rmse']) and not np.isnan(week16_data['rmse']):
+            rmse_improvement = ((week1_data['rmse'] - week16_data['rmse']) / week1_data['rmse']) * 100
+            print(f"  • RMSE improved by {rmse_improvement:.1f}%")
+        
+        if not np.isnan(week1_data['mae']) and not np.isnan(week16_data['mae']):
+            mae_improvement = ((week1_data['mae'] - week16_data['mae']) / week1_data['mae']) * 100
+            print(f"  • MAE improved by {mae_improvement:.1f}%")
+        
+        if not np.isnan(week1_data['r2']) and not np.isnan(week16_data['r2']):
+            r2_improvement = ((week16_data['r2'] - week1_data['r2']) / abs(week1_data['r2'])) * 100
+            print(f"  • R² improved by {r2_improvement:.1f}%")
+    else:
+        print(f"  (Insufficient data for improvement calculation)")
+    
+    print(f"{'='*110}")
 
 
 if __name__ == '__main__':

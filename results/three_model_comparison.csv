@@ -1,5 +1,5 @@
 model,building,description,mae,rmse,r2,mape
-Baseline-Source,Rat_education_Colin (source),"2 years, evaluated on training building",17.29439353942871,23.866530269183322,0.36051034927368164,56.69657
-Baseline-Target,Rat_education_Denise (target),"2 years source, evaluated on NEW building",37.106422424316406,41.504061948237364,-3.103531837463379,47.93242
-Pre-Transfer,Rat_education_Denise (target),1 month target data (no transfer),16.95455551147461,20.489855233272603,-0.0001252889633178711,22.797253
-Transfer,Rat_education_Denise (target),1 month target data + transfer learning,12.417628288269043,17.794596779937073,0.2456846833229065,16.24208
+Baseline-Source,Rat_education_Colin (source),"2 years, evaluated on training building",14.481452941894531,21.02133257764226,0.5038928985595703,29.618263
+Baseline-Target,Rat_education_Denise (target),"2 years source, evaluated on NEW building",36.21931457519531,40.78229314997273,-2.962049722671509,46.10114
+Pre-Transfer,Rat_education_Denise (target),2 months target data (no transfer),17.31743812561035,20.513258949387087,-0.002411365509033203,23.656412
+Transfer,Rat_education_Denise (target),2 months target data + transfer learning,13.254226684570312,18.176789056387012,0.21293437480926514,17.045544

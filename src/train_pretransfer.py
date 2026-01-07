@@ -135,7 +135,8 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
     input_size = train_loader.dataset.features.shape[1]
     
     # Use SIMPLER architecture for limited data to avoid collapse
-    if data_limit_months <= 1:
+    # 4 weeks = approximately 1 month
+    if data_limit_weeks <= 4:
         # With very limited data, use smaller/simpler model
         model = EnergyLSTM(
             input_size=input_size,
