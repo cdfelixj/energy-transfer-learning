@@ -166,7 +166,7 @@ if __name__ == '__main__':
     project_root = os.path.dirname(script_dir)
     
     # Source building: one of the buildings used in baseline
-    source_building = 'Rat_education_Angelica'
+    source_building = 'Rat_education_Colin'
     
     # Target building: a Rat education building NOT used in baseline training
     # Baseline uses: Angelica, Moises, Colin
@@ -187,9 +187,39 @@ if __name__ == '__main__':
     print(f"\nFound {len(model_files)} baseline model(s)")
     print(f"Using: {os.path.basename(source_model_path)}")
     print(f"Source building: {source_building} (Education - has baseline model)")
-    print(f"Target building: {target_building} (Dormitory - NO baseline model)")
+    print(f"Target building: {target_building} (Education - NO baseline model)")
     print("This ensures proper transfer learning evaluation!\n")
     
     # Train transfer model with same limited data as pre-transfer (8 weeks)
-    train_transfer(source_building, target_building, source_model_path, 
-                  epochs=20, seq_length=24, data_limit_weeks=8)
+    try:
+        model, results = train_transfer(source_building, target_building, source_model_path, 
+                      epochs=20, seq_length=24, data_limit_weeks=8)
+        
+        print(f"\n✓ Transfer learning training complete!")
+        print(f"  Test RMSE: {results[0]['test_rmse']:.4f}")
+        print(f"  Test MAE:  {results[0]['test_mae']:.4f}")
+        
+        # Save summary
+        results_dir = os.path.join(project_root, 'results')
+        os.makedirs(results_dir, exist_ok=True)
+        
+        summary_df = pd.DataFrame([{
+            'model_type': 'Transfer Learning',
+            'source_building': source_building,
+            'target_building': target_building,
+            'data_weeks': 8,
+            'test_rmse': results[0]['test_rmse'],
+            'test_mae': results[0]['test_mae'],
+            'test_loss': results[0]['test_loss'],
+            'status': 'Success'
+        }])
+        
+        summary_path = os.path.join(results_dir, 'transfer_training_summary.csv')
+        summary_df.to_csv(summary_path, index=False)
+        print(f"\n✓ Summary saved to: results/transfer_training_summary.csv")
+        
+    except Exception as e:
+        print(f"\n✗ Training failed!")
+        print(f"  Error: {str(e)}")
+        import traceback
+        traceback.print_exc()

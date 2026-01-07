@@ -6,6 +6,9 @@ data/raw/*
 models/*.pth
 models/*.ckpt
 
+# Training logs
+lightning_logs/
+
 # Python
 *.pyc
 __pycache__/

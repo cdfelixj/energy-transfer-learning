@@ -28,9 +28,9 @@ This project implements a **3-model transfer learning framework** for building e
 
 4. **Data Efficiency Models** (`train_data_efficiency.py`)
    - **Purpose**: Evaluate how performance scales with data amount
-   - **Training**: Both Pre-Transfer and Transfer with 1, 2, 4, 8, 16 weeks
+   - **Training**: Both Pre-Transfer and Transfer with 1, 2, 4, 8, 16, 32, 64, 104 weeks
    - **Building**: Rat_education_Denise
-   - **Output**: Performance comparison tables for all data amounts
+   - **Output**: Performance comparison tables for all data amounts (104 weeks = 2 years)
 
 ### Key Design Decisions
 

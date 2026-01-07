@@ -1,2 +1,0 @@
-model_type,target_building,data_months,test_rmse,test_mae,test_loss,status
-Pre-Transfer (No Transfer Learning),Rat_education_Denise,1,21.240234375,18.029550552368164,456.1524963378906,Success

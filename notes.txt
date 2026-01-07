@@ -23,7 +23,7 @@ IMPORTANT NOTES
 - Baseline: 2 years Rat_education_Colin, seq_length=168, 3 layers, 128 hidden
 - Pre-Transfer & Transfer: 8 weeks Rat_education_Denise, seq_length=24, 2 layers, 64 hidden
 - Pre-Transfer vs Transfer comparison shows pure transfer learning benefit
-- Data Efficiency: Pre-Transfer & Transfer models with 1, 2, 4, 8, 16 weeks of data
+- Data Efficiency: Pre-Transfer & Transfer models with 1, 2, 4, 8, 16, 32, 64, 104 weeks (2 years) of data
 
 KNOWN ISSUES FIXED
 ==================

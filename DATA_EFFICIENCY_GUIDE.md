@@ -2,7 +2,7 @@
 
 ## Overview
 
-The data efficiency evaluation system allows you to assess how pre-transfer and transfer learning models perform with varying amounts of training data (1, 2, 4, 8, and 16 weeks).
+The data efficiency evaluation system allows you to assess how pre-transfer and transfer learning models perform with varying amounts of training data (1, 2, 4, 8, 16, 32, 64 weeks, and 2 years).
 
 ## Files Created/Modified
 
@@ -26,10 +26,12 @@ python train_data_efficiency.py
 ```
 
 This will:
-- Train 5 pre-transfer models (1w, 2w, 4w, 8w, 16w) - from scratch
-- Train 5 transfer models (1w, 2w, 4w, 8w, 16w) - fine-tuned from baseline
+- Train 8 pre-transfer models (1w, 2w, 4w, 8w, 16w, 32w, 64w, 104w) - from scratch
+- Train 8 transfer models (1w, 2w, 4w, 8w, 16w, 32w, 64w, 104w) - fine-tuned from baseline
 - Save all models to `models/data_efficiency/` folder
-- Total: 10 models trained
+- Total: 16 models trained
+
+**Note:** 104 weeks = 2 years (for comparison with baseline model training duration)
 
 **Expected duration:** ~2-4 hours depending on your hardware
 
@@ -61,10 +63,10 @@ The evaluation script now produces:
    - Transfer (2 months)
 
 2. **Pre-Transfer Data Efficiency Table** - Shows MAE, RMSE, R², MAPE for:
-   - 1 week, 2 weeks, 4 weeks, 8 weeks, 16 weeks
+   - 1 week, 2 weeks, 4 weeks, 8 weeks, 16 weeks, 32 weeks, 64 weeks, 2 years (104 weeks)
 
 3. **Transfer Data Efficiency Table** - Shows MAE, RMSE, R², MAPE for:
-   - 1 week, 2 weeks, 4 weeks, 8 weeks, 16 weeks
+   - 1 week, 2 weeks, 4 weeks, 8 weeks, 16 weeks, 32 weeks, 64 weeks, 2 years (104 weeks)
 
 ### Saved Files
 
@@ -95,19 +97,19 @@ This allows partial evaluation if you only want to train subset of models.
 Comparison of Pre-Transfer model performance with varying amounts of training data:
 (All models trained and evaluated on same building: Rat_education_Denise)
 
-Metric                    1 Week          2 Weeks         4 Weeks         8 Weeks         16 Weeks       
---------------------------------------------------------------------------------------------------------------
-MAE (kWh)                       25.3421         18.7654         15.2341         12.8976         11.2345  
-RMSE (kWh)                      35.6789         26.4321         21.3456         18.9012         16.7890  
-R² Score                         0.3456          0.5678          0.6789          0.7234          0.7689  
-MAPE (%)                        42.3456         32.1234         26.7890         22.4567         19.8765  
-Median AE (kWh)                 21.2345         15.6789         12.3456         10.4567          9.1234  
-==========================================================================================
+Metric                    1 Week          2 Weeks         4 Weeks         8 Weeks         16 Weeks        32 Weeks        64 Weeks        2 Years        
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+MAE (kWh)                       25.3421         18.7654         15.2341         12.8976         11.2345         10.1234          9.3456          8.7654  
+RMSE (kWh)                      35.6789         26.4321         21.3456         18.9012         16.7890         15.2341         13.9876         12.8765  
+R² Score                         0.3456          0.5678          0.6789          0.7234          0.7689          0.8123          0.8456          0.8789  
+MAPE (%)                        42.3456         32.1234         26.7890         22.4567         19.8765         17.6543         15.8901         14.3210  
+Median AE (kWh)                 21.2345         15.6789         12.3456         10.4567          9.1234          8.2345          7.4567          6.8901  
+===========================================================================================================================================================
 
-  IMPROVEMENT ANALYSIS (1 Week → 16 Weeks):
-  • RMSE improved by 52.9%
-  • MAE improved by 55.6%
-  • R² improved by 122.4%
+  IMPROVEMENT ANALYSIS (1 Week → 2 Years):
+  • RMSE improved by 63.9%
+  • MAE improved by 65.4%
+  • R² improved by 154.3%
 ==========================================================================================
 ```
 
@@ -120,7 +122,7 @@ To modify which data amounts are evaluated, edit the `weeks_list` parameter:
 pretransfer_data_eff_results = evaluate_data_efficiency(
     model_type='pretransfer',
     target_building=target_building,
-    weeks_list=[1, 2, 4, 8, 16],  # <- Modify this list
+    weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],  # <- Modify this list (104 = 2 years)
     seq_length=seq_length
 )
 ```

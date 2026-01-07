@@ -440,7 +440,7 @@ def main():
     pretransfer_data_eff_results = evaluate_data_efficiency(
         model_type='pretransfer',
         target_building=target_building,
-        weeks_list=[1, 2, 4, 8, 16],
+        weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
         seq_length=seq_length
     )
     
@@ -456,7 +456,7 @@ def main():
     transfer_data_eff_results = evaluate_data_efficiency(
         model_type='transfer',
         target_building=target_building,
-        weeks_list=[1, 2, 4, 8, 16],
+        weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
         seq_length=seq_length
     )
     
@@ -518,14 +518,14 @@ def create_comparison_plot(df, results_dir):
     plt.close()
 
 
-def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16], seq_length=24):
+def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16, 32, 64, 104], seq_length=24):
     """
     Evaluate pre-transfer or transfer models trained with different data amounts
     
     Args:
         model_type: 'pretransfer' or 'transfer'
         target_building: Building ID to evaluate on
-        weeks_list: List of week amounts to evaluate
+        weeks_list: List of week amounts to evaluate (104 weeks = 2 years)
         seq_length: Sequence length used in training
     
     Returns:
@@ -618,8 +618,8 @@ def compare_data_efficiency(results_df, model_type):
     print(f"{'='*110}")
     print(f"\nComparison of {model_type} model performance with varying amounts of training data:")
     print(f"(All models trained and evaluated on same building: Rat_education_Denise)")
-    print(f"\n{'Metric':<25} {'1 Week':<15} {'2 Weeks':<15} {'4 Weeks':<15} {'8 Weeks':<15} {'16 Weeks':<15}")
-    print(f"{'-'*110}")
+    print(f"\n{'Metric':<25} {'1 Week':<15} {'2 Weeks':<15} {'4 Weeks':<15} {'8 Weeks':<15} {'16 Weeks':<15} {'32 Weeks':<15} {'64 Weeks':<15} {'2 Years':<15}")
+    print(f"{'-'*155}")
     
     metrics = [
         ('mae', 'MAE (kWh)'),
@@ -632,7 +632,7 @@ def compare_data_efficiency(results_df, model_type):
     for metric_key, metric_name in metrics:
         row = f"{metric_name:<25}"
         
-        for weeks in [1, 2, 4, 8, 16]:
+        for weeks in [1, 2, 4, 8, 16, 32, 64, 104]:
             week_data = results_df[results_df['weeks'] == weeks]
             if len(week_data) > 0:
                 value = week_data.iloc[0][metric_key]
@@ -645,30 +645,30 @@ def compare_data_efficiency(results_df, model_type):
         
         print(row)
     
-    print(f"{'='*110}")
+    print(f"{'='*155}")
     
-    # Calculate improvement from 1 week to 16 weeks
-    print(f"\n  IMPROVEMENT ANALYSIS (1 Week → 16 Weeks):")
+    # Calculate improvement from 1 week to 104 weeks (2 years)
+    print(f"\n  IMPROVEMENT ANALYSIS (1 Week → 2 Years):")
     
     week1_data = results_df[results_df['weeks'] == 1].iloc[0] if len(results_df[results_df['weeks'] == 1]) > 0 else None
-    week16_data = results_df[results_df['weeks'] == 16].iloc[0] if len(results_df[results_df['weeks'] == 16]) > 0 else None
+    week104_data = results_df[results_df['weeks'] == 104].iloc[0] if len(results_df[results_df['weeks'] == 104]) > 0 else None
     
-    if week1_data is not None and week16_data is not None:
-        if not np.isnan(week1_data['rmse']) and not np.isnan(week16_data['rmse']):
-            rmse_improvement = ((week1_data['rmse'] - week16_data['rmse']) / week1_data['rmse']) * 100
+    if week1_data is not None and week104_data is not None:
+        if not np.isnan(week1_data['rmse']) and not np.isnan(week104_data['rmse']):
+            rmse_improvement = ((week1_data['rmse'] - week104_data['rmse']) / week1_data['rmse']) * 100
             print(f"  • RMSE improved by {rmse_improvement:.1f}%")
         
-        if not np.isnan(week1_data['mae']) and not np.isnan(week16_data['mae']):
-            mae_improvement = ((week1_data['mae'] - week16_data['mae']) / week1_data['mae']) * 100
+        if not np.isnan(week1_data['mae']) and not np.isnan(week104_data['mae']):
+            mae_improvement = ((week1_data['mae'] - week104_data['mae']) / week1_data['mae']) * 100
             print(f"  • MAE improved by {mae_improvement:.1f}%")
         
-        if not np.isnan(week1_data['r2']) and not np.isnan(week16_data['r2']):
-            r2_improvement = ((week16_data['r2'] - week1_data['r2']) / abs(week1_data['r2'])) * 100
+        if not np.isnan(week1_data['r2']) and not np.isnan(week104_data['r2']):
+            r2_improvement = ((week104_data['r2'] - week1_data['r2']) / abs(week1_data['r2'])) * 100
             print(f"  • R² improved by {r2_improvement:.1f}%")
     else:
         print(f"  (Insufficient data for improvement calculation)")
     
-    print(f"{'='*110}")
+    print(f"{'='*155}")
 
 
 if __name__ == '__main__':

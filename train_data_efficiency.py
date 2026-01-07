@@ -23,7 +23,7 @@ def train_all_data_efficiency_models():
     # Configuration
     target_building = 'Rat_education_Denise'
     source_building = 'Rat_education_Colin'  # Baseline was trained on Colin
-    weeks_to_train = [1, 2, 4, 8, 16]  # Different data amounts to test
+    weeks_to_train = [1, 2, 4, 8, 16, 32, 64, 104]  # Different data amounts to test (104 weeks = 2 years)
     
     # Get project paths
     script_dir = os.path.dirname(os.path.abspath(__file__))

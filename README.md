@@ -90,8 +90,8 @@ python evaluate_all_models.py
 Transfer Learning Improvement: ~15-25% RMSE reduction
 
 DATA EFFICIENCY ANALYSIS:
-  Pre-Transfer:  1w → 2w → 4w → 8w → 16w (improving)
-  Transfer:      1w → 2w → 4w → 8w → 16w (better at all levels)
+  Pre-Transfer:  1w → 2w → 4w → 8w → 16w → 32w → 64w → 2yr (improving)
+  Transfer:      1w → 2w → 4w → 8w → 16w → 32w → 64w → 2yr (better at all levels)
 ```
 
 ## 📁 Project Structure
