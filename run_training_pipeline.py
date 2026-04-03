@@ -38,11 +38,11 @@ def main():
        - Learns general energy consumption patterns
        
     2. PRE-TRANSFER MODEL  
-       - Trains from scratch on 1 month of target data
+       - Trains from scratch on ~2 months (8 weeks) of target data
        - Shows performance WITHOUT transfer learning
        
     3. TRANSFER MODEL
-       - Fine-tunes baseline on 1 month of target data
+       - Fine-tunes baseline on ~2 months (8 weeks) of target data
        - Shows performance WITH transfer learning
        
     Expected duration: 1-3 hours (depends on hardware)

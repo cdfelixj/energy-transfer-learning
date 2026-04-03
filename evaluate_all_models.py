@@ -238,8 +238,10 @@ def prepare_test_data(target_building, data_limit_months=1, seq_length=24, archi
         electricity, target_building, weather_building
     )
     
-    # Limit data
-    hours_to_keep = data_limit_months * 30 * 24
+    # Limit data (use 4-week months to align with data_limit_weeks used in training scripts)
+    weeks_per_month = 4
+    hours_per_week = 7 * 24
+    hours_to_keep = int(data_limit_months * weeks_per_month * hours_per_week)
     target_data = target_data.iloc[:hours_to_keep]
     
     # Match architecture if needed

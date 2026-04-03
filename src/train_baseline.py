@@ -96,9 +96,12 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     print(f"Input features: {input_size}")
     
     # Callbacks
+    # use a stable prefix from building_ids list the function receives
+    # (avoids dependency on global variable which may not exist in direct function calls)
+    prefix = building_ids[0][:20] if len(building_ids) > 0 else 'baseline'
     checkpoint_callback = ModelCheckpoint(
         dirpath=os.path.join(project_root, 'models'),
-        filename=f'baseline_{buildings_to_train[0][:20]}_2yr_{{epoch:02d}}_{{val_loss:.4f}}',
+        filename=f'baseline_{prefix}_2yr_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',
         save_top_k=1
