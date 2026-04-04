@@ -7,19 +7,17 @@ from torch.utils.data import Dataset, DataLoader
 import os
 
 
-def load_electricity_data(data_dir=None):
-    """Load filtered electricity data (Education buildings from Rat site only).
-    
-    Automatically filters for:
-    - Building type: Education (most data: 561 buildings)
-    - Site: Rat (most buildings: 267 buildings)
-    - Meter type: Electricity only (most coverage: 1578 buildings)
-    
+def load_electricity_data(data_dir=None, site_id='Rat', building_type='Education'):
+    """Load filtered electricity data for buildings matching the given site and type.
+
     Args:
         data_dir: Base directory containing the data. If None, uses default relative path.
-        
+        site_id: Site to filter for (default 'Rat'). Pass None to include all sites.
+        building_type: Building type (primaryspaceusage) to filter for (default 'Education').
+                       Pass None to include all building types.
+
     Returns:
-        electricity_df: Filtered electricity consumption dataframe (only Education + Rat)
+        electricity_df: Filtered electricity consumption dataframe
         metadata: Full metadata dataframe
         valid_buildings: List of valid building IDs after filtering
     """
@@ -28,49 +26,54 @@ def load_electricity_data(data_dir=None):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(script_dir)
         data_dir = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2', 'data')
-    
+
     metadata_path = os.path.join(data_dir, 'metadata', 'metadata.csv')
     electricity_path = os.path.join(data_dir, 'meters', 'cleaned', 'electricity_cleaned.csv')
-    
+
     print("\n" + "="*70)
     print("LOADING FILTERED ELECTRICITY DATA")
     print("="*70)
     print("Filtering criteria:")
-    print("  ✓ Building type: Education")
-    print("  ✓ Site: Rat")
+    print(f"  ✓ Building type: {building_type if building_type else 'All'}")
+    print(f"  ✓ Site: {site_id if site_id else 'All'}")
     print("  ✓ Meter type: Electricity only")
     print("="*70 + "\n")
-    
+
     # Load metadata
     metadata = pd.read_csv(metadata_path)
-    
+
     # Load electricity data
     electricity_full = pd.read_csv(electricity_path, index_col=0, parse_dates=True)
-    
-    # Filter for Education buildings from Rat site
-    filtered_metadata = metadata[
-        (metadata['primaryspaceusage'] == 'Education') & 
-        (metadata['site_id'] == 'Rat')
-    ]
-    
+
+    # Build filter mask dynamically
+    mask = pd.Series([True] * len(metadata), index=metadata.index)
+    if building_type is not None:
+        mask = mask & (metadata['primaryspaceusage'] == building_type)
+    if site_id is not None:
+        mask = mask & (metadata['site_id'] == site_id)
+
+    filtered_metadata = metadata[mask]
+
     # Get valid building IDs that exist in both metadata and electricity data
     valid_buildings = [
-        bid for bid in filtered_metadata['building_id'].values 
+        bid for bid in filtered_metadata['building_id'].values
         if bid in electricity_full.columns
     ]
-    
+
     if len(valid_buildings) == 0:
-        raise ValueError("No buildings found matching criteria (Education + Rat site + Electricity)")
-    
+        criteria = f"(type={building_type}, site={site_id}, Electricity)"
+        raise ValueError(f"No buildings found matching criteria {criteria}")
+
     # Filter electricity dataframe to only include valid buildings
     electricity_df = electricity_full[valid_buildings].copy()
-    
-    print(f"✓ Loaded {len(valid_buildings)} Education buildings from Rat site")
+
+    label = f"{building_type or 'All types'} buildings from {site_id or 'all sites'}"
+    print(f"✓ Loaded {len(valid_buildings)} {label}")
     print(f"  Date range: {electricity_df.index.min()} to {electricity_df.index.max()}")
     print(f"  Total timestamps: {len(electricity_df):,}")
     print(f"  Buildings: {valid_buildings[:5]}{'...' if len(valid_buildings) > 5 else ''}")
     print()
-    
+
     return electricity_df, metadata, valid_buildings
 
 

@@ -208,12 +208,15 @@ def compare_all_models(baseline_source_results, baseline_target_results, pretran
     return improvements
 
 
-def prepare_test_data(target_building, data_limit_months=1, seq_length=24, architecture_match=None):
+def prepare_test_data(target_building, data_limit_months=1, seq_length=24,
+                      architecture_match=None, site_id='Rat', building_type='Education'):
     """Prepare test data for target building (same as used in training)"""
     
     # Load filtered data
-    electricity, metadata, valid_buildings = load_electricity_data()
-    
+    electricity, metadata, valid_buildings = load_electricity_data(
+        site_id=site_id, building_type=building_type
+    )
+
     # Get project root
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = script_dir
@@ -265,21 +268,175 @@ def prepare_test_data(target_building, data_limit_months=1, seq_length=24, archi
     train_loader, val_loader, test_loader = create_dataloaders(
         target_data, seq_length=seq_length, batch_size=32
     )
-    
+
     return train_loader, val_loader, test_loader
+
+
+def evaluate_experiment(experiment_name, source_building, target_building,
+                        site_id, building_type, baseline_model_path,
+                        weeks_list=None, seq_length=24, data_limit_months=2):
+    """
+    Run a full 4-model evaluation + data efficiency analysis for one experiment.
+
+    Saves results under results/experiments/{experiment_name}/:
+      - baseline_comparison.csv      (4-model snapshot at data_limit_months of data)
+      - data_efficiency_pretransfer.csv
+      - data_efficiency_transfer.csv
+      - analysis_summary.csv
+
+    Args:
+        experiment_name: e.g. 'eagle_education'
+        source_building: Building the baseline was trained on
+        target_building: Building pre-transfer and transfer were trained on
+        site_id: Passed to load_electricity_data (None = any site)
+        building_type: Passed to load_electricity_data (None = any type)
+        baseline_model_path: Absolute path to the baseline .ckpt
+        weeks_list: Weeks for data efficiency sweep (default [1,2,4,8,16,32,64,104])
+        seq_length: Sequence length (default 24 h)
+        data_limit_months: Months of target data for the 4-model comparison (default 2)
+    """
+    if weeks_list is None:
+        weeks_list = [1, 2, 4, 8, 16, 32, 64, 104]
+
+    project_root = os.path.dirname(os.path.abspath(__file__))
+    exp_dir = os.path.join(project_root, 'models', 'experiments', experiment_name)
+    results_dir = os.path.join(project_root, 'results', 'experiments', experiment_name)
+    os.makedirs(results_dir, exist_ok=True)
+
+    print(f"\n{'=' * 90}")
+    print(f"  EVALUATING EXPERIMENT: {experiment_name}")
+    print(f"  Source: {source_building}  |  Target: {target_building}")
+    print(f"{'=' * 90}")
+
+    # ------------------------------------------------------------------ #
+    # Locate model checkpoints
+    # ------------------------------------------------------------------ #
+    def latest(pattern):
+        files = glob.glob(pattern)
+        return max(files, key=os.path.getmtime) if files else None
+
+    baseline_path = baseline_model_path or latest(
+        os.path.join(exp_dir, 'baseline_*.ckpt')
+    )
+    pretransfer_path = latest(os.path.join(exp_dir, 'pretransfer_*.ckpt'))
+    transfer_path = latest(os.path.join(exp_dir, 'transfer_*.ckpt'))
+
+    missing = []
+    if not baseline_path:
+        missing.append('baseline')
+    if not pretransfer_path:
+        missing.append('pretransfer')
+    if not transfer_path:
+        missing.append('transfer')
+
+    if missing:
+        print(f"  ⚠ Missing checkpoints: {missing} — skipping 4-model comparison.")
+        models_ok = False
+    else:
+        print(f"  ✓ Baseline:     {os.path.basename(baseline_path)}")
+        print(f"  ✓ Pre-Transfer: {os.path.basename(pretransfer_path)}")
+        print(f"  ✓ Transfer:     {os.path.basename(transfer_path)}")
+        models_ok = True
+
+    # ------------------------------------------------------------------ #
+    # 4-model comparison (Baseline-Source, Baseline-Target, Pre-Transfer, Transfer)
+    # ------------------------------------------------------------------ #
+    if models_ok:
+        baseline_model = EnergyLSTM.load_from_checkpoint(baseline_path)
+        pretransfer_model = EnergyLSTM.load_from_checkpoint(pretransfer_path)
+        transfer_model = EnergyLSTM.load_from_checkpoint(transfer_path)
+
+        # Source data (full)
+        src_loader = prepare_test_data(
+            source_building, data_limit_months=24, seq_length=336,
+            architecture_match=baseline_path,
+            site_id=site_id, building_type=building_type,
+        )[2]
+
+        # Target data (limited)
+        tgt_loader = prepare_test_data(
+            target_building, data_limit_months=data_limit_months, seq_length=seq_length,
+            architecture_match=baseline_path,
+            site_id=site_id, building_type=building_type,
+        )[2]
+
+        r_bs = evaluate_model(baseline_model, src_loader, f'Baseline-Source ({source_building})')
+        r_bt = evaluate_model(baseline_model, tgt_loader, f'Baseline-Target ({target_building})')
+        r_pt = evaluate_model(pretransfer_model, tgt_loader, f'Pre-Transfer ({target_building})')
+        r_tr = evaluate_model(transfer_model, tgt_loader, f'Transfer ({target_building})')
+
+        compare_all_models(r_bs, r_bt, r_pt, r_tr)
+
+        comparison_df = pd.DataFrame([
+            {'model': 'Baseline-Source', 'building': source_building,
+             'mae': r_bs['mae'], 'rmse': r_bs['rmse'], 'r2': r_bs['r2'],
+             'mape': r_bs['mape'], 'median_ae': r_bs['median_ae']},
+            {'model': 'Baseline-Target', 'building': target_building,
+             'mae': r_bt['mae'], 'rmse': r_bt['rmse'], 'r2': r_bt['r2'],
+             'mape': r_bt['mape'], 'median_ae': r_bt['median_ae']},
+            {'model': 'Pre-Transfer', 'building': target_building,
+             'mae': r_pt['mae'], 'rmse': r_pt['rmse'], 'r2': r_pt['r2'],
+             'mape': r_pt['mape'], 'median_ae': r_pt['median_ae']},
+            {'model': 'Transfer', 'building': target_building,
+             'mae': r_tr['mae'], 'rmse': r_tr['rmse'], 'r2': r_tr['r2'],
+             'mape': r_tr['mape'], 'median_ae': r_tr['median_ae']},
+        ])
+        comparison_df.to_csv(
+            os.path.join(results_dir, 'baseline_comparison.csv'), index=False
+        )
+        print(f"\n  ✓ Saved: results/experiments/{experiment_name}/baseline_comparison.csv")
+
+        # Summary stats
+        tl_mae_improv = (r_pt['mae'] - r_tr['mae']) / r_pt['mae'] * 100
+        domain_shift = (r_bt['mae'] - r_bs['mae']) / r_bs['mae'] * 100
+        summary_df = pd.DataFrame([{
+            'experiment': experiment_name,
+            'source_building': source_building,
+            'target_building': target_building,
+            'transfer_benefit_mae_pct': round(tl_mae_improv, 2),
+            'domain_shift_penalty_pct': round(domain_shift, 2),
+            'baseline_source_mae': round(r_bs['mae'], 4),
+            'baseline_target_mae': round(r_bt['mae'], 4),
+            'pretransfer_mae': round(r_pt['mae'], 4),
+            'transfer_mae': round(r_tr['mae'], 4),
+        }])
+        summary_df.to_csv(
+            os.path.join(results_dir, 'analysis_summary.csv'), index=False
+        )
+        print(f"  ✓ Saved: results/experiments/{experiment_name}/analysis_summary.csv")
+
+    # ------------------------------------------------------------------ #
+    # Data efficiency sweep
+    # ------------------------------------------------------------------ #
+    for model_type in ('pretransfer', 'transfer'):
+        de_results = evaluate_data_efficiency(
+            model_type=model_type,
+            target_building=target_building,
+            weeks_list=weeks_list,
+            seq_length=seq_length,
+            experiment_name=experiment_name,
+            site_id=site_id,
+            building_type=building_type,
+        )
+        compare_data_efficiency(de_results, model_type.capitalize())
+        out_path = os.path.join(results_dir, f'data_efficiency_{model_type}.csv')
+        de_results.to_csv(out_path, index=False)
+        print(f"  ✓ Saved: results/experiments/{experiment_name}/data_efficiency_{model_type}.csv")
+
+    print(f"\n  ✓ Experiment {experiment_name} evaluation complete.")
 
 
 def main():
     print("="*90)
     print("  COMPREHENSIVE 3-MODEL EVALUATION")
     print("="*90)
-    
+
     # Configuration
     # Use same target building as training (Rat education building NOT in baseline)
     target_building = 'Rat_education_Denise'
     data_limit_months = 2  # Changed to 2 months to match training
     seq_length = 24  # Match training (24 hours = 1 day)
-    
+
     print(f"\nTarget Building: {target_building}")
     print(f"Limited Data: {data_limit_months} month(s)")
     print(f"Sequence Length: {seq_length} hours")
@@ -287,25 +444,27 @@ def main():
     # Find model checkpoints
     print("\nSearching for trained models...")
     
-    baseline_models = glob.glob('models/baseline_*.ckpt')
-    pretransfer_models = glob.glob('models/pretransfer_*.ckpt')
-    transfer_models = glob.glob('models/transfer_*.ckpt')
-    
+    exp_dir = os.path.join('models', 'experiments', 'rat_education')
+    baseline_models = glob.glob(os.path.join(exp_dir, 'baseline_*.ckpt'))
+    pretransfer_models = glob.glob(os.path.join(exp_dir, 'pretransfer_*.ckpt'))
+    transfer_models = glob.glob(os.path.join(exp_dir, 'transfer_*.ckpt'))
+
     if not baseline_models:
         print("\n✗ ERROR: No baseline model found!")
-        print("  Please run: python src/train_baseline.py")
+        print(f"  Looked in: {exp_dir}")
+        print("  Please run: python run_experiment_suite.py --experiment rat_education")
         return
-    
+
     if not pretransfer_models:
         print("\n✗ ERROR: No pre-transfer model found!")
-        print("  Please run: python src/train_pretransfer.py")
+        print(f"  Looked in: {exp_dir}")
         return
-    
+
     if not transfer_models:
         print("\n✗ ERROR: No transfer model found!")
-        print("  Please run: python src/train_transfer.py")
+        print(f"  Looked in: {exp_dir}")
         return
-    
+
     # Load most recent models
     baseline_model_path = max(baseline_models, key=os.path.getmtime)
     pretransfer_model_path = max(pretransfer_models, key=os.path.getmtime)
@@ -485,7 +644,8 @@ def main():
         model_type='pretransfer',
         target_building=target_building,
         weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
-        seq_length=seq_length
+        seq_length=seq_length,
+        experiment_name='rat_education',
     )
     
     # Display Pre-Transfer comparison table
@@ -501,7 +661,8 @@ def main():
         model_type='transfer',
         target_building=target_building,
         weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
-        seq_length=seq_length
+        seq_length=seq_length,
+        experiment_name='rat_education',
     )
     
     # Display Transfer comparison table
@@ -562,30 +723,38 @@ def create_comparison_plot(df, results_dir):
     plt.close()
 
 
-def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16, 32, 64, 104], seq_length=24):
+def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
+                             seq_length=24, experiment_name='rat_education',
+                             site_id='Rat', building_type='Education'):
     """
-    Evaluate pre-transfer or transfer models trained with different data amounts
-    
+    Evaluate pre-transfer or transfer models trained with different data amounts.
+
     Args:
         model_type: 'pretransfer' or 'transfer'
         target_building: Building ID to evaluate on
         weeks_list: List of week amounts to evaluate (104 weeks = 2 years)
         seq_length: Sequence length used in training
-    
+        experiment_name: Experiment directory name under models/experiments/
+        site_id: Site filter forwarded to prepare_test_data
+        building_type: Building type filter forwarded to prepare_test_data
+
     Returns:
         DataFrame with results for each data amount
     """
     print(f"\n{'='*90}")
-    print(f"  DATA EFFICIENCY EVALUATION: {model_type.upper()} Models")
+    print(f"  DATA EFFICIENCY EVALUATION: {model_type.upper()} Models  [{experiment_name}]")
     print(f"{'='*90}")
-    
+
     results = []
-    
+
     for weeks in weeks_list:
         print(f"\n[Evaluating {weeks} week(s) model...]")
-        
+
         # Find model checkpoint
-        pattern = f'models/data_efficiency/{model_type}_{target_building[:15]}_{weeks}week_*.ckpt'
+        pattern = os.path.join(
+            'models', 'experiments', experiment_name, 'data_efficiency',
+            f'{model_type}_{target_building[:15]}_{weeks}week_*.ckpt'
+        )
         model_files = glob.glob(pattern)
         
         if not model_files:
@@ -609,13 +778,15 @@ def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8
         try:
             # Load model
             model = EnergyLSTM.load_from_checkpoint(model_path)
-            
+
             # Prepare test data with same weeks as training
             train_loader, val_loader, test_loader = prepare_test_data(
-                target_building, 
-                data_limit_months=int(weeks / 4) if weeks >= 4 else 1,  # Convert weeks to months (approx)
+                target_building,
+                data_limit_months=int(weeks / 4) if weeks >= 4 else 1,
                 seq_length=seq_length,
-                architecture_match=model_path
+                architecture_match=model_path,
+                site_id=site_id,
+                building_type=building_type,
             )
             
             # Evaluate

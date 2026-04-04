@@ -11,10 +11,12 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from data_loader import preprocess_building_data, create_dataloaders, load_electricity_data
 from models import EnergyLSTM
 
-def train_transfer(source_building, target_building, 
-                   source_model_path, epochs=20, seq_length=24, data_limit_weeks=4):
+def train_transfer(source_building, target_building,
+                   source_model_path, epochs=20, seq_length=24, data_limit_weeks=4,
+                   site_id='Rat', building_type='Education',
+                   experiment_name='rat_education'):
     """Transfer learning: fine-tune on target building with limited data
-    
+
     Args:
         source_building: Building used to train baseline model
         target_building: Building to transfer to (with limited data)
@@ -22,6 +24,9 @@ def train_transfer(source_building, target_building,
         epochs: Number of fine-tuning epochs
         seq_length: Sequence length in hours (default 24 = 1 day, suitable for limited data)
         data_limit_weeks: Number of weeks of target data to use (default 4)
+        site_id: Site filter for load_electricity_data (default 'Rat')
+        building_type: Building type filter for load_electricity_data (default 'Education')
+        experiment_name: Name of experiment; determines checkpoint save directory
     """
     
     print(f"\n{'='*70}")
@@ -30,8 +35,10 @@ def train_transfer(source_building, target_building,
     print(f"  Data limit: {data_limit_weeks} week(s)")
     print(f"{'='*70}")
     
-    # Load filtered data (Education + Rat site + Electricity only)
-    electricity, metadata, valid_buildings = load_electricity_data()
+    # Load filtered data
+    electricity, metadata, valid_buildings = load_electricity_data(
+        site_id=site_id, building_type=building_type
+    )
     
     # Validate that both buildings are available
     print(f"\nValidating buildings...")
@@ -128,8 +135,10 @@ def train_transfer(source_building, target_building,
     print(f"   Num layers: {transfer_model.hparams.num_layers}")
     
     # Train on target
+    exp_dir = os.path.join(project_root, 'models', 'experiments', experiment_name)
+    os.makedirs(exp_dir, exist_ok=True)
     checkpoint_callback = ModelCheckpoint(
-        dirpath=os.path.join(project_root, 'models'),
+        dirpath=exp_dir,
         filename=f'transfer_{source_building[:15]}_{target_building[:15]}_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',

@@ -10,17 +10,24 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from data_loader import preprocess_building_data, create_dataloaders, load_electricity_data
 from models import EnergyLSTM
 
-def train_baseline(building_ids, epochs=50, seq_length=336):
+def train_baseline(building_ids, epochs=50, seq_length=336,
+                   site_id='Rat', building_type='Education',
+                   experiment_name='rat_education'):
     """Train baseline LSTM on multiple buildings combined
-    
+
     Args:
         building_ids: List of building identifiers to combine
         epochs: Number of training epochs
         seq_length: Sequence length in hours (default 336 = 2 weeks)
+        site_id: Site filter for load_electricity_data (default 'Rat')
+        building_type: Building type filter for load_electricity_data (default 'Education')
+        experiment_name: Name of experiment; determines checkpoint save directory
     """
-    
-    # Load filtered data (Education + Rat site + Electricity only)
-    electricity, metadata, valid_buildings = load_electricity_data()
+
+    # Load filtered data
+    electricity, metadata, valid_buildings = load_electricity_data(
+        site_id=site_id, building_type=building_type
+    )
     
     # Validate that all requested building_ids are in the filtered set
     print(f"\nValidating {len(building_ids)} requested buildings...")
@@ -96,11 +103,12 @@ def train_baseline(building_ids, epochs=50, seq_length=336):
     print(f"Input features: {input_size}")
     
     # Callbacks
-    # use a stable prefix from building_ids list the function receives
-    # (avoids dependency on global variable which may not exist in direct function calls)
+    # Determine checkpoint save directory
     prefix = building_ids[0][:20] if len(building_ids) > 0 else 'baseline'
+    exp_dir = os.path.join(project_root, 'models', 'experiments', experiment_name)
+    os.makedirs(exp_dir, exist_ok=True)
     checkpoint_callback = ModelCheckpoint(
-        dirpath=os.path.join(project_root, 'models'),
+        dirpath=exp_dir,
         filename=f'baseline_{prefix}_2yr_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',

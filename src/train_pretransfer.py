@@ -18,17 +18,22 @@ from data_loader import preprocess_building_data, create_dataloaders, load_elect
 from models import EnergyLSTM
 
 
-def train_pretransfer(target_building, epochs=50, seq_length=24, 
-                     data_limit_weeks=4, architecture_match=None):
+def train_pretransfer(target_building, epochs=50, seq_length=24,
+                     data_limit_weeks=4, architecture_match=None,
+                     site_id='Rat', building_type='Education',
+                     experiment_name='rat_education'):
     """
     Train a model from scratch on limited data from the target building.
-    
+
     Args:
         target_building: Building ID to train on (with limited data)
         epochs: Number of training epochs
         seq_length: Sequence length in hours (default 24 = 1 day, suitable for limited data)
         data_limit_weeks: Number of weeks of data to use (default 4)
         architecture_match: Optional path to baseline model to match architecture
+        site_id: Site filter for load_electricity_data (default 'Rat')
+        building_type: Building type filter for load_electricity_data (default 'Education')
+        experiment_name: Name of experiment; determines checkpoint save directory
     """
     
     print(f"\n{'='*70}")
@@ -37,8 +42,10 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
     print(f"  Data limit: {data_limit_weeks} week(s)")
     print(f"{'='*70}")
     
-    # Load filtered data (Education + Rat site + Electricity only)
-    electricity, metadata, valid_buildings = load_electricity_data()
+    # Load filtered data
+    electricity, metadata, valid_buildings = load_electricity_data(
+        site_id=site_id, building_type=building_type
+    )
     
     # Validate that building is available
     print(f"\nValidating target building...")
@@ -162,8 +169,10 @@ def train_pretransfer(target_building, epochs=50, seq_length=24,
     print(f"  Parameters: {sum(p.numel() for p in model.parameters()):,}")
     
     # Callbacks
+    exp_dir = os.path.join(project_root, 'models', 'experiments', experiment_name)
+    os.makedirs(exp_dir, exist_ok=True)
     checkpoint_callback = ModelCheckpoint(
-        dirpath=os.path.join(project_root, 'models'),
+        dirpath=exp_dir,
         filename=f'pretransfer_{target_building[:15]}_{{epoch:02d}}_{{val_loss:.4f}}',
         monitor='val_loss',
         mode='min',
