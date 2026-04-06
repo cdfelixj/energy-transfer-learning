@@ -36,6 +36,8 @@ from typing import List, Optional
 
 from src.train_pretransfer import train_pretransfer
 from src.train_transfer import train_transfer
+from src.train_frozen_backbone import train_frozen_backbone
+from src.train_adapter import train_adapter
 
 
 @dataclass
@@ -125,9 +127,9 @@ def train_data_efficiency(config: ExperimentConfig, baseline_model_path: str):
             continue
 
         # ---------------------------------------------------------- #
-        # 2. Transfer (fine-tune from baseline)
+        # 2. Transfer / Full Fine-Tuning (fine-tune from baseline)
         # ---------------------------------------------------------- #
-        print(f"\n[2/2] Transfer ({weeks} weeks, fine-tuned)...")
+        print(f"\n[2/4] Full Fine-Tuning ({weeks} weeks, all params trainable)...")
         try:
             _, transfer_results = train_transfer(
                 source_building=config.source_building,
@@ -157,14 +159,94 @@ def train_data_efficiency(config: ExperimentConfig, baseline_model_path: str):
                 shutil.move(latest, os.path.join(data_efficiency_dir, new_name))
                 print(f"  ✓ Saved: {new_name}")
 
-            print(f"  ✓ Transfer ({weeks} weeks) complete")
+            print(f"  ✓ Full Fine-Tuning ({weeks} weeks) complete")
             print(f"    Test RMSE: {transfer_results[0]['test_rmse']:.4f}")
             print(f"    Test MAE:  {transfer_results[0]['test_mae']:.4f}")
 
         except Exception as e:
-            print(f"  ✗ Transfer ({weeks} weeks) FAILED: {e}")
+            print(f"  ✗ Full Fine-Tuning ({weeks} weeks) FAILED: {e}")
             import traceback; traceback.print_exc()
-            continue
+
+        # ---------------------------------------------------------- #
+        # 3. Frozen Backbone
+        # ---------------------------------------------------------- #
+        print(f"\n[3/4] Frozen Backbone ({weeks} weeks, encoder locked)...")
+        try:
+            _, frozen_results = train_frozen_backbone(
+                source_building=config.source_building,
+                target_building=config.target_building,
+                source_model_path=baseline_model_path,
+                epochs=50,
+                seq_length=24,
+                data_limit_weeks=weeks,
+                site_id=config.site_id,
+                building_type=config.building_type,
+                experiment_name=config.name,
+            )
+
+            pattern = os.path.join(
+                staging_dir,
+                f'frozen_{config.source_building[:15]}_{config.target_building[:15]}_*.ckpt'
+            )
+            fresh = glob.glob(pattern)
+            if fresh:
+                latest = max(fresh, key=os.path.getmtime)
+                epoch_part = os.path.basename(latest).split('epoch=')[1]
+                new_name = (
+                    f'frozen_{config.target_building[:15]}'
+                    f'_{weeks}week_epoch={epoch_part}'
+                )
+                shutil.move(latest, os.path.join(data_efficiency_dir, new_name))
+                print(f"  ✓ Saved: {new_name}")
+
+            print(f"  ✓ Frozen Backbone ({weeks} weeks) complete")
+            print(f"    Test RMSE: {frozen_results[0]['test_rmse']:.4f}")
+            print(f"    Test MAE:  {frozen_results[0]['test_mae']:.4f}")
+
+        except Exception as e:
+            print(f"  ✗ Frozen Backbone ({weeks} weeks) FAILED: {e}")
+            import traceback; traceback.print_exc()
+
+        # ---------------------------------------------------------- #
+        # 4. Adapter Layers
+        # ---------------------------------------------------------- #
+        print(f"\n[4/4] Adapter Layers ({weeks} weeks, bottleneck=32)...")
+        try:
+            _, adapter_results = train_adapter(
+                source_building=config.source_building,
+                target_building=config.target_building,
+                source_model_path=baseline_model_path,
+                epochs=50,
+                seq_length=24,
+                data_limit_weeks=weeks,
+                site_id=config.site_id,
+                building_type=config.building_type,
+                experiment_name=config.name,
+                adapter_bottleneck=32,
+            )
+
+            pattern = os.path.join(
+                staging_dir,
+                f'adapter_{config.source_building[:15]}_{config.target_building[:15]}_*.ckpt'
+            )
+            fresh = glob.glob(pattern)
+            if fresh:
+                latest = max(fresh, key=os.path.getmtime)
+                epoch_part = os.path.basename(latest).split('epoch=')[1]
+                new_name = (
+                    f'adapter_{config.target_building[:15]}'
+                    f'_{weeks}week_epoch={epoch_part}'
+                )
+                shutil.move(latest, os.path.join(data_efficiency_dir, new_name))
+                print(f"  ✓ Saved: {new_name}")
+
+            print(f"  ✓ Adapter Layers ({weeks} weeks) complete")
+            print(f"    Test RMSE: {adapter_results[0]['test_rmse']:.4f}")
+            print(f"    Test MAE:  {adapter_results[0]['test_mae']:.4f}")
+
+        except Exception as e:
+            print(f"  ✗ Adapter Layers ({weeks} weeks) FAILED: {e}")
+            import traceback; traceback.print_exc()
 
         print(f"\n{'=' * 80}")
         print(f"  {weeks} WEEK(S) TRAINING COMPLETE  [{config.name}]")

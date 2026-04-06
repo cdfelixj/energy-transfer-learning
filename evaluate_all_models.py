@@ -61,7 +61,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from data_loader import preprocess_building_data, create_dataloaders, load_electricity_data
-from models import EnergyLSTM
+from models import EnergyLSTM, EnergyLSTMFrozen, EnergyLSTMAdapter
 
 
 def evaluate_model(model, test_loader, model_name="Model"):
@@ -406,9 +406,9 @@ def evaluate_experiment(experiment_name, source_building, target_building,
         print(f"  ✓ Saved: results/experiments/{experiment_name}/analysis_summary.csv")
 
     # ------------------------------------------------------------------ #
-    # Data efficiency sweep
+    # Data efficiency sweep  (4 strategies)
     # ------------------------------------------------------------------ #
-    for model_type in ('pretransfer', 'transfer'):
+    for model_type in ('pretransfer', 'transfer', 'frozen', 'adapter'):
         de_results = evaluate_data_efficiency(
             model_type=model_type,
             target_building=target_building,
@@ -723,14 +723,23 @@ def create_comparison_plot(df, results_dir):
     plt.close()
 
 
+# Map model_type string → Lightning class used to save the checkpoint
+_MODEL_CLASS = {
+    'pretransfer': EnergyLSTM,
+    'transfer':    EnergyLSTM,
+    'frozen':      EnergyLSTMFrozen,
+    'adapter':     EnergyLSTMAdapter,
+}
+
+
 def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8, 16, 32, 64, 104],
                              seq_length=24, experiment_name='rat_education',
                              site_id='Rat', building_type='Education'):
     """
-    Evaluate pre-transfer or transfer models trained with different data amounts.
+    Evaluate pretransfer / transfer / frozen / adapter models with different data amounts.
 
     Args:
-        model_type: 'pretransfer' or 'transfer'
+        model_type: 'pretransfer', 'transfer', 'frozen', or 'adapter'
         target_building: Building ID to evaluate on
         weeks_list: List of week amounts to evaluate (104 weeks = 2 years)
         seq_length: Sequence length used in training
@@ -776,8 +785,9 @@ def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8
         print(f"  Found: {os.path.basename(model_path)}")
         
         try:
-            # Load model
-            model = EnergyLSTM.load_from_checkpoint(model_path)
+            # Load model using the correct class for this strategy
+            model_cls = _MODEL_CLASS.get(model_type, EnergyLSTM)
+            model = model_cls.load_from_checkpoint(model_path)
 
             # Prepare test data with same weeks as training
             train_loader, val_loader, test_loader = prepare_test_data(
