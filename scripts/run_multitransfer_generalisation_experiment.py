@@ -49,9 +49,9 @@ File outputs
 
 Usage
 ─────
-  python run_multitransfer_generalisation_experiment.py
-  python run_multitransfer_generalisation_experiment.py --skip-baselines
-  python run_multitransfer_generalisation_experiment.py --eval-only
+  python scripts/run_multitransfer_generalisation_experiment.py
+  python scripts/run_multitransfer_generalisation_experiment.py --skip-baselines
+  python scripts/run_multitransfer_generalisation_experiment.py --eval-only
 """
 
 import sys
@@ -100,7 +100,7 @@ WEEKS = [1, 2, 4, 8, 16, 32, 64, 104]
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_project_root():
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def _latest(pattern):

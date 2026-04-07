@@ -35,12 +35,12 @@ File outputs
 
 Usage
 ─────
-  python run_switch_modelling_experiment.py
-  python run_switch_modelling_experiment.py --threshold 5.0
-  python run_switch_modelling_experiment.py --target Rat_education_Denise
-  python run_switch_modelling_experiment.py --skip-baseline
-  python run_switch_modelling_experiment.py --eval-only
-  python run_switch_modelling_experiment.py --eval-only --threshold 3.0
+  python scripts/run_switch_modelling_experiment.py
+  python scripts/run_switch_modelling_experiment.py --threshold 5.0
+  python scripts/run_switch_modelling_experiment.py --target Rat_education_Denise
+  python scripts/run_switch_modelling_experiment.py --skip-baseline
+  python scripts/run_switch_modelling_experiment.py --eval-only
+  python scripts/run_switch_modelling_experiment.py --eval-only --threshold 3.0
 """
 
 import sys
@@ -82,7 +82,7 @@ DEFAULT_THRESHOLD_PCT   = 2.0
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_project_root() -> str:
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def _latest(pattern: str):

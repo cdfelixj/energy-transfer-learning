@@ -36,10 +36,10 @@ File outputs
 
 Usage
 ─────
-  python run_multi_transfer_experiment.py
-  python run_multi_transfer_experiment.py --target Eagle_education_Brooke
-  python run_multi_transfer_experiment.py --skip-baselines    # re-use existing baselines
-  python run_multi_transfer_experiment.py --eval-only         # skip training, evaluate only
+  python scripts/run_multi_transfer_experiment.py
+  python scripts/run_multi_transfer_experiment.py --target Eagle_education_Brooke
+  python scripts/run_multi_transfer_experiment.py --skip-baselines    # re-use existing baselines
+  python scripts/run_multi_transfer_experiment.py --eval-only         # skip training, evaluate only
 """
 
 import sys
@@ -91,7 +91,7 @@ WEEKS = [1, 2, 4, 8, 16, 32, 64, 104]
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_project_root():
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def _latest(pattern):

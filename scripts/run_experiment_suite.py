@@ -20,8 +20,8 @@ Prerequisites:
   2. Optionally set SKIP_EXISTING=True below to avoid re-training rat_education
 
 Usage:
-    python run_experiment_suite.py
-    python run_experiment_suite.py --experiment eagle_education
+    python scripts/run_experiment_suite.py
+    python scripts/run_experiment_suite.py --experiment eagle_education
 """
 
 import sys
@@ -51,7 +51,7 @@ SKIP_EXISTING_DATA_EFFICIENCY = True
 
 
 def get_project_root():
-    return os.path.dirname(os.path.abspath(__file__))
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 
 def load_selections(project_root):
@@ -60,7 +60,7 @@ def load_selections(project_root):
         print(
             "ERROR: building_selections.csv not found.\n"
             "Run discover_buildings.py first:\n"
-            "  python discover_buildings.py"
+            "  python scripts/discover_buildings.py"
         )
         sys.exit(1)
     return pd.read_csv(path)

@@ -220,8 +220,7 @@ def prepare_test_data(target_building, data_limit_months=1, seq_length=24,
     )
 
     # Get project root
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = script_dir
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     
     # Load weather
     weather_path = os.path.join(project_root, 'data', 'raw', 'building-data-genome-project-2',
@@ -300,7 +299,7 @@ def evaluate_experiment(experiment_name, source_building, target_building,
     if weeks_list is None:
         weeks_list = [1, 2, 4, 8, 16, 32, 64, 104]
 
-    project_root = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     exp_dir = os.path.join(project_root, 'models', 'experiments', experiment_name)
     results_dir = os.path.join(project_root, 'results', 'experiments', experiment_name)
     os.makedirs(results_dir, exist_ok=True)
@@ -454,7 +453,7 @@ def main():
     if not baseline_models:
         print("\n✗ ERROR: No baseline model found!")
         print(f"  Looked in: {exp_dir}")
-        print("  Please run: python run_experiment_suite.py --experiment rat_education")
+        print("  Please run: python scripts/run_experiment_suite.py --experiment rat_education")
         return
 
     if not pretransfer_models:

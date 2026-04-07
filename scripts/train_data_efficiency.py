@@ -22,7 +22,7 @@ Usage (programmatic):
     train_data_efficiency(cfg, baseline_model_path)
 
 Usage (CLI – runs all experiments from building_selections.csv):
-    python train_data_efficiency.py
+    python scripts/train_data_efficiency.py
 """
 
 import sys
@@ -63,7 +63,7 @@ def train_data_efficiency(config: ExperimentConfig, baseline_model_path: str):
         baseline_model_path: Absolute path to the baseline checkpoint to use
                              for transfer learning.
     """
-    project_root = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
     data_efficiency_dir = os.path.join(
         project_root, 'models', 'experiments', config.name, 'data_efficiency'
@@ -266,7 +266,7 @@ def train_data_efficiency(config: ExperimentConfig, baseline_model_path: str):
 # --------------------------------------------------------------------------- #
 def train_all_data_efficiency_models():
     """Legacy entry point: runs the rat_education experiment (Colin→Denise)."""
-    project_root = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
     baseline_ckpts = glob.glob(
         os.path.join(project_root, 'models', 'experiments', 'rat_education', 'baseline_*.ckpt')
@@ -294,7 +294,7 @@ def train_all_data_efficiency_models():
 if __name__ == '__main__':
     import pandas as pd
 
-    project_root = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     selections_path = os.path.join(
         project_root, 'results', 'experiments', 'building_selections.csv'
     )
@@ -303,7 +303,7 @@ if __name__ == '__main__':
         print(
             "ERROR: building_selections.csv not found.\n"
             "Run discover_buildings.py first:\n"
-            "  python discover_buildings.py"
+            "  python scripts/discover_buildings.py"
         )
         sys.exit(1)
 
