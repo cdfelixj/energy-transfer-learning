@@ -27,7 +27,9 @@ Usage (CLI – runs all experiments from building_selections.csv):
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, _root)
+sys.path.insert(0, os.path.join(_root, 'src'))
 
 import glob
 import shutil

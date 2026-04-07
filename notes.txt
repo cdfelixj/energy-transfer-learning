@@ -11,10 +11,10 @@ TRAINING PIPELINE
    python src/train_transfer.py
 
 4. Optional - Train data efficiency models (1w, 2w, 4w, 8w, 16w):
-   python train_data_efficiency.py
+   python scripts/train_data_efficiency.py
    
 5. Evaluate all models:
-   python evaluate_all_models.py
+   python scripts/evaluate_all_models.py
 
 IMPORTANT NOTES
 ===============
@@ -37,9 +37,9 @@ KNOWN ISSUES FIXED
 
 After Step 5, run the full retraining pipeline:
 
-python discover_buildings.py
-python run_experiment_suite.py
-python run_multi_transfer_experiment.py, run_cross_type_experiment.py, run_ensemble_transfer_experiment.py
-python run_multitransfer_ablation_experiment.py, run_multitransfer_generalisation_experiment.py
-python run_switch_modelling_experiment.py
-python evaluate_all_models.py
+python scripts/discover_buildings.py
+python scripts/run_experiment_suite.py
+python scripts/run_multi_transfer_experiment.py, run_cross_type_experiment.py, run_ensemble_transfer_experiment.py
+python scripts/run_multitransfer_ablation_experiment.py, run_multitransfer_generalisation_experiment.py
+python scripts/run_switch_modelling_experiment.py
+python scripts/evaluate_all_models.py

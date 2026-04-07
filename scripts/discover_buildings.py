@@ -18,7 +18,9 @@ Outputs:
 
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, _root)
+sys.path.insert(0, os.path.join(_root, 'src'))
 
 import pandas as pd
 import numpy as np

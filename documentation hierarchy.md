@@ -9,7 +9,7 @@ Quick start guide, 4-strategy framework overview, 12-experiment roster, full tra
 ## Experiment Reference → EXPERIMENTS.md
 Detailed setup for each of the 12 experiments: building selections, hyperparameters, what each experiment answers, output files, dependency map.
 
-## Technical History → TECHNICAL_IMPROVEMENTS Part 1.md
+## Technical History → TECHNICAL_IMPROVEMENTS.md
 Bug-fix chronicle (distribution mismatch, model collapse, early stopping, sequence length), architecture decisions and rationale, Sections 1–9 core fixes, Section 10 — advanced experiment implementations (Frozen Backbone, Adapter, Multi-Transfer, Ensemble Transfer, N-Source Ablation, Cross-Type, Switch Modelling).
 
 ## Quick Reference → notes.txt

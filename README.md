@@ -69,25 +69,25 @@ pip install torch pytorch-lightning pandas numpy scikit-learn matplotlib seaborn
 
 ```bash
 # Step 1: Discover best building pairs for each experiment cluster
-python discover_buildings.py
+python scripts/discover_buildings.py
 
 # Step 2: Train 6 baseline experiments (baseline + 4 strategies × 8 data amounts each)
-python run_experiment_suite.py
+python scripts/run_experiment_suite.py
 
 # Step 3: Advanced multi-source experiments (run in any order)
-python run_multi_transfer_experiment.py
-python run_cross_type_experiment.py
-python run_ensemble_transfer_experiment.py
+python scripts/run_multi_transfer_experiment.py
+python scripts/run_cross_type_experiment.py
+python scripts/run_ensemble_transfer_experiment.py
 
 # Step 4: Ablation & generalisation studies
-python run_multitransfer_ablation_experiment.py
-python run_multitransfer_generalisation_experiment.py
+python scripts/run_multitransfer_ablation_experiment.py
+python scripts/run_multitransfer_generalisation_experiment.py
 
 # Step 5: Switch modelling
-python run_switch_modelling_experiment.py
+python scripts/run_switch_modelling_experiment.py
 
 # Step 6: Evaluate everything
-python evaluate_all_models.py
+python scripts/evaluate_all_models.py
 ```
 
 Results are saved under `results/experiments/{experiment_name}/`.
@@ -104,16 +104,17 @@ energy-transfer-learning/
 │   ├── train_transfer.py                    # Full fine-tuning strategy
 │   └── switch_logic.py                      # Auto-selection logic for Experiment 12
 │
-├── discover_buildings.py                    # Auto-select best building pairs
-├── run_experiment_suite.py                  # Experiments 1–6
-├── run_multi_transfer_experiment.py         # Experiment 7
-├── run_cross_type_experiment.py             # Experiment 8
-├── run_ensemble_transfer_experiment.py      # Experiment 9
-├── run_multitransfer_ablation_experiment.py # Experiment 10
-├── run_multitransfer_generalisation_experiment.py  # Experiment 11
-├── run_switch_modelling_experiment.py       # Experiment 12
-├── evaluate_all_models.py                   # Comprehensive evaluation
-├── train_data_efficiency.py                 # Data-sweep training helper
+├── scripts/
+│   ├── discover_buildings.py                    # Auto-select best building pairs
+│   ├── run_experiment_suite.py                  # Experiments 1–6
+│   ├── run_multi_transfer_experiment.py         # Experiment 7
+│   ├── run_cross_type_experiment.py             # Experiment 8
+│   ├── run_ensemble_transfer_experiment.py      # Experiment 9
+│   ├── run_multitransfer_ablation_experiment.py # Experiment 10
+│   ├── run_multitransfer_generalisation_experiment.py  # Experiment 11
+│   ├── run_switch_modelling_experiment.py       # Experiment 12
+│   ├── evaluate_all_models.py                   # Comprehensive evaluation
+│   └── train_data_efficiency.py                 # Data-sweep training helper
 │
 ├── notebooks/
 │   └── model_evaluation_analysis.ipynb      # Interactive analysis (16 sections)
@@ -124,7 +125,7 @@ energy-transfer-learning/
 │
 ├── EXPERIMENTS.md                           # Full description of all 12 experiments
 ├── PROJECT_SUMMARY.md                       # 4-strategy framework & design decisions
-├── TECHNICAL_IMPROVEMENTS Part 1.md         # Bug-fix history & advanced experiment record
+├── TECHNICAL_IMPROVEMENTS.md                # Bug-fix history & advanced experiment record
 └── notes.txt                                # Quick training pipeline reference
 ```
 

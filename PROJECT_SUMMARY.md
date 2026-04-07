@@ -73,15 +73,15 @@ This project implements a **4-strategy transfer learning framework** for buildin
 ## 🚀 Usage
 
 ```bash
-python discover_buildings.py                          # Select building pairs
-python run_experiment_suite.py                        # Experiments 1–6
-python run_multi_transfer_experiment.py               # Experiment 7
-python run_cross_type_experiment.py                   # Experiment 8
-python run_ensemble_transfer_experiment.py            # Experiment 9
-python run_multitransfer_ablation_experiment.py       # Experiment 10
-python run_multitransfer_generalisation_experiment.py # Experiment 11
-python run_switch_modelling_experiment.py             # Experiment 12
-python evaluate_all_models.py                         # Final evaluation
+python scripts/discover_buildings.py                          # Select building pairs
+python scripts/run_experiment_suite.py                        # Experiments 1–6
+python scripts/run_multi_transfer_experiment.py               # Experiment 7
+python scripts/run_cross_type_experiment.py                   # Experiment 8
+python scripts/run_ensemble_transfer_experiment.py            # Experiment 9
+python scripts/run_multitransfer_ablation_experiment.py       # Experiment 10
+python scripts/run_multitransfer_generalisation_experiment.py # Experiment 11
+python scripts/run_switch_modelling_experiment.py             # Experiment 12
+python scripts/evaluate_all_models.py                         # Final evaluation
 ```
 
 ## 📈 Expected Results
@@ -142,16 +142,17 @@ energy-transfer-learning/
 │   ├── train_pretransfer.py                 # Train from scratch (Scratch strategy)
 │   ├── train_transfer.py                    # Full fine-tuning strategy
 │   └── switch_logic.py                      # Auto-selection logic (Experiment 12)
-├── discover_buildings.py                    # Auto building-pair selection
-├── run_experiment_suite.py                  # Experiments 1–6
-├── run_multi_transfer_experiment.py         # Experiment 7
-├── run_cross_type_experiment.py             # Experiment 8
-├── run_ensemble_transfer_experiment.py      # Experiment 9
-├── run_multitransfer_ablation_experiment.py # Experiment 10
-├── run_multitransfer_generalisation_experiment.py  # Experiment 11
-├── run_switch_modelling_experiment.py       # Experiment 12
-├── evaluate_all_models.py                   # Comprehensive evaluation
-├── train_data_efficiency.py                 # Data-sweep training helper
+├── scripts/
+│   ├── discover_buildings.py                    # Auto building-pair selection
+│   ├── run_experiment_suite.py                  # Experiments 1–6
+│   ├── run_multi_transfer_experiment.py         # Experiment 7
+│   ├── run_cross_type_experiment.py             # Experiment 8
+│   ├── run_ensemble_transfer_experiment.py      # Experiment 9
+│   ├── run_multitransfer_ablation_experiment.py # Experiment 10
+│   ├── run_multitransfer_generalisation_experiment.py  # Experiment 11
+│   ├── run_switch_modelling_experiment.py       # Experiment 12
+│   ├── evaluate_all_models.py                   # Comprehensive evaluation
+│   └── train_data_efficiency.py                 # Data-sweep training helper
 ├── notebooks/model_evaluation_analysis.ipynb  # Interactive analysis notebook (16 sections)
 ├── models/experiments/                      # Saved checkpoints
 └── results/experiments/                     # CSVs + figures

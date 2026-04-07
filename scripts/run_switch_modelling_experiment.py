@@ -49,7 +49,9 @@ import argparse
 import glob
 import shutil
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, _root)
+sys.path.insert(0, os.path.join(_root, 'src'))
 
 from src.train_baseline      import train_baseline
 from src.train_pretransfer   import train_pretransfer
