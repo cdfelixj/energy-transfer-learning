@@ -1,0 +1,9 @@
+weeks,pretransfer_mae,pretransfer_rmse,pretransfer_r2,transfer_mae,transfer_rmse,transfer_r2,selected_model,rmse_margin_pct,switched,decision_reason,confidence
+1,24.2,31.5,0.402,21.5,28.2,0.521,transfer,-11.70212765957447,False,transfer_better,high
+2,20.1,26.8,0.541,18.9,25.1,0.608,transfer,-6.772908366533861,False,transfer_better,medium
+4,15.8,20.9,0.674,14.5,19.2,0.731,transfer,-8.854166666666663,False,transfer_better,medium
+8,12.6,16.7,0.762,11.6,15.3,0.811,transfer,-9.15032679738561,False,transfer_better,medium
+16,10.5,13.9,0.821,9.9,13.1,0.852,transfer,-6.106870229007639,False,transfer_better,medium
+32,9.3,12.4,0.858,9.1,12.1,0.876,transfer,-2.4793388429752126,False,transfer_better,low
+64,8.4,11.1,0.881,8.1,10.8,0.894,transfer,-2.7777777777777675,False,transfer_better,low
+104,8.0,10.6,0.897,7.8,10.4,0.903,transfer,-1.9230769230769162,False,transfer_better,low

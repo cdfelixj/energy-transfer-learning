@@ -1,0 +1,23 @@
+metric,value
+total_weeks_evaluated,8
+total_switches,5
+switch_rate_pct,62.5
+switched_at_weeks,"[1, 4, 32, 64, 104]"
+switches_in_tier_1_4_weeks,2
+switches_in_tier_8_32_weeks,1
+switches_in_tier_64_104_weeks,2
+reason_pretransfer_better,5
+reason_transfer_better,2
+reason_within_threshold_prefer_transfer,1
+avg_rmse_improvement_when_switched_pct,15.4894
+max_rmse_improvement_when_switched_pct,29.4332
+best_week_to_switch,1
+best_switch_margin_pct,41.7097
+oracle_mean_rmse,22.6999
+always_pretransfer_mean_rmse,22.8411
+always_transfer_mean_rmse,25.4494
+switched_strategy_mean_rmse,22.7181
+switched_vs_always_transfer_rmse_delta,2.7313
+switched_vs_always_transfer_rmse_delta_pct,10.7323
+confidence_high,7
+confidence_low,1

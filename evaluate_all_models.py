@@ -725,10 +725,24 @@ def create_comparison_plot(df, results_dir):
 
 # Map model_type string → Lightning class used to save the checkpoint
 _MODEL_CLASS = {
-    'pretransfer': EnergyLSTM,
-    'transfer':    EnergyLSTM,
-    'frozen':      EnergyLSTMFrozen,
-    'adapter':     EnergyLSTMAdapter,
+    'pretransfer':   EnergyLSTM,
+    'transfer':      EnergyLSTM,
+    'frozen':        EnergyLSTMFrozen,
+    'adapter':       EnergyLSTMAdapter,
+    'multitransfer':    EnergyLSTM,   # Multi-source pre-trained, same architecture as baseline
+    'ensembletransfer': EnergyLSTM,   # Weight-averaged model soup, same architecture
+    # N-source ablation variants (multitransfer with N=1..5 source buildings)
+    'multitransfer_n1': EnergyLSTM,
+    'multitransfer_n2': EnergyLSTM,
+    'multitransfer_n3': EnergyLSTM,
+    'multitransfer_n4': EnergyLSTM,
+    'multitransfer_n5':  EnergyLSTM,
+    'multitransfer_n10': EnergyLSTM,
+    'multitransfer_n15': EnergyLSTM,
+    # Cross-type transfer variants (same target, different source domain distance)
+    'transfer_samesite':  EnergyLSTM,
+    'transfer_sametype':  EnergyLSTM,
+    'transfer_crosstype': EnergyLSTM,
 }
 
 
@@ -894,6 +908,96 @@ def compare_data_efficiency(results_df, model_type):
         print(f"  (Insufficient data for improvement calculation)")
     
     print(f"{'='*155}")
+
+
+def evaluate_data_efficiency_with_switching(
+    target_building,
+    weeks_list=None,
+    seq_length=24,
+    experiment_name='rat_education',
+    site_id='Rat',
+    building_type='Education',
+    margin_threshold_pct=2.0,
+):
+    """
+    Evaluate PreTransfer and Transfer data-efficiency models then apply
+    automatic model switching based on RMSE significance.
+
+    For each week count the model with the lower RMSE is selected, provided the
+    improvement exceeds *margin_threshold_pct* (default 2%). When the gap is
+    smaller than the threshold, Transfer is preferred (warm-start bias).
+
+    Args:
+        target_building:       Building to evaluate on.
+        weeks_list:            Week counts to sweep (default [1,2,4,8,16,32,64,104]).
+        seq_length:            Sequence length used during training (default 24 h).
+        experiment_name:       Subdirectory under models/experiments/.
+        site_id:               Site filter forwarded to prepare_test_data.
+        building_type:         Building-type filter forwarded to prepare_test_data.
+        margin_threshold_pct:  Minimum RMSE % gap required to switch away from
+                               the Transfer default (default 2.0).
+
+    Returns:
+        DataFrame with columns:
+            weeks, pretransfer_mae, pretransfer_rmse, pretransfer_r2,
+            transfer_mae, transfer_rmse, transfer_r2,
+            selected_model, rmse_margin_pct, switched, decision_reason, confidence
+    """
+    import sys as _sys
+    import os as _os
+    _sys.path.append(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'src'))
+    from src.switch_logic import apply_switching_to_df
+
+    if weeks_list is None:
+        weeks_list = [1, 2, 4, 8, 16, 32, 64, 104]
+
+    print(f"\n{'=' * 90}")
+    print(f"  SWITCH MODELLING EVALUATION  [{experiment_name}]")
+    print(f"  Target: {target_building}  |  Threshold: {margin_threshold_pct}%")
+    print(f"{'=' * 90}")
+
+    pt_df = evaluate_data_efficiency(
+        model_type='pretransfer',
+        target_building=target_building,
+        weeks_list=weeks_list,
+        seq_length=seq_length,
+        experiment_name=experiment_name,
+        site_id=site_id,
+        building_type=building_type,
+    )
+
+    tr_df = evaluate_data_efficiency(
+        model_type='transfer',
+        target_building=target_building,
+        weeks_list=weeks_list,
+        seq_length=seq_length,
+        experiment_name=experiment_name,
+        site_id=site_id,
+        building_type=building_type,
+    )
+
+    switched_df = apply_switching_to_df(pt_df, tr_df, margin_threshold_pct)
+
+    # Print per-week switching decisions
+    print(f"\n{'─' * 90}")
+    print(f"  {'Weeks':<8} {'PT RMSE':<12} {'TR RMSE':<12} {'Selected':<14} {'Margin %':<12} {'Switched':<10} {'Reason'}")
+    print(f"{'─' * 90}")
+    for _, row in switched_df.iterrows():
+        pt_rmse = f"{row['pretransfer_rmse']:.4f}" if not pd.isna(row['pretransfer_rmse']) else 'N/A'
+        tr_rmse = f"{row['transfer_rmse']:.4f}"    if not pd.isna(row['transfer_rmse'])    else 'N/A'
+        margin  = f"{row['rmse_margin_pct']:.2f}%"  if not pd.isna(row['rmse_margin_pct'])  else 'N/A'
+        switched_flag = '*** YES ***' if row['switched'] else 'no'
+        print(
+            f"  {int(row['weeks']):<8} {pt_rmse:<12} {tr_rmse:<12} "
+            f"{str(row['selected_model']):<14} {margin:<12} {switched_flag:<10} {row['decision_reason']}"
+        )
+    print(f"{'─' * 90}")
+
+    n_switches = int(switched_df['switched'].sum())
+    total = len(switched_df)
+    print(f"\n  Switches: {n_switches} / {total} week counts ({n_switches/total*100:.1f}%)")
+
+    return switched_df
 
 
 if __name__ == '__main__':
