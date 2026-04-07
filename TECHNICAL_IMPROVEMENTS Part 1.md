@@ -1178,6 +1178,143 @@ By systematically addressing each issue—distribution mismatch, model collapse,
 
 ---
 
-**Document Status**: Complete  
-**Last Verified**: January 2026  
-**Next Review**: After retraining all models
+**Document Status**: Updated
+**Last Verified**: April 2026
+**Next Review**: As new experiments are added
+
+---
+
+## 10. Advanced Experiments & Strategies
+
+This section documents the implementation of the Frozen Backbone, Adapter, Multi-Transfer, Ensemble Transfer, N-Source Ablation, Cross-Type, and Switch Modelling experiments added after the initial core (Sections 1–9).
+
+---
+
+### 10.1 Frozen Backbone (`EnergyLSTMFrozen`)
+
+**Motivation**: Full fine-tuning risks catastrophic forgetting when only 1–8 weeks of target data is available. Freezing the LSTM layers prevents the shared representations from being overwritten.
+
+**Implementation** (`src/models.py`):
+- All LSTM layers have `requires_grad = False` set after loading baseline weights.
+- Only the MLP prediction head (~8 K params) is updated during training.
+- Uses identical training scripts as Full Fine-Tuning; controlled by `model_class=EnergyLSTMFrozen`.
+
+**Key findings**:
+- Most stable strategy at 1–4 weeks of target data.
+- Advantage vs Full Fine-Tuning shrinks and eventually reverses at ≥32 weeks (head alone cannot exploit extra data).
+- Eagle/Brooke collapse does **not** occur with Frozen Backbone at low data amounts.
+
+---
+
+### 10.2 Adapter Layers (`EnergyLSTMAdapter`)
+
+**Motivation**: Frozen Backbone's 8 K trainable params may be insufficient at moderate data levels. A small bottleneck adapter adds expressiveness without catastrophic forgetting risk.
+
+**Architecture** (`src/models.py`):
+```
+LSTM output (dim=128)
+    │
+    ├─ adapter: Linear(128→32) → ReLU → Linear(32→128)  [residual add]
+    │
+    └─ MLP head → prediction
+```
+Trainable params: ~16 K (adapter layers + head). LSTM layers remain frozen.
+
+**Key findings**:
+- Competitive with Full Fine-Tuning at low data; more robust at medium data than pure Frozen Backbone.
+- Residual connection prevents adapter from degrading frozen representations.
+
+---
+
+### 10.3 Multi-Transfer — Diverse Source Pool (Experiment 7)
+
+**Motivation**: Eagle/Education single-source Transfer collapses at <16 weeks (MAE up to 904 kWh, R²=−340). Training on a single same-site source over-specialises the baseline, making it brittle when fine-tuned with minimal target data.
+
+**Implementation** (`run_multi_transfer_experiment.py`):
+- Baseline pre-trained jointly on 5 buildings: Rat/Colin, Eagle/Samantha, Lamb/Lucas, Hog/Miriam, Robin/Celia (3 sites, 3 building types).
+- Lamb site provides only 29 features (vs 31 for others); all multi-source models use `input_size=29` (two weather columns dropped from other sites).
+- Target: Eagle/Brooke, using the same 1–104 week sweep as single-source experiments.
+
+**Key findings**:
+- Eliminates the collapse entirely; MAE stays within a reasonable range even at 1 week.
+- Slightly weaker vs single-source Transfer at moderate/high data for easy targets (feature truncation penalty + reduced per-building specialisation).
+- Most valuable precisely where single-source Transfer is most fragile.
+
+---
+
+### 10.4 Ensemble Transfer — Model Soup (Experiment 9)
+
+**Motivation**: Joint multi-source training may lose per-building specialisation. Weight averaging ("model soup") preserves it by combining individually trained baselines.
+
+**Implementation** (`run_ensemble_transfer_experiment.py`):
+1. Train 5 individual source baselines (each with `input_size=29`).
+2. Uniform-average all state dicts: `θ_soup = (1/5) Σ θᵢ`.
+3. Fine-tune the averaged model on Eagle/Brooke at each data level.
+
+**Key findings**:
+- Comparable to Multi-Transfer at low data; slightly different failure modes.
+- Confirms model-soup weight averaging is viable for time-series LSTM pre-training.
+- Does not consistently outperform joint Multi-Transfer; the two approaches are approximately equivalent.
+
+---
+
+### 10.5 N-Source Ablation (Experiment 10)
+
+**Motivation**: Quantify how pool size (N) and source diversity affect Multi-Transfer performance.
+
+**Implementation** (`run_multitransfer_ablation_experiment.py`):
+- Pools grow incrementally: N=1 (Eagle/Samantha), N=2 (+Rat/Colin), N=3 (+Lamb/Lucas), N=4 (+Hog/Miriam), N=5 (+Robin/Celia), N=10 and N=15 add additional Eagle/Rat buildings.
+- Target: Eagle/Brooke across the full 1–104 week data sweep.
+
+**Key findings**:
+- Largest MAE improvements occur between N=1 and N=3 (adding different sites and types matters most).
+- Strong diminishing returns from N=4 onward; adding more buildings of existing site/type provides minimal benefit.
+- Diversity of site + type is more important than raw quantity.
+
+---
+
+### 10.6 Cross-Type Transfer (Experiment 8)
+
+**Motivation**: Establish a domain-distance gradient: same-site and same-type sources should need less adaptation than cross-site or cross-type.
+
+**Implementation** (`run_cross_type_experiment.py`):
+- Three source categories tested on Eagle/Brooke (Education):
+  - **Same-site, same-type**: Eagle/Samantha (Education)
+  - **Cross-site, same-type**: Rat/Colin (Education, different site)
+  - **Cross-site, cross-type**: Hog/Miriam (Office, different site)
+
+**Key findings**:
+- Confirms the domain-distance gradient: same-site > same-type cross-site > cross-type cross-site.
+- Even cross-type transfer provides meaningful benefit over Scratch at 1–8 weeks.
+- Domain gap is smaller than expected; shared temporal patterns (occupancy, HVAC) are transferable across building types.
+
+---
+
+### 10.7 Multi-Transfer Generalisation (Experiment 11)
+
+**Motivation**: Multi-Transfer was designed for hard targets (Eagle/Brooke). Does it also benefit easy targets where single-source Transfer already works well?
+
+**Implementation** (`run_multitransfer_generalisation_experiment.py`):
+- Same 5-building pool as Experiment 7 (`input_size=29`).
+- Target: Rat/Denise (easy target, same site as one source building).
+
+**Key findings**:
+- Multi-Transfer provides smaller benefit than single-source Transfer here.
+- Feature truncation penalty (29 vs 31 features) and reduced source specialisation combine to slightly worsen performance vs same-building Transfer.
+- Conclusion: Multi-source pre-training is most valuable when single-source Transfer is fragile; for easy targets, single-source Transfer remains the better default.
+
+---
+
+### 10.8 Switch Modelling (Experiment 12)
+
+**Motivation**: In deployment, the optimal strategy (Scratch vs Transfer) varies by data amount and target building. Can a simple auto-selection rule capture this without additional training?
+
+**Implementation**:
+- `run_switch_modelling_experiment.py` trains both Scratch and Transfer at each data level.
+- `src/switch_logic.py` applies the selection rule: prefer Transfer unless Scratch RMSE is more than 2% better, with NaN handling (if one strategy produces NaN RMSE, auto-select the other).
+- Outputs: `data_efficiency_switched.csv` (selected model metrics per week count), `switch_summary.csv` (per-week selection + relative margin).
+
+**Key findings**:
+- Auto-switching matches or exceeds the better individual strategy at every data level.
+- The 2% threshold prevents unnecessary switching from noise; tie goes to Transfer.
+- Demonstrates that a cheap post-hoc selection rule can reliably recover near-optimal performance without architectural changes.

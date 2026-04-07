@@ -2,102 +2,112 @@
 
 ## Project Overview
 
-This project implements a **3-model transfer learning framework** for building energy consumption forecasting using LSTM neural networks. The goal is to demonstrate that transfer learning can improve prediction accuracy when only limited data is available for a new building.
+This project implements a **4-strategy transfer learning framework** for building energy consumption forecasting using LSTM neural networks, validated across 12 experiments covering 6 building-pair clusters.
 
 ## 🎯 Experimental Design
 
-### Models
+### Fine-Tuning Strategies
 
-1. **Baseline Model** (`src/train_baseline.py`)
-   - **Purpose**: Learn general patterns from abundant source data
-   - **Training**: 2 years of data from Rat_education_Colin (~17,500 hours)
-   - **Architecture**: 3-layer LSTM (128 hidden units, seq_length=168)
-   - **Data Split**: Stratified random split (avoids seasonal distribution mismatch)
+1. **Scratch / Pre-Transfer** (`src/train_pretransfer.py`)
+   - **Purpose**: Control group — train from scratch on limited target data
+   - **Architecture**: 2 layers × 64 hidden, seq=24h
+   - **Trainable params**: ~88 K (all)
+   - **Starting point**: Random initialisation
 
-2. **Pre-Transfer Model** (`src/train_pretransfer.py`)
-   - **Purpose**: Control group - train from scratch on limited target data
-   - **Training**: 8 weeks of Rat_education_Denise data (~1,344 hours)
-   - **Architecture**: Simplified (2 layers, 64 hidden units, seq_length=24)
-   - **Data Split**: Stratified random split
+2. **Full Fine-Tuning / Transfer** (`src/train_transfer.py`)
+   - **Purpose**: Warm-start fine-tuning on all parameters
+   - **Architecture**: 2 layers × 64 hidden, seq=24h
+   - **Trainable params**: ~620 K (all)
+   - **Starting point**: Baseline weights
+   - **LR**: 1e-4 (10× lower than Scratch)
 
-3. **Transfer Model** (`src/train_transfer.py`)
-   - **Purpose**: Experimental group - fine-tune baseline on limited target data  
-   - **Training**: Same 8 weeks of Rat_education_Denise
-   - **Initialization**: Loaded from baseline model weights
-   - **Architecture**: Matches baseline (adapted for shorter sequences)
+3. **Frozen Backbone** (`src/models.py` — `EnergyLSTMFrozen`)
+   - **Purpose**: Transfer with catastrophic-forgetting prevention
+   - **Architecture**: LSTM frozen; only MLP head trainable
+   - **Trainable params**: ~8 K
+   - **Starting point**: Baseline weights
 
-4. **Data Efficiency Models** (`train_data_efficiency.py`)
-   - **Purpose**: Evaluate how performance scales with data amount
-   - **Training**: Both Pre-Transfer and Transfer with 1, 2, 4, 8, 16, 32, 64, 104 weeks
-   - **Building**: Rat_education_Denise
-   - **Output**: Performance comparison tables for all data amounts (104 weeks = 2 years)
+4. **Adapter Layers** (`src/models.py` — `EnergyLSTMAdapter`)
+   - **Purpose**: Minimal-parameter transfer with added expressiveness
+   - **Architecture**: Linear(128→32)+ReLU+Linear(32→128) bottleneck, LSTM frozen
+   - **Trainable params**: ~16 K (adapter + head)
+   - **Starting point**: Baseline weights
+
+**Baseline** (`src/train_baseline.py`): 3-layer LSTM (128 hidden, seq=168h) trained on 2 years of source building data; produces the shared checkpoint from which all transfer strategies start.
+
+**Data Efficiency Sweep** (`train_data_efficiency.py`): Train all 4 strategies at 1, 2, 4, 8, 16, 32, 64, 104 weeks of target data to quantify the data-scarce benefit of transfer learning.
 
 ### Key Design Decisions
 
-✅ **Stratified Random Split**: All models use stratified random splits by month to ensure train/val/test have similar distributions. This avoids the 52% distribution shift that caused negative R² in early experiments.
+✅ **Stratified Random Split**: Month-based shuffle split ensures train/val/test have similar energy distributions. Chronological split caused a 52% train→test mean shift (negative R²).
 
-✅ **Same Target Data**: Pre-Transfer and Transfer use identical data (8 weeks) to isolate the effect of transfer learning.
+✅ **Adaptive architecture**: Limited-data models use 2 layers × 64 hidden (not 3 × 128) to prevent overfitting with small datasets.
 
-✅ **Adaptive Architecture**: Limited-data models use simpler architecture (64 hidden, 2 layers) to prevent overfitting with small datasets.
+✅ **Same target data per comparison**: All 4 strategies are evaluated on identical target-building data to isolate the effect of pre-training and fine-tuning strategy.
 
 ## 📊 Research Questions
 
-1. **Does transfer learning improve performance with limited data?**
-   - Compare: Pre-Transfer RMSE vs Transfer RMSE on target building
+1. Does any transfer strategy beat Scratch at low data levels (1–8 weeks)?
+2. Which fine-tuning strategy is most robust — Full, Frozen, or Adapter?
+3. Can multi-source pre-training fix catastrophic collapse on hard targets?
+4. How does source-to-target domain distance (site/type) affect TL benefit?
+5. Does auto-switching between Scratch and Transfer always select the better one?
 
-2. **How much improvement does transfer learning provide?**
-   - Measure: % reduction in RMSE, MAE, and improvement in R²
+## 📋 12-Experiment Roster
 
-3. **Can we overcome distribution shifts across buildings?**
-   - Compare: Baseline on source vs Baseline on target
+| # | Name | Source → Target | Key question |
+|---|---|---|---|
+| 1 | `rat_education` | Rat/Colin → Rat/Denise | Does TL work at all? |
+| 2 | `rat_education_new` | Rat/Theo → Rat/Lee | Replicability? |
+| 3 | `eagle_education` | Eagle/Samantha → Eagle/Brooke | TL at different site? |
+| 4 | `lamb_education` | Lamb/Lucas → Lamb/Mae | TL at a third site? |
+| 5 | `office_any` | Hog/Miriam → Hog/Denita | TL for office type? |
+| 6 | `lodging_any` | Robin/Celia → Robin/Oliva | TL for lodging type? |
+| 7 | `multi_transfer` | 5-building pool → Eagle/Brooke | Multi-source fixes collapse? |
+| 8 | `cross_type_transfer` | Same-site / Same-type / Cross-type → Eagle/Brooke | Domain distance impact? |
+| 9 | `ensemble_transfer` | Model soup (5 baselines) → Eagle/Brooke | Joint vs. averaging? |
+| 10 | `multitransfer_ablation` | N=1…15 sources → Eagle/Brooke | How many sources needed? |
+| 11 | `multitransfer_generalisation` | 5-building pool → Rat/Denise | Multi-source on easy targets? |
+| 12 | `switch_modelling` | Colin → Denise | Auto-select beats either? |
 
 ## 🚀 Usage
 
-### Train All Models
-
 ```bash
-# Option 1: Train individually
-python src/train_baseline.py       # ~15-25 epochs
-python src/train_pretransfer.py    # ~100 epochs  
-python src/train_transfer.py       # ~50 epochs
-
-# Option 2: Automated pipeline
-python run_training_pipeline.py
+python discover_buildings.py                          # Select building pairs
+python run_experiment_suite.py                        # Experiments 1–6
+python run_multi_transfer_experiment.py               # Experiment 7
+python run_cross_type_experiment.py                   # Experiment 8
+python run_ensemble_transfer_experiment.py            # Experiment 9
+python run_multitransfer_ablation_experiment.py       # Experiment 10
+python run_multitransfer_generalisation_experiment.py # Experiment 11
+python run_switch_modelling_experiment.py             # Experiment 12
+python evaluate_all_models.py                         # Final evaluation
 ```
-
-### Evaluate & Compare
-
-```bash
-python evaluate_all_models.py
-```
-
-This generates:
-- `results/three_model_comparison.csv` - Detailed metrics
-- `results/model_comparison.png` - Visualization
-- Console output with comprehensive analysis
 
 ## 📈 Expected Results
 
 ```
-Model Comparison:
-──────────────────────────────────────────────────────────────
-Model          Data Source        RMSE (kWh)  R²     Notes
-──────────────────────────────────────────────────────────────
-Baseline       2yr Colin         <15         >0.6   Best case
-Pre-Transfer   2mo Denise        ~20-30      ~0.4   Control
-Transfer       2mo Denise        <20         >0.6   ↑ Improved!
-──────────────────────────────────────────────────────────────
+4-Strategy Comparison (per experiment, per data level):
+──────────────────────────────────────────────────────────────────
+Strategy       Data Source     MAE (kWh)   R²     vs Scratch
+──────────────────────────────────────────────────────────────────
+Scratch        8wk target      ~basis      ~0.4   control
+Full FT        8wk + TL        <basis      >0.6   ↑ better
+Frozen         8wk + TL        <basis      >0.6   ↑ most stable low-data
+Adapter        8wk + TL        <basis      >0.6   ↑ competitive
+──────────────────────────────────────────────────────────────────
 ```
 
-**Success Criteria**: Transfer RMSE < Pre-Transfer RMSE (proves transfer learning helps!)
+**Success Criteria**: Any transfer strategy MAE < Scratch MAE proves transfer learning helps.
+Benefit is reported as `(Scratch_MAE − Strategy_MAE) / Scratch_MAE × 100%`.
 
 ## 🔧 Technical Details
 
 ### Data Processing
-- **Dataset**: Building Data Genome Project 2 (Education buildings, Rat site)
-- **Features**: Weather data + temporal features (31 total)
-- **Normalization**: StandardScaler on features, energy target unscaled
-- **Train/Val/Test**: 60/20/20 split with month-based stratification
+- **Dataset**: Building Data Genome Project 2 (electricity meters, multiple sites and types)
+- **Features**: Weather data (8) + temporal features (4 cyclical) = 31 features total (29 for Lamb site)
+- **Normalisation**: StandardScaler on features, energy target left unscaled
+- **Train/Val/Test**: 60/20/20 by month-based stratification
 
 ### Model Architecture
 ```python
@@ -107,62 +117,61 @@ Sequence: 168 hours (1 week)
 Dropout: 0.2
 Learning rate: 5e-4
 
-# Pre-Transfer & Transfer (limited data)
-LSTM: 2 layers × 64 hidden units  
+# Limited-data strategies
+LSTM: 2 layers × 64 hidden units
 Sequence: 24 hours (1 day)
 Dropout: 0.2
-Learning rate: 1e-3 (pre-transfer), 1e-4 (transfer)
+Learning rate: 1e-3 (Scratch), 1e-4 (transfer strategies)
 ```
 
 ### Critical Fixes Applied
 
-⚠️ **Distribution Mismatch Issue**: Initial chronological split caused 52% mean shift between train (60.8 kWh) and test (29.2 kWh), resulting in negative R². Fixed by implementing stratified random split.
-
-✅ **Early Stopping**: Increased patience from 10 to 15 epochs to allow proper convergence.
-
-✅ **Sequence Length**: Reduced from 336 to 168 hours for baseline (easier for LSTM to learn).
+⚠️ **Distribution Mismatch**: Chronological split caused 52% mean shift. Fixed by stratified month-based random split.  
+✅ **Early Stopping**: Patience increased from 10 → 20 to allow convergence.  
+✅ **Architecture Scaling**: 64 hidden / 2 layers for limited-data (not 128/3).  
+✅ **Sequence Length**: 168h for baseline, 24h for limited-data training.
 
 ## 📁 Project Structure
 
 ```
 energy-transfer-learning/
 ├── src/
-│   ├── data_loader.py          # Data loading & preprocessing
-│   ├── models.py               # LSTM model definition
-│   ├── train_baseline.py       # Train baseline model
-│   ├── train_pretransfer.py    # Train from scratch (control)
-│   └── train_transfer.py       # Fine-tune baseline (experimental)
-├── evaluate_all_models.py      # Compare all 3 models
-├── run_training_pipeline.py    # Automated training
-├── models/                      # Saved model checkpoints
-├── results/                     # Evaluation results
-└── data/                        # Building Data Genome Project 2
+│   ├── data_loader.py                       # Data loading & preprocessing
+│   ├── models.py                            # EnergyLSTM, EnergyLSTMFrozen, EnergyLSTMAdapter
+│   ├── train_baseline.py                    # Train source building
+│   ├── train_pretransfer.py                 # Train from scratch (Scratch strategy)
+│   ├── train_transfer.py                    # Full fine-tuning strategy
+│   └── switch_logic.py                      # Auto-selection logic (Experiment 12)
+├── discover_buildings.py                    # Auto building-pair selection
+├── run_experiment_suite.py                  # Experiments 1–6
+├── run_multi_transfer_experiment.py         # Experiment 7
+├── run_cross_type_experiment.py             # Experiment 8
+├── run_ensemble_transfer_experiment.py      # Experiment 9
+├── run_multitransfer_ablation_experiment.py # Experiment 10
+├── run_multitransfer_generalisation_experiment.py  # Experiment 11
+├── run_switch_modelling_experiment.py       # Experiment 12
+├── evaluate_all_models.py                   # Comprehensive evaluation
+├── train_data_efficiency.py                 # Data-sweep training helper
+├── notebooks/model_evaluation_analysis.ipynb  # Interactive analysis notebook (16 sections)
+├── models/experiments/                      # Saved checkpoints
+└── results/experiments/                     # CSVs + figures
 ```
 
 ## 📚 Key Findings from Development
 
-1. **Data Distribution**: Education buildings show strong seasonal patterns. Test set (Aug-Dec) had 52% lower consumption than train set (Jan-Jul), likely due to school closures. Stratified split resolved this.
+1. **Stratified split is essential**: Education buildings have school-holiday patterns that cause a 52% train→test mean shift with chronological splits — fixed by month stratification.
+2. **Eagle/Brooke is a hard target**: Single-source Transfer collapses at <16 weeks (MAE up to 904 kWh, R²=−340). Multi-source pre-training eliminates this.
+3. **Frozen Backbone is most reliable at 1–4 weeks** of target data; Full Fine-Tuning catches up at ≥32 weeks.
+4. **N-source diminishing returns past N=3**: Pool diversity (site + type) improves generalisation more than raw quantity.
+5. **Auto-switching (Switch Modelling)** matches or exceeds the better individual strategy at every data level with a 2% threshold rule.
 
-2. **Model Convergence**: Initial training stopped too early (epoch 7) with val_RMSE=34 kWh. With improved settings, models converge to <15 kWh RMSE.
+## 🔄 Next Steps (Open Research Questions)
 
-3. **Architecture Scaling**: Full baseline architecture (128 hidden, 3 layers, 336 seq_length) doesn't work with limited data. Reduced to (64 hidden, 2 layers, 24 seq_length) for limited-data scenarios.
-
-## 🎓 Research Context
-
-This project follows standard transfer learning experimental design:
-- **Source task**: Energy forecasting for building with abundant data
-- **Target task**: Energy forecasting for building with limited data
-- **Hypothesis**: Pre-trained model improves performance vs training from scratch
-- **Comparison**: Controlled (Pre-Transfer) vs Experimental (Transfer)
-
-## 🔄 Next Steps
-
-1. ✅ Train all models with fixed data splits
-2. ⏳ Evaluate and document final results
-3. ⏳ Statistical significance testing (t-test on improvements)
-4. ⏳ Analyze which features transfer best
-5. ⏳ Try different target buildings to test generalization
+- Statistical significance testing across experiments (t-test on MAE improvements)
+- Feature attribution — which weather/temporal features transfer most effectively
+- True temporal validation (chronological split, future forecasting scenarios)
+- Architecture alternatives: Transformer or GRU vs LSTM
 
 ---
 
-**Status**: Core implementation complete. Ready for training and evaluation.
+**Status**: ✅ All 12 experiments complete.
