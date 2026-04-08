@@ -1,8 +1,5 @@
 # Building Energy Transfer Learning
 
-**Read DOCUMENTATION HIERARCHY**
-**MAKE SURE TO READ REPORT.MD and notebooks\comprehensive_analysis.ipynb**
-
 A transfer learning framework for building energy consumption forecasting using LSTM neural networks. This project demonstrates how pre-training on data-rich buildings can improve prediction accuracy for buildings with limited historical data, across 12 experiments and 4 fine-tuning strategies.
 
 ## 🎯 Problem Statement

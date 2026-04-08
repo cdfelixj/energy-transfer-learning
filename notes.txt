@@ -42,4 +42,9 @@ python scripts/run_experiment_suite.py
 python scripts/run_multi_transfer_experiment.py, run_cross_type_experiment.py, run_ensemble_transfer_experiment.py
 python scripts/run_multitransfer_ablation_experiment.py, run_multitransfer_generalisation_experiment.py
 python scripts/run_switch_modelling_experiment.py
+python scripts/run_prime_experiment.py
 python scripts/evaluate_all_models.py
+
+Results saved to:
+  results/experiments/{experiment_name}/  for Experiments 1–12
+  results/prime/                          for PRIME experiment

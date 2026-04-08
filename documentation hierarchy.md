@@ -15,10 +15,12 @@ Bug-fix chronicle (distribution mismatch, model collapse, early stopping, sequen
 ## Quick Reference → notes.txt
 Training pipeline commands in order, known issues and their fixes.
 
-## Analysis Notebook → notebooks/model_evaluation_analysis.ipynb
-Interactive analysis — 16 sections covering all 12 experiments and all 4 strategies:
-- Sections 1–6: Core experiment data efficiency curves
-- Sections 7–9: Ensemble, Cross-Type, N-Source Ablation
-- Sections 10–12: Architecture details, parameter counts
-- Sections 13–15: Multi-Transfer, Generalisation, Cross-Type deep dive
-- Section 16: Switch Modelling (auto-selection results)
+## Analysis Notebook → notebooks/comprehensive_analysis.ipynb
+The complete analysis — 14 sections covering all 12 experiments + PRIME with charts and interpreted findings:
+- Section 0: Setup, imports, project overview
+- Sections 1–2: Dataset overview, architecture & strategies
+- Sections 3–8: Core experiments 1–11 (including collapse analysis, multi-source, ablation)
+- Section 9: Experiment 12 — auto-switch modelling (RMSE 22.72 vs oracle 22.70)
+- Section 10: PRIME experiment (negative result, source homogeneity analysis)
+- Section 11: Cross-experiment summary (master heatmap, transfer benefit heatmap)
+- Sections 12–14: Discussion, Limitations, Conclusion
