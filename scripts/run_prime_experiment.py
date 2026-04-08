@@ -170,6 +170,9 @@ def run_data_efficiency_sweep(
     soup_state: dict,
     soup_hparams,
     out_dir: str,
+    electricity_all: pd.DataFrame | None = None,
+    metadata_all: pd.DataFrame | None = None,
+    weather_df: pd.DataFrame | None = None,
 ) -> tuple[pd.DataFrame, object | None, object | None]:
     """Train PRIME_Transfer + PreTransfer at every weeks value in WEEKS_LIST.
 
@@ -230,12 +233,47 @@ def run_data_efficiency_sweep(
             streaming_model    = prime_model
             streaming_pt_model = pt_model
 
+        # PRIME Streaming — run soft-blend at this week level
+        streaming_mae_val  = float('nan')
+        streaming_rmse_val = float('nan')
+        if (not args.skip_streaming
+                and prime_model is not None
+                and pt_model is not None
+                and electricity_all is not None
+                and metadata_all is not None):
+            try:
+                stream_out_dir = os.path.join(out_dir, 'streaming')
+                os.makedirs(stream_out_dir, exist_ok=True)
+                live_df = run_soft_blend_streaming(
+                    transfer_model=prime_model,
+                    pretransfer_model=pt_model,
+                    electricity_df=electricity_all,
+                    target_building=args.target_building,
+                    data_limit_weeks=weeks,
+                    metadata=metadata_all,
+                    weather_df=weather_df,
+                    eval_window=args.eval_window,
+                    hard_switch_threshold_pct=args.threshold,
+                    n_mc_samples=args.mc_samples,
+                    mc_confidence=0.9,
+                    seq_length=24,
+                )
+                _save_csv(live_df, os.path.join(stream_out_dir, f'live_inference_{weeks}week.csv'))
+                errors = live_df['prediction_kwh'] - live_df['actual_kwh']
+                streaming_mae_val  = round(float(errors.abs().mean()), 4)
+                streaming_rmse_val = round(float((errors ** 2).mean() ** 0.5), 4)
+                print(f"  \u2713 Streaming {weeks}w: MAE={streaming_mae_val:.4f}  RMSE={streaming_rmse_val:.4f}")
+            except Exception as e:
+                print(f"  \u2717 Streaming ({weeks} weeks) skipped: {e}")
+
         efficiency_rows.append({
-            'weeks':            weeks,
-            'prime_rmse':       round(prime_r.get('test_rmse', float('nan')), 4),
-            'prime_mae':        round(prime_r.get('test_mae',  float('nan')), 4),
-            'pretransfer_rmse': round(pt_r.get('test_rmse',    float('nan')), 4),
-            'pretransfer_mae':  round(pt_r.get('test_mae',     float('nan')), 4),
+            'weeks':                weeks,
+            'prime_rmse':           round(prime_r.get('test_rmse', float('nan')), 4),
+            'prime_mae':            round(prime_r.get('test_mae',  float('nan')), 4),
+            'pretransfer_rmse':     round(pt_r.get('test_rmse',    float('nan')), 4),
+            'pretransfer_mae':      round(pt_r.get('test_mae',     float('nan')), 4),
+            'prime_streaming_rmse': streaming_rmse_val,
+            'prime_streaming_mae':  streaming_mae_val,
         })
 
     df = pd.DataFrame(efficiency_rows)
@@ -255,6 +293,12 @@ def run_data_efficiency_sweep(
             columns={'pretransfer_rmse': 'rmse', 'pretransfer_mae': 'mae'}),
         os.path.join(out_dir, 'data_efficiency_prime_pretransfer.csv'),
     )
+    if 'prime_streaming_rmse' in df.columns:
+        _save_csv(
+            df[['weeks', 'prime_streaming_rmse', 'prime_streaming_mae']].rename(
+                columns={'prime_streaming_rmse': 'rmse', 'prime_streaming_mae': 'mae'}),
+            os.path.join(out_dir, 'data_efficiency_prime_streaming.csv'),
+        )
 
     # Generate efficiency curve figure
     _generate_efficiency_figure(df, out_dir)
@@ -290,6 +334,10 @@ def _generate_efficiency_figure(df: pd.DataFrame, out_dir: str) -> None:
         if pt_col in df.columns:
             ax.plot(df['weeks'], df[pt_col], 's--', color='darkorange',
                     label='PreTransfer', linewidth=1.5, markersize=5)
+        stream_col = f'prime_streaming_{metric}'
+        if stream_col in df.columns and df[stream_col].notna().any():
+            ax.plot(df['weeks'], df[stream_col], '^-.', color='seagreen',
+                    label='PRIME_Streaming', linewidth=1.5, markersize=5)
         ax.set_xscale('log')
         ax.set_xticks(df['weeks'])
         ax.set_xticklabels(df['weeks'])
@@ -610,8 +658,8 @@ def parse_args() -> argparse.Namespace:
                         help='Number of source buildings for the soup (ablation N=5 optimal).')
     parser.add_argument('--eval-window', type=int, default=168,
                         help='Hours between blend-weight updates in streaming (168 = 1 week).')
-    parser.add_argument('--threshold', type=float, default=2.0,
-                        help='Hard-switch margin threshold in percent (default 2.0%).')
+    parser.add_argument('--threshold', type=float, default=20.0,
+                        help='Hard-switch margin threshold in percent (default 20.0%).')
     parser.add_argument('--mc-samples', type=int, default=50,
                         help='MC Dropout samples for uncertainty estimation.')
     parser.add_argument('--loss-alpha', type=float, default=0.7,
@@ -664,6 +712,24 @@ def main() -> None:
         out_dir=out_dir,
     )
 
+    # ── Load full electricity + weather for streaming (hoisted — needed by sweep) ──
+    # phase_discovery already loaded all buildings; reuse those variables.
+    electricity_all = electricity
+    metadata_all = metadata
+    project_root = _root
+    weather_df = None
+    weather_path = os.path.join(
+        project_root, 'data', 'raw', 'building-data-genome-project-2',
+        'data', 'weather', 'weather.csv',
+    )
+    try:
+        weather_df = pd.read_csv(weather_path)
+        weather_df['timestamp'] = pd.to_datetime(weather_df['timestamp'])
+        weather_df = weather_df.set_index('timestamp')
+        print("  ✓ Weather data loaded")
+    except Exception as e:
+        print(f"  Warning: weather unavailable — {e}")
+
     if sweep_mode:
         # ── Sweep: fine-tune + evaluate at all weeks ──────────────────────
         _, prime_model, pretransfer_model = run_data_efficiency_sweep(
@@ -672,6 +738,9 @@ def main() -> None:
             soup_state=soup_state,
             soup_hparams=soup_hparams,
             out_dir=out_dir,
+            electricity_all=electricity_all,
+            metadata_all=metadata_all,
+            weather_df=weather_df,
         )
         # Snapshot evaluation at args.weeks for the comparison CSV
         if prime_model is not None or pretransfer_model is not None:
