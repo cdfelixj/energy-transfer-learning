@@ -1,0 +1,1558 @@
+rank,building_id,composite_score,completeness_pct,site_id,building_type,selected_as_source
+1,Eagle_education_Samantha,99.96,99.93,Eagle,Education,True
+2,Eagle_education_Will,99.85,99.54,Eagle,Education,True
+3,Eagle_education_Luther,99.85,99.53,Eagle,Education,True
+4,Eagle_education_Teresa,99.84,99.61,Eagle,Education,True
+5,Eagle_education_Sherrill,99.83,99.48,Eagle,Education,True
+6,Eagle_education_Norah,99.8,99.38,Eagle,Education,False
+7,Eagle_education_Raul,99.78,99.3,Eagle,Education,False
+8,Eagle_education_Peter,99.75,99.24,Eagle,Education,False
+9,Eagle_education_Roman,99.69,99.0,Eagle,Education,False
+10,Eagle_education_Petra,99.68,98.98,Eagle,Education,False
+11,Eagle_education_Shanna,99.67,99.02,Eagle,Education,False
+12,Eagle_education_Wesley,99.57,98.98,Eagle,Education,False
+13,Eagle_education_Maragret,99.57,98.79,Eagle,Education,False
+14,Eagle_education_Lino,99.56,98.95,Eagle,Education,False
+15,Eagle_education_Shante,98.72,95.78,Eagle,Education,False
+16,Eagle_education_Edith,98.38,95.91,Eagle,Education,False
+17,Eagle_education_Brianne,98.34,95.03,Eagle,Education,False
+18,Eagle_education_Alberto,98.07,93.62,Eagle,Education,False
+19,Eagle_education_Shana,97.99,93.37,Eagle,Education,False
+20,Eagle_education_Eileen,97.9,93.19,Eagle,Education,False
+21,Eagle_education_Jewell,97.42,91.46,Eagle,Education,False
+22,Eagle_education_Paul,95.56,85.7,Eagle,Education,False
+23,Eagle_education_Sheena,95.56,85.7,Eagle,Education,False
+24,Eagle_education_April,92.37,74.74,Eagle,Education,False
+25,Eagle_education_Cassie,84.06,48.33,Eagle,Education,False
+26,Fox_education_Eldon,79.98,99.97,Fox,Education,False
+27,Fox_education_Tonya,79.98,99.98,Fox,Education,False
+28,Fox_education_Theodore,79.98,99.97,Fox,Education,False
+29,Fox_education_Andre,79.97,99.99,Fox,Education,False
+30,Peacock_education_Ophelia,79.97,99.94,Peacock,Education,False
+31,Robin_education_Madeline,79.97,100.0,Robin,Education,False
+32,Fox_education_Wendell,79.97,99.96,Fox,Education,False
+33,Hog_education_Hallie,79.97,99.99,Hog,Education,False
+34,Fox_education_Gloria,79.97,99.93,Fox,Education,False
+35,Robin_education_So,79.96,100.0,Robin,Education,False
+36,Wolf_education_Joaquin,79.96,99.98,Wolf,Education,False
+37,Fox_education_Yolande,79.96,99.99,Fox,Education,False
+38,Fox_education_Virgil,79.95,99.97,Fox,Education,False
+39,Fox_education_Geoffrey,79.95,99.96,Fox,Education,False
+40,Fox_education_Otilia,79.95,99.9,Fox,Education,False
+41,Peacock_education_Gilberto,79.95,99.91,Peacock,Education,False
+42,Bear_education_Gavin,79.95,99.94,Bear,Education,False
+43,Fox_education_Jaclyn,79.95,99.91,Fox,Education,False
+44,Bear_education_Val,79.94,99.95,Bear,Education,False
+45,Peacock_education_Karyn,79.94,99.85,Peacock,Education,False
+46,Bear_education_Sharon,79.94,99.97,Bear,Education,False
+47,Fox_education_Claude,79.94,99.85,Fox,Education,False
+48,Hog_education_Bruno,79.94,99.99,Hog,Education,False
+49,Robin_education_Jasper,79.94,100.0,Robin,Education,False
+50,Robin_education_Audrea,79.94,100.0,Robin,Education,False
+51,Bear_education_Wilton,79.94,99.9,Bear,Education,False
+52,Robin_education_Megan,79.94,100.0,Robin,Education,False
+53,Fox_education_Willis,79.94,99.98,Fox,Education,False
+54,Robin_education_Margarito,79.93,100.0,Robin,Education,False
+55,Robin_education_Derrick,79.93,100.0,Robin,Education,False
+56,Fox_education_Melinda,79.93,99.98,Fox,Education,False
+57,Peacock_education_Pasquale,79.92,99.78,Peacock,Education,False
+58,Robin_education_Terrance,79.92,100.0,Robin,Education,False
+59,Fox_education_Louie,79.92,99.98,Fox,Education,False
+60,Robin_education_Leslie,79.92,100.0,Robin,Education,False
+61,Robin_education_Kristopher,79.91,100.0,Robin,Education,False
+62,Hog_education_Odell,79.91,99.84,Hog,Education,False
+63,Robin_education_Lizbeth,79.91,100.0,Robin,Education,False
+64,Fox_education_Dominique,79.91,99.93,Fox,Education,False
+65,Fox_education_Ashli,79.91,99.98,Fox,Education,False
+66,Hog_education_Sonia,79.9,99.93,Hog,Education,False
+67,Fox_education_Ollie,79.89,99.99,Fox,Education,False
+68,Robin_education_Derick,79.89,100.0,Robin,Education,False
+69,Bear_education_Bulah,79.89,99.77,Bear,Education,False
+70,Fox_education_Burton,79.89,99.96,Fox,Education,False
+71,Bear_education_Laurette,79.89,99.69,Bear,Education,False
+72,Bear_education_Patricia,79.89,99.77,Bear,Education,False
+73,Moose_education_Ricardo,79.89,100.0,Moose,Education,False
+74,Bear_education_Maryjane,79.88,99.96,Bear,Education,False
+75,Bear_education_Rebecca,79.88,99.7,Bear,Education,False
+76,Robin_education_Zenia,79.88,100.0,Robin,Education,False
+77,Fox_education_Rosie,79.87,99.97,Fox,Education,False
+78,Rat_education_Imelda,79.87,99.7,Rat,Education,False
+79,Wolf_education_Dorris,79.87,99.99,Wolf,Education,False
+80,Bear_education_Chad,79.86,99.86,Bear,Education,False
+81,Hog_education_George,79.85,99.77,Hog,Education,False
+82,Bear_education_Lorie,79.85,99.68,Bear,Education,False
+83,Bear_education_Derek,79.85,99.61,Bear,Education,False
+84,Bear_education_Clint,79.84,99.73,Bear,Education,False
+85,Bear_education_Pattie,79.84,99.75,Bear,Education,False
+86,Peacock_education_Lyle,79.84,99.94,Peacock,Education,False
+87,Wolf_education_Clarissa,79.84,99.98,Wolf,Education,False
+88,Bear_education_Lila,79.84,99.99,Bear,Education,False
+89,Bear_education_Alvaro,79.83,99.64,Bear,Education,False
+90,Peacock_education_Yolanda,79.83,99.98,Peacock,Education,False
+91,Peacock_education_Joshua,79.83,99.47,Peacock,Education,False
+92,Fox_education_Elois,79.82,99.95,Fox,Education,False
+93,Fox_education_Leona,79.82,99.98,Fox,Education,False
+94,Rat_education_Jacob,79.81,99.57,Rat,Education,False
+95,Hog_education_Leandro,79.81,99.74,Hog,Education,False
+96,Bear_education_Curtis,79.81,99.56,Bear,Education,False
+97,Bear_education_Irene,79.81,99.78,Bear,Education,False
+98,Bear_education_Chana,79.81,99.78,Bear,Education,False
+99,Peacock_education_Forest,79.81,99.77,Peacock,Education,False
+100,Fox_education_Marlana,79.8,99.42,Fox,Education,False
+101,Eagle_health_Trisha,79.8,99.38,Eagle,Healthcare,False
+102,Fox_education_Leota,79.8,99.95,Fox,Education,False
+103,Hog_education_Wayne,79.8,99.95,Hog,Education,False
+104,Bear_education_Zandra,79.8,99.37,Bear,Education,False
+105,Moose_education_Abbie,79.79,99.81,Moose,Education,False
+106,Eagle_office_Henriette,79.79,99.52,Eagle,Office,False
+107,Robin_education_Mercedes,79.79,100.0,Robin,Education,False
+108,Hog_education_Jewel,79.79,100.0,Hog,Education,False
+109,Bear_education_Wm,79.79,99.97,Bear,Education,False
+110,Peacock_education_Robbie,79.79,99.98,Peacock,Education,False
+111,Robin_education_Cecilia,79.78,100.0,Robin,Education,False
+112,Hog_education_Madge,79.78,100.0,Hog,Education,False
+113,Wolf_education_Tammie,79.78,99.98,Wolf,Education,False
+114,Rat_education_Lee,79.78,99.98,Rat,Education,False
+115,Fox_education_Nilda,79.77,99.98,Fox,Education,False
+116,Fox_education_Janina,79.77,99.76,Fox,Education,False
+117,Rat_education_Candida,79.77,99.7,Rat,Education,False
+118,Rat_education_Kelsey,79.76,99.84,Rat,Education,False
+119,Rat_education_Cedric,79.76,99.84,Rat,Education,False
+120,Fox_education_Elvira,79.76,99.87,Fox,Education,False
+121,Rat_education_Keith,79.76,99.84,Rat,Education,False
+122,Moose_education_Lori,79.75,99.48,Moose,Education,False
+123,Hog_education_Haywood,79.75,99.21,Hog,Education,False
+124,Rat_education_Guillermo,79.75,99.54,Rat,Education,False
+125,Rat_education_Bryant,79.75,99.48,Rat,Education,False
+126,Fox_education_Eddy,79.75,99.98,Fox,Education,False
+127,Hog_education_Luvenia,79.75,99.46,Hog,Education,False
+128,Fox_education_Lilly,79.74,99.44,Fox,Education,False
+129,Wolf_education_Tori,79.74,99.98,Wolf,Education,False
+130,Rat_education_Rosalyn,79.74,99.7,Rat,Education,False
+131,Robin_education_Takako,79.73,100.0,Robin,Education,False
+132,Rat_education_Jame,79.73,99.46,Rat,Education,False
+133,Eagle_health_Lucinda,79.73,99.25,Eagle,Healthcare,False
+134,Eagle_public_Preston,79.73,99.5,Eagle,Public services,False
+135,Rat_education_Calvin,79.72,99.75,Rat,Education,False
+136,Moose_education_Marina,79.72,99.81,Moose,Education,False
+137,Moose_education_Maria,79.72,99.33,Moose,Education,False
+138,Bear_education_Sandy,79.72,99.21,Bear,Education,False
+139,Eagle_lodging_Andy,79.71,99.58,Eagle,Lodging/residential,False
+140,Robin_education_Julius,79.71,100.0,Robin,Education,False
+141,Bear_education_Elise,79.71,99.99,Bear,Education,False
+142,Rat_education_Lynn,79.71,99.7,Rat,Education,False
+143,Wolf_education_Roderick,79.7,99.96,Wolf,Education,False
+144,Fox_education_Etta,79.69,99.89,Fox,Education,False
+145,Eagle_office_Bridgett,79.69,99.31,Eagle,Office,False
+146,Bear_education_Marsha,79.69,99.75,Bear,Education,False
+147,Eagle_office_Francis,79.69,98.97,Eagle,Office,False
+148,Fox_education_Cynthia,79.68,99.11,Fox,Education,False
+149,Rat_education_Jesse,79.68,99.84,Rat,Education,False
+150,Hog_education_Beth,79.67,99.96,Hog,Education,False
+151,Peacock_education_Shelly,79.67,98.94,Peacock,Education,False
+152,Bear_education_Chun,79.67,99.58,Bear,Education,False
+153,Rat_education_Royal,79.66,99.7,Rat,Education,False
+154,Eagle_health_Jodi,79.66,99.42,Eagle,Healthcare,False
+155,Wolf_education_Ursula,79.66,99.99,Wolf,Education,False
+156,Rat_education_Ulrike,79.66,99.7,Rat,Education,False
+157,Rat_education_Esther,79.66,99.56,Rat,Education,False
+158,Eagle_office_Mable,79.65,99.29,Eagle,Office,False
+159,Wolf_education_Loren,79.65,99.98,Wolf,Education,False
+160,Eagle_lodging_Tressa,79.65,98.98,Eagle,Lodging/residential,False
+161,Bear_education_Katy,79.65,99.97,Bear,Education,False
+162,Peacock_education_Dustin,79.64,99.76,Peacock,Education,False
+163,Rat_education_Kandice,79.64,99.81,Rat,Education,False
+164,Rat_education_Dann,79.64,99.7,Rat,Education,False
+165,Fox_education_Kim,79.64,99.97,Fox,Education,False
+166,Rat_education_Zoe,79.63,99.7,Rat,Education,False
+167,Hog_education_Janell,79.63,99.91,Hog,Education,False
+168,Eagle_health_Reba,79.63,98.96,Eagle,Healthcare,False
+169,Fox_education_Stacia,79.63,98.85,Fox,Education,False
+170,Eagle_office_Jackie,79.62,98.97,Eagle,Office,False
+171,Bear_education_Babara,79.62,98.88,Bear,Education,False
+172,Rat_education_Everett,79.62,99.69,Rat,Education,False
+173,Robin_education_Kiera,79.62,100.0,Robin,Education,False
+174,Hog_education_Jordan,79.61,100.0,Hog,Education,False
+175,Hog_education_Rachael,79.61,100.0,Hog,Education,False
+176,Hog_education_Roberto,79.61,99.99,Hog,Education,False
+177,Rat_education_Stuart,79.61,99.57,Rat,Education,False
+178,Fox_education_Tamika,79.61,99.95,Fox,Education,False
+179,Peacock_education_Patience,79.61,99.94,Peacock,Education,False
+180,Fox_education_Long,79.6,99.98,Fox,Education,False
+181,Fox_education_Ray,79.6,99.99,Fox,Education,False
+182,Eagle_office_Sonya,79.59,98.98,Eagle,Office,False
+183,Rat_education_Deanna,79.59,99.7,Rat,Education,False
+184,Eagle_office_Randolph,79.59,99.51,Eagle,Office,False
+185,Peacock_education_Anita,79.59,99.77,Peacock,Education,False
+186,Moose_education_Gladys,79.59,99.48,Moose,Education,False
+187,Rat_education_Patty,79.59,99.57,Rat,Education,False
+188,Robin_education_Karyl,79.58,100.0,Robin,Education,False
+189,Rat_education_Kathryn,79.58,99.98,Rat,Education,False
+190,Bear_education_Tara,79.58,99.76,Bear,Education,False
+191,Fox_education_Claire,79.58,99.99,Fox,Education,False
+192,Eagle_lodging_Stephanie,79.58,98.81,Eagle,Lodging/residential,False
+193,Fox_education_Carleen,79.57,99.93,Fox,Education,False
+194,Bear_education_Oscar,79.57,99.76,Bear,Education,False
+195,Eagle_assembly_Ian,79.57,99.03,Eagle,Entertainment/public assembly,False
+196,Hog_education_Casandra,79.57,100.0,Hog,Education,False
+197,Wolf_education_Katie,79.57,99.99,Wolf,Education,False
+198,Eagle_lodging_Dawn,79.56,98.91,Eagle,Lodging/residential,False
+199,Bear_education_Thuy,79.56,99.99,Bear,Education,False
+200,Eagle_lodging_Edgardo,79.56,98.98,Eagle,Lodging/residential,False
+201,Rat_education_Nydia,79.55,99.12,Rat,Education,False
+202,Eagle_lodging_Casey,79.55,98.91,Eagle,Lodging/residential,False
+203,Rat_education_Brett,79.55,99.65,Rat,Education,False
+204,Rat_education_Terese,79.55,99.61,Rat,Education,False
+205,Moose_education_Clark,79.55,99.81,Moose,Education,False
+206,Rat_education_Beverly,79.54,99.98,Rat,Education,False
+207,Bear_education_Herb,79.54,99.77,Bear,Education,False
+208,Rat_education_Dana,79.54,99.83,Rat,Education,False
+209,Bear_education_Bob,79.54,99.99,Bear,Education,False
+210,Bear_education_Shelley,79.54,99.99,Bear,Education,False
+211,Rat_education_Renee,79.53,99.7,Rat,Education,False
+212,Rat_education_Wilmer,79.53,99.43,Rat,Education,False
+213,Eagle_office_Patrice,79.52,98.98,Eagle,Office,False
+214,Fox_education_Suzan,79.52,99.34,Fox,Education,False
+215,Rat_education_Paula,79.51,98.88,Rat,Education,False
+216,Bear_education_Alfredo,79.51,99.69,Bear,Education,False
+217,Rat_education_Irma,79.51,99.68,Rat,Education,False
+218,Bear_education_Herman,79.5,99.78,Bear,Education,False
+219,Bear_education_Paola,79.5,99.99,Bear,Education,False
+220,Hog_education_Robert,79.5,99.98,Hog,Education,False
+221,Rat_education_Morton,79.5,99.7,Rat,Education,False
+222,Rat_education_Nellie,79.5,99.79,Rat,Education,False
+223,Rat_education_Verna,79.5,99.41,Rat,Education,False
+224,Eagle_health_Reuben,79.5,98.56,Eagle,Healthcare,False
+225,Eagle_office_Lane,79.49,98.77,Eagle,Office,False
+226,Rat_education_Earnest,79.49,99.57,Rat,Education,False
+227,Eagle_office_Jeff,79.48,98.98,Eagle,Office,False
+228,Bear_education_Wade,79.48,99.9,Bear,Education,False
+229,Bear_education_Yvette,79.48,99.74,Bear,Education,False
+230,Fox_education_Heriberto,79.48,99.98,Fox,Education,False
+231,Eagle_lodging_Trina,79.48,98.98,Eagle,Lodging/residential,False
+232,Eagle_office_Freida,79.48,98.93,Eagle,Office,False
+233,Eagle_office_Ryan,79.47,98.74,Eagle,Office,False
+234,Eagle_assembly_Benny,79.47,99.36,Eagle,Entertainment/public assembly,False
+235,Wolf_education_Miguel,79.46,99.95,Wolf,Education,False
+236,Rat_education_Sina,79.46,99.43,Rat,Education,False
+237,Moose_education_Marlon,79.46,99.81,Moose,Education,False
+238,Rat_education_Robyn,79.45,99.84,Rat,Education,False
+239,Rat_education_Winnie,79.45,99.56,Rat,Education,False
+240,Eagle_office_Efrain,79.45,98.97,Eagle,Office,False
+241,Rat_education_Debra,79.45,99.44,Rat,Education,False
+242,Rat_education_Marcos,79.45,98.56,Rat,Education,False
+243,Bear_education_Mara,79.45,98.23,Bear,Education,False
+244,Fox_education_Dewayne,79.45,99.91,Fox,Education,False
+245,Rat_education_Barney,79.45,99.28,Rat,Education,False
+246,Wolf_education_Vivian,79.44,99.98,Wolf,Education,False
+247,Bull_education_Stewart,79.44,98.3,Bull,Education,False
+248,Wolf_education_Cheryl,79.43,99.99,Wolf,Education,False
+249,Rat_education_Tim,79.43,99.78,Rat,Education,False
+250,Rat_education_Sherwood,79.43,99.43,Rat,Education,False
+251,Bear_education_Holly,79.43,99.11,Bear,Education,False
+252,Bull_education_Elva,79.42,98.3,Bull,Education,False
+253,Bull_education_Clarice,79.42,98.28,Bull,Education,False
+254,Bull_education_Jae,79.42,98.13,Bull,Education,False
+255,Bull_education_Carl,79.42,98.14,Bull,Education,False
+256,Bull_education_Brain,79.42,98.16,Bull,Education,False
+257,Rat_education_Tania,79.42,98.81,Rat,Education,False
+258,Bull_education_Kristal,79.42,98.14,Bull,Education,False
+259,Rat_education_Alfonso,79.42,99.55,Rat,Education,False
+260,Rat_education_Jena,79.42,99.57,Rat,Education,False
+261,Rat_education_Mona,79.41,99.7,Rat,Education,False
+262,Bull_education_Nina,79.41,98.15,Bull,Education,False
+263,Eagle_office_Donovan,79.41,99.4,Eagle,Office,False
+264,Fox_education_Rudolph,79.4,99.22,Fox,Education,False
+265,Eagle_health_Vincenza,79.4,99.41,Eagle,Healthcare,False
+266,Bull_education_Miranda,79.4,98.11,Bull,Education,False
+267,Fox_education_Kendrick,79.4,99.98,Fox,Education,False
+268,Bull_education_Arthur,79.4,98.15,Bull,Education,False
+269,Bear_education_Lidia,79.4,99.78,Bear,Education,False
+270,Bear_education_Iris,79.4,99.99,Bear,Education,False
+271,Bear_education_Danna,79.4,99.98,Bear,Education,False
+272,Bear_education_Lewis,79.39,99.78,Bear,Education,False
+273,Bull_education_Dan,79.39,98.11,Bull,Education,False
+274,Bull_education_Nolan,79.39,98.3,Bull,Education,False
+275,Bull_education_Mervin,79.39,98.14,Bull,Education,False
+276,Bull_education_Dania,79.38,98.28,Bull,Education,False
+277,Bear_education_Owen,79.38,99.96,Bear,Education,False
+278,Eagle_assembly_Estelle,79.38,98.95,Eagle,Entertainment/public assembly,False
+279,Bull_education_Hayley,79.38,98.14,Bull,Education,False
+280,Hog_education_Caridad,79.38,99.58,Hog,Education,False
+281,Bull_education_Barry,79.37,97.95,Bull,Education,False
+282,Bull_education_Brenda,79.37,98.16,Bull,Education,False
+283,Bull_education_Racheal,79.36,98.14,Bull,Education,False
+284,Eagle_office_Elvis,79.36,98.97,Eagle,Office,False
+285,Fox_education_Miguelina,79.36,99.91,Fox,Education,False
+286,Rat_education_Davis,79.35,99.3,Rat,Education,False
+287,Rat_education_Liz,79.35,99.7,Rat,Education,False
+288,Rat_education_Earl,79.35,99.4,Rat,Education,False
+289,Eagle_office_Yadira,79.34,98.94,Eagle,Office,False
+290,Bull_education_Reynaldo,79.34,98.28,Bull,Education,False
+291,Wolf_education_Laurinda,79.34,99.99,Wolf,Education,False
+292,Eagle_office_Dallas,79.33,99.08,Eagle,Office,False
+293,Bull_education_Lenny,79.33,98.09,Bull,Education,False
+294,Bull_education_Pamela,79.33,98.28,Bull,Education,False
+295,Bull_education_Venita,79.32,98.13,Bull,Education,False
+296,Fox_education_Melvin,79.31,99.44,Fox,Education,False
+297,Bull_education_Luke,79.31,98.15,Bull,Education,False
+298,Bull_education_Reina,79.31,98.12,Bull,Education,False
+299,Fox_education_Shirley,79.31,98.67,Fox,Education,False
+300,Rat_education_Salvatore,79.31,99.7,Rat,Education,False
+301,Bear_education_Millie,79.31,97.81,Bear,Education,False
+302,Fox_education_Charles,79.3,99.88,Fox,Education,False
+303,Eagle_public_Minnie,79.3,97.93,Eagle,Public services,False
+304,Bull_education_Antonia,79.29,97.9,Bull,Education,False
+305,Rat_education_Rogelio,79.29,98.87,Rat,Education,False
+306,Eagle_office_Sheree,79.29,99.17,Eagle,Office,False
+307,Bull_education_Nichole,79.28,98.15,Bull,Education,False
+308,Eagle_public_Ola,79.27,97.83,Eagle,Public services,False
+309,Bull_education_Shona,79.27,97.62,Bull,Education,False
+310,Bear_education_Benita,79.27,97.69,Bear,Education,False
+311,Rat_education_Nona,79.26,99.56,Rat,Education,False
+312,Rat_education_Fernando,79.26,99.56,Rat,Education,False
+313,Rat_education_Marianna,79.26,99.29,Rat,Education,False
+314,Bull_education_Miquel,79.26,98.16,Bull,Education,False
+315,Rat_education_Dreama,79.26,97.75,Rat,Education,False
+316,Rat_education_Shellie,79.25,99.57,Rat,Education,False
+317,Bull_education_Tracey,79.25,98.27,Bull,Education,False
+318,Bull_education_Kendra,79.25,98.05,Bull,Education,False
+319,Bull_education_Roseann,79.25,97.6,Bull,Education,False
+320,Bull_education_Genie,79.24,98.15,Bull,Education,False
+321,Bull_education_Bryon,79.24,98.26,Bull,Education,False
+322,Rat_education_Pat,79.24,98.66,Rat,Education,False
+323,Bull_education_Patrina,79.23,98.11,Bull,Education,False
+324,Bull_education_Fabiola,79.23,98.15,Bull,Education,False
+325,Bull_education_Lyn,79.23,97.99,Bull,Education,False
+326,Rat_education_Carmela,79.23,99.56,Rat,Education,False
+327,Rat_education_Meghan,79.23,99.83,Rat,Education,False
+328,Eagle_assembly_Herbert,79.23,99.31,Eagle,Entertainment/public assembly,False
+329,Bear_education_Fannie,79.22,97.54,Bear,Education,False
+330,Eagle_office_Demetra,79.22,98.98,Eagle,Office,False
+331,Bull_education_Krista,79.22,98.15,Bull,Education,False
+332,Bull_education_Roland,79.21,98.04,Bull,Education,False
+333,Bear_education_Lashanda,79.21,99.78,Bear,Education,False
+334,Wolf_education_Dolores,79.2,99.94,Wolf,Education,False
+335,Bull_education_Juan,79.2,98.1,Bull,Education,False
+336,Eagle_assembly_Margret,79.19,97.57,Eagle,Entertainment/public assembly,False
+337,Rat_education_Colin,79.18,99.57,Rat,Education,False
+338,Rat_education_Cecil,79.18,99.42,Rat,Education,False
+339,Bear_education_Marie,79.17,99.99,Bear,Education,False
+340,Eagle_health_Amy,79.17,98.97,Eagle,Healthcare,False
+341,Bull_education_Mario,79.16,98.3,Bull,Education,False
+342,Bear_education_Arnold,79.16,97.5,Bear,Education,False
+343,Lamb_education_Luz,79.15,99.92,Lamb,Education,False
+344,Bull_education_Gregory,79.15,98.12,Bull,Education,False
+345,Bull_education_Sebastian,79.15,98.13,Bull,Education,False
+346,Bull_education_Joseph,79.14,97.89,Bull,Education,False
+347,Bull_education_Myra,79.14,98.26,Bull,Education,False
+348,Bull_education_Linnie,79.13,98.15,Bull,Education,False
+349,Eagle_assembly_Josie,79.13,98.16,Eagle,Entertainment/public assembly,False
+350,Rat_education_Theo,79.12,99.98,Rat,Education,False
+351,Rat_education_Mose,79.12,99.68,Rat,Education,False
+352,Rat_education_Humberto,79.1,97.8,Rat,Education,False
+353,Rat_education_Lincoln,79.1,99.53,Rat,Education,False
+354,Eagle_assembly_Portia,79.09,98.91,Eagle,Entertainment/public assembly,False
+355,Rat_education_Elisa,79.09,99.84,Rat,Education,False
+356,Wolf_education_Josefa,79.09,99.97,Wolf,Education,False
+357,Bull_education_Summer,79.09,97.4,Bull,Education,False
+358,Bear_education_Marta,79.07,99.94,Bear,Education,False
+359,Fox_education_Lesley,79.07,99.79,Fox,Education,False
+360,Bull_education_Pablo,79.06,98.12,Bull,Education,False
+361,Bull_education_Brandi,79.05,98.27,Bull,Education,False
+362,Eagle_public_Alvin,79.04,97.12,Eagle,Public services,False
+363,Bear_education_Augusta,79.04,99.61,Bear,Education,False
+364,Wolf_education_Bobby,79.03,98.27,Wolf,Education,False
+365,Bull_education_Magaret,79.02,98.11,Bull,Education,False
+366,Bull_education_Dora,79.02,97.93,Bull,Education,False
+367,Bear_education_Bonita,79.01,98.81,Bear,Education,False
+368,Bull_education_Olive,79.0,98.1,Bull,Education,False
+369,Wolf_education_Arnulfo,79.0,97.83,Wolf,Education,False
+370,Eagle_public_Missy,78.99,97.3,Eagle,Public services,False
+371,Fox_education_Henrietta,78.98,99.81,Fox,Education,False
+372,Rat_education_Marvin,78.97,99.33,Rat,Education,False
+373,Robin_education_Billi,78.97,100.0,Robin,Education,False
+374,Eagle_office_Isidro,78.97,98.87,Eagle,Office,False
+375,Rat_education_Adrian,78.97,99.43,Rat,Education,False
+376,Rat_education_Zina,78.97,99.29,Rat,Education,False
+377,Fox_education_Kris,78.97,99.95,Fox,Education,False
+378,Wolf_education_Eulalia,78.96,99.98,Wolf,Education,False
+379,Lamb_education_Terina,78.95,99.86,Lamb,Education,False
+380,Bull_education_Geneva,78.95,97.5,Bull,Education,False
+381,Rat_education_Lonnie,78.93,99.56,Rat,Education,False
+382,Bull_education_Dakota,78.93,98.3,Bull,Education,False
+383,Rat_education_Alfred,78.91,97.68,Rat,Education,False
+384,Rat_education_Willie,78.89,99.57,Rat,Education,False
+385,Lamb_education_Rodrigo,78.86,99.91,Lamb,Education,False
+386,Bull_education_Brady,78.86,98.28,Bull,Education,False
+387,Lamb_education_Mae,78.85,100.0,Lamb,Education,False
+388,Bull_education_Dottie,78.85,96.42,Bull,Education,False
+389,Wolf_education_Cody,78.81,99.9,Wolf,Education,False
+390,Eagle_public_Henry,78.81,99.07,Eagle,Public services,False
+391,Fox_education_John,78.8,98.17,Fox,Education,False
+392,Hog_education_Jared,78.8,99.23,Hog,Education,False
+393,Eagle_assembly_Lacy,78.79,96.06,Eagle,Entertainment/public assembly,False
+394,Robin_education_Lashandra,78.76,100.0,Robin,Education,False
+395,Eagle_food_Kay,78.75,97.42,Eagle,Food sales and service,False
+396,Bear_education_Darrell,78.72,99.99,Bear,Education,False
+397,Rat_education_Yu,78.71,96.42,Rat,Education,False
+398,Fox_education_Virginia,78.7,99.71,Fox,Education,False
+399,Lamb_education_Philomena,78.7,99.85,Lamb,Education,False
+400,Rat_education_Adell,78.69,98.83,Rat,Education,False
+401,Robin_education_Della,78.66,99.44,Robin,Education,False
+402,Bear_education_Deena,78.66,96.72,Bear,Education,False
+403,Moose_education_Rene,78.63,99.81,Moose,Education,False
+404,Lamb_education_Junior,78.62,99.82,Lamb,Education,False
+405,Lamb_education_Robin,78.61,99.91,Lamb,Education,False
+406,Rat_education_Maricela,78.6,97.14,Rat,Education,False
+407,Rat_education_Milagros,78.6,97.36,Rat,Education,False
+408,Wolf_education_Anisa,78.6,97.39,Wolf,Education,False
+409,Eagle_office_Lillian,78.59,96.75,Eagle,Office,False
+410,Lamb_education_Emery,78.57,99.91,Lamb,Education,False
+411,Rat_education_Vicky,78.53,96.07,Rat,Education,False
+412,Lamb_education_Domitila,78.52,99.92,Lamb,Education,False
+413,Eagle_office_Elias,78.51,95.6,Eagle,Office,False
+414,Eagle_office_Damian,78.51,95.6,Eagle,Office,False
+415,Lamb_education_Mckenzie,78.5,99.91,Lamb,Education,False
+416,Bull_education_Lydia,78.48,95.25,Bull,Education,False
+417,Bull_education_Clarita,78.47,95.02,Bull,Education,False
+418,Bear_education_Austin,78.45,99.78,Bear,Education,False
+419,Bull_education_Violeta,78.45,97.83,Bull,Education,False
+420,Eagle_lodging_Terri,78.45,95.58,Eagle,Lodging/residential,False
+421,Lamb_education_Antonio,78.44,99.91,Lamb,Education,False
+422,Bear_education_Yuri,78.43,99.78,Bear,Education,False
+423,Eagle_office_Katheleen,78.42,95.92,Eagle,Office,False
+424,Rat_education_Leonardo,78.39,96.88,Rat,Education,False
+425,Rat_education_Francisca,78.37,97.24,Rat,Education,False
+426,Lamb_education_Isabelle,78.36,99.74,Lamb,Education,False
+427,Lamb_education_Dwayne,78.36,99.74,Lamb,Education,False
+428,Lamb_education_Armando,78.35,100.0,Lamb,Education,False
+429,Eagle_office_Elia,78.33,95.92,Eagle,Office,False
+430,Eagle_assembly_Candice,78.33,98.87,Eagle,Entertainment/public assembly,False
+431,Fox_education_Shawanda,78.33,99.97,Fox,Education,False
+432,Bear_education_Santos,78.32,99.78,Bear,Education,False
+433,Eagle_public_Pearle,78.3,95.6,Eagle,Public services,False
+434,Lamb_education_Darrel,78.27,99.91,Lamb,Education,False
+435,Lamb_education_Daniel,78.24,99.6,Lamb,Education,False
+436,Fox_education_Sterling,78.24,99.97,Fox,Education,False
+437,Lamb_education_Gabriel,78.22,99.73,Lamb,Education,False
+438,Bear_education_Leonel,78.22,99.98,Bear,Education,False
+439,Fox_education_Delma,78.17,99.81,Fox,Education,False
+440,Lamb_education_Lazaro,78.15,100.0,Lamb,Education,False
+441,Eagle_office_Chauncey,78.13,93.9,Eagle,Office,False
+442,Lamb_education_Lawrence,78.1,99.91,Lamb,Education,False
+443,Eagle_office_Nereida,78.1,93.88,Eagle,Office,False
+444,Lamb_education_Gabrielle,78.09,100.0,Lamb,Education,False
+445,Lamb_education_Manuel,78.09,99.74,Lamb,Education,False
+446,Bobcat_education_Angela,78.05,93.94,Bobcat,Education,False
+447,Lamb_education_Freddy,78.02,99.46,Lamb,Education,False
+448,Lamb_education_Patsy,78.0,99.74,Lamb,Education,False
+449,Eagle_office_Mandi,77.99,93.37,Eagle,Office,False
+450,Eagle_office_Phyllis,77.99,93.37,Eagle,Office,False
+451,Eagle_office_Remedios,77.98,93.41,Eagle,Office,False
+452,Eagle_office_Amanda,77.98,93.44,Eagle,Office,False
+453,Bull_education_Bernice,77.96,93.31,Bull,Education,False
+454,Eagle_office_Lamont,77.93,93.35,Eagle,Office,False
+455,Eagle_office_Flossie,77.93,93.34,Eagle,Office,False
+456,Eagle_health_Margo,77.92,93.2,Eagle,Healthcare,False
+457,Eagle_office_Tia,77.9,93.19,Eagle,Office,False
+458,Eagle_office_Marisela,77.9,93.25,Eagle,Office,False
+459,Lamb_education_Hubert,77.87,99.77,Lamb,Education,False
+460,Bobcat_education_Alissa,77.84,94.07,Bobcat,Education,False
+461,Eagle_office_Norbert,77.84,93.48,Eagle,Office,False
+462,Hog_education_Donnie,77.84,100.0,Hog,Education,False
+463,Lamb_education_Bettye,77.83,99.61,Lamb,Education,False
+464,Lamb_education_Maxwell,77.76,99.74,Lamb,Education,False
+465,Crow_education_Keisha,77.72,92.75,Crow,Education,False
+466,Lamb_education_Lucas,77.71,100.0,Lamb,Education,False
+467,Eagle_office_Chantelle,77.71,92.79,Eagle,Office,False
+468,Lamb_education_Sara,77.7,100.0,Lamb,Education,False
+469,Lamb_education_Princess,77.66,99.58,Lamb,Education,False
+470,Lamb_education_Larissa,77.64,99.36,Lamb,Education,False
+471,Crow_education_Winston,77.63,94.27,Crow,Education,False
+472,Lamb_education_Williams,77.58,99.91,Lamb,Education,False
+473,Cockatoo_education_Tyler,77.54,91.86,Cockatoo,Education,False
+474,Cockatoo_education_Julio,77.54,91.88,Cockatoo,Education,False
+475,Cockatoo_education_Flora,77.54,91.84,Cockatoo,Education,False
+476,Bull_education_Jeffery,77.52,91.92,Bull,Education,False
+477,Cockatoo_education_Sheryl,77.52,91.88,Cockatoo,Education,False
+478,Cockatoo_education_Nelda,77.52,91.81,Cockatoo,Education,False
+479,Cockatoo_education_Gussie,77.51,91.84,Cockatoo,Education,False
+480,Cockatoo_education_Charity,77.51,91.78,Cockatoo,Education,False
+481,Cockatoo_education_Claudine,77.51,91.85,Cockatoo,Education,False
+482,Cockatoo_education_Terrence,77.5,91.75,Cockatoo,Education,False
+483,Lamb_education_Felipe,77.5,96.71,Lamb,Education,False
+484,Cockatoo_education_Janet,77.5,91.87,Cockatoo,Education,False
+485,Lamb_education_Garry,77.49,99.74,Lamb,Education,False
+486,Cockatoo_education_Helene,77.49,91.77,Cockatoo,Education,False
+487,Cockatoo_education_Doreen,77.48,91.88,Cockatoo,Education,False
+488,Cockatoo_education_Brendan,77.47,91.85,Cockatoo,Education,False
+489,Fox_education_Gayla,77.47,93.02,Fox,Education,False
+490,Cockatoo_education_Brigitte,77.46,91.87,Cockatoo,Education,False
+491,Lamb_education_Sunny,77.46,99.57,Lamb,Education,False
+492,Cockatoo_education_Oliver,77.46,91.88,Cockatoo,Education,False
+493,Cockatoo_education_Orlando,77.45,91.88,Cockatoo,Education,False
+494,Cockatoo_education_June,77.45,91.79,Cockatoo,Education,False
+495,Cockatoo_education_Collin,77.44,91.85,Cockatoo,Education,False
+496,Cockatoo_education_Minh,77.44,91.63,Cockatoo,Education,False
+497,Crow_education_Omer,77.44,92.8,Crow,Education,False
+498,Cockatoo_education_Shawn,77.43,91.88,Cockatoo,Education,False
+499,Cockatoo_education_Joel,77.43,91.88,Cockatoo,Education,False
+500,Cockatoo_education_Deloris,77.42,91.49,Cockatoo,Education,False
+501,Eagle_assembly_Latrina,77.41,93.17,Eagle,Entertainment/public assembly,False
+502,Cockatoo_education_Julia,77.41,91.7,Cockatoo,Education,False
+503,Cockatoo_education_Erik,77.4,91.71,Cockatoo,Education,False
+504,Cockatoo_education_Arlen,77.39,91.77,Cockatoo,Education,False
+505,Cockatoo_education_Victoria,77.38,91.63,Cockatoo,Education,False
+506,Cockatoo_education_Clifton,77.37,91.35,Cockatoo,Education,False
+507,Cockatoo_education_Magdalena,77.33,91.87,Cockatoo,Education,False
+508,Lamb_education_Stefan,77.33,99.74,Lamb,Education,False
+509,Cockatoo_education_Eunice,77.32,91.83,Cockatoo,Education,False
+510,Cockatoo_education_Maynard,77.32,91.85,Cockatoo,Education,False
+511,Cockatoo_education_Lionel,77.31,91.14,Cockatoo,Education,False
+512,Cockatoo_education_Jon,77.28,91.86,Cockatoo,Education,False
+513,Fox_education_Marcelina,77.25,99.46,Fox,Education,False
+514,Cockatoo_education_Laurence,77.22,91.87,Cockatoo,Education,False
+515,Bobcat_education_Coleman,77.2,92.1,Bobcat,Education,False
+516,Bull_education_Matilda,77.18,91.23,Bull,Education,False
+517,Cockatoo_education_Jack,77.18,91.85,Cockatoo,Education,False
+518,Lamb_education_Augustine,77.14,99.74,Lamb,Education,False
+519,Lamb_education_Hilary,77.09,99.73,Lamb,Education,False
+520,Lamb_education_Maritza,77.08,93.74,Lamb,Education,False
+521,Cockatoo_education_Marva,77.04,91.88,Cockatoo,Education,False
+522,Lamb_education_Hui,77.04,99.72,Lamb,Education,False
+523,Cockatoo_education_Rita,77.01,91.87,Cockatoo,Education,False
+524,Cockatoo_education_Amira,76.99,90.69,Cockatoo,Education,False
+525,Bear_education_Nanette,76.9,90.66,Bear,Education,False
+526,Rat_education_Elsie,76.85,99.65,Rat,Education,False
+527,Cockatoo_education_Joeann,76.85,91.44,Cockatoo,Education,False
+528,Bear_education_Destiny,76.77,91.0,Bear,Education,False
+529,Cockatoo_education_Melanie,76.7,91.85,Cockatoo,Education,False
+530,Lamb_education_Rick,76.64,99.74,Lamb,Education,False
+531,Lamb_education_Felicia,76.62,93.6,Lamb,Education,False
+532,Crow_education_Marlin,76.59,92.95,Crow,Education,False
+533,Lamb_education_Chet,76.59,93.73,Lamb,Education,False
+534,Lamb_education_Fred,76.57,93.74,Lamb,Education,False
+535,Lamb_education_Lemuel,76.56,93.74,Lamb,Education,False
+536,Fox_education_Maris,76.54,88.79,Fox,Education,False
+537,Rat_education_Tristan,76.43,89.18,Rat,Education,False
+538,Lamb_education_Ellen,76.32,93.74,Lamb,Education,False
+539,Lamb_education_Jane,76.32,93.6,Lamb,Education,False
+540,Lamb_education_Carlton,76.32,93.6,Lamb,Education,False
+541,Bear_education_Liliana,76.3,87.87,Bear,Education,False
+542,Lamb_education_Harold,76.26,95.24,Lamb,Education,False
+543,Lamb_education_Moses,76.25,93.74,Lamb,Education,False
+544,Lamb_education_Kayla,76.24,93.61,Lamb,Education,False
+545,Lamb_education_Wanda,76.21,93.72,Lamb,Education,False
+546,Lamb_education_Emilie,76.21,93.6,Lamb,Education,False
+547,Lamb_education_Ruben,76.21,93.74,Lamb,Education,False
+548,Lamb_education_Vaughn,76.19,93.87,Lamb,Education,False
+549,Lamb_education_Heidi,76.18,93.61,Lamb,Education,False
+550,Rat_education_Conrad,76.17,94.76,Rat,Education,False
+551,Lamb_education_Randal,76.17,93.74,Lamb,Education,False
+552,Lamb_education_Hillary,76.13,95.74,Lamb,Education,False
+553,Crow_education_Kate,76.13,87.99,Crow,Education,False
+554,Bobcat_education_Toni,76.08,88.1,Bobcat,Education,False
+555,Lamb_education_Faith,76.06,93.74,Lamb,Education,False
+556,Lamb_education_Hellen,76.05,93.73,Lamb,Education,False
+557,Lamb_education_Sylvester,76.04,93.68,Lamb,Education,False
+558,Lamb_education_Bert,76.04,93.74,Lamb,Education,False
+559,Bobcat_education_Hollis,76.0,86.95,Bobcat,Education,False
+560,Lamb_education_Norris,75.98,93.87,Lamb,Education,False
+561,Lamb_education_Phil,75.83,93.72,Lamb,Education,False
+562,Lamb_education_Salvador,75.73,93.61,Lamb,Education,False
+563,Lamb_education_Nathan,75.71,93.74,Lamb,Education,False
+564,Fox_education_Elizabeth,75.67,86.24,Fox,Education,False
+565,Lamb_education_Leopoldo,75.66,93.87,Lamb,Education,False
+566,Rat_education_Barbara,75.49,93.05,Rat,Education,False
+567,Bobcat_education_Jayne,75.48,87.92,Bobcat,Education,False
+568,Hog_education_Josh,75.44,86.35,Hog,Education,False
+569,Lamb_education_Debby,75.41,93.74,Lamb,Education,False
+570,Bobcat_education_Dylan,75.41,85.49,Bobcat,Education,False
+571,Lamb_education_Sabrina,75.36,93.27,Lamb,Education,False
+572,Fox_education_Shaun,75.35,86.94,Fox,Education,False
+573,Eagle_food_Jennifer,75.35,87.22,Eagle,Food sales and service,False
+574,Lamb_education_Nichol,75.32,96.05,Lamb,Education,False
+575,Bobcat_education_Whitney,75.29,86.17,Bobcat,Education,False
+576,Lamb_education_Eula,75.29,100.0,Lamb,Education,False
+577,Lamb_education_Dolly,75.22,93.59,Lamb,Education,False
+578,Lamb_education_Marty,75.0,93.7,Lamb,Education,False
+579,Lamb_education_Wilbert,74.86,93.74,Lamb,Education,False
+580,Lamb_education_Kasha,74.68,93.72,Lamb,Education,False
+581,Lamb_education_Logan,74.49,87.45,Lamb,Education,False
+582,Panther_education_Violet,74.33,81.36,Panther,Education,False
+583,Eagle_health_Athena,74.32,81.9,Eagle,Healthcare,False
+584,Panther_education_Sophia,74.31,81.12,Panther,Education,False
+585,Panther_education_Misty,74.2,81.44,Panther,Education,False
+586,Panther_education_Gina,74.2,80.83,Panther,Education,False
+587,Panther_education_Hugh,74.19,80.69,Panther,Education,False
+588,Bobcat_education_Rosalva,74.19,81.99,Bobcat,Education,False
+589,Panther_education_Jerome,74.19,80.7,Panther,Education,False
+590,Eagle_office_Amie,74.16,80.9,Eagle,Office,False
+591,Panther_education_Shelton,74.14,80.68,Panther,Education,False
+592,Panther_education_Rosalie,74.12,80.66,Panther,Education,False
+593,Lamb_education_Ira,74.11,86.89,Lamb,Education,False
+594,Panther_education_Mohammad,74.11,80.92,Panther,Education,False
+595,Panther_education_Scarlett,74.1,81.18,Panther,Education,False
+596,Bear_education_Merrill,74.09,81.61,Bear,Education,False
+597,Panther_education_Annetta,74.08,80.69,Panther,Education,False
+598,Panther_education_Ivan,74.07,80.68,Panther,Education,False
+599,Panther_education_Edna,74.04,80.87,Panther,Education,False
+600,Panther_education_Alecia,74.03,80.68,Panther,Education,False
+601,Panther_education_Teofila,74.02,80.69,Panther,Education,False
+602,Panther_education_Vincent,74.0,80.68,Panther,Education,False
+603,Panther_education_Emily,73.96,81.0,Panther,Education,False
+604,Panther_education_Enriqueta,73.94,80.79,Panther,Education,False
+605,Panther_education_Neal,73.94,80.69,Panther,Education,False
+606,Panther_education_Diann,73.89,80.67,Panther,Education,False
+607,Panther_education_Aurora,73.84,80.7,Panther,Education,False
+608,Cockatoo_education_Evangeline,73.83,79.54,Cockatoo,Education,False
+609,Panther_education_Zelda,73.82,80.68,Panther,Education,False
+610,Panther_education_Karri,73.74,79.26,Panther,Education,False
+611,Cockatoo_education_Mayra,73.74,79.92,Cockatoo,Education,False
+612,Panther_education_Janis,73.63,80.66,Panther,Education,False
+613,Panther_education_Genevieve,73.53,78.55,Panther,Education,False
+614,Panther_education_Cleopatra,73.53,81.32,Panther,Education,False
+615,Bull_education_Annette,73.5,78.96,Bull,Education,False
+616,Panther_education_Tina,73.11,80.81,Panther,Education,False
+617,Panther_education_Mattie,73.0,80.7,Panther,Education,False
+618,Bobcat_education_Marisha,72.84,77.28,Bobcat,Education,False
+619,Panther_education_Jonathan,72.71,77.06,Panther,Education,False
+620,Rat_education_Gricelda,72.55,76.32,Rat,Education,False
+621,Eagle_health_Gregoria,72.24,74.16,Eagle,Healthcare,False
+622,Lamb_education_Traci,72.04,85.56,Lamb,Education,False
+623,Lamb_education_Marc,71.81,82.11,Lamb,Education,False
+624,Cockatoo_education_Christi,71.62,72.82,Cockatoo,Education,False
+625,Bobcat_education_Monte,71.32,73.67,Bobcat,Education,False
+626,Hog_education_Cathleen,71.11,70.5,Hog,Education,False
+627,Lamb_education_Aldo,70.8,79.71,Lamb,Education,False
+628,Panther_education_Quintin,70.7,69.7,Panther,Education,False
+629,Rat_education_Dianne,70.7,69.52,Rat,Education,False
+630,Moose_education_Leland,70.69,73.54,Moose,Education,False
+631,Bull_education_Delia,70.66,69.03,Bull,Education,False
+632,Bobcat_education_Miki,70.53,69.6,Bobcat,Education,False
+633,Eagle_lodging_Blake,70.18,69.19,Eagle,Lodging/residential,False
+634,Moose_education_Florence,69.44,67.62,Moose,Education,False
+635,Bear_education_Carlo,69.37,68.38,Bear,Education,False
+636,Rat_education_Cinthia,69.0,68.46,Rat,Education,False
+637,Moose_education_Diane,66.73,55.89,Moose,Education,False
+638,Fox_education_Jacqueline,66.56,64.35,Fox,Education,False
+639,Lamb_education_Willetta,66.37,100.0,Lamb,Education,False
+640,Rat_education_Alyson,66.23,55.53,Rat,Education,False
+641,Lamb_education_Camille,66.18,58.73,Lamb,Education,False
+642,Rat_education_Matt,65.78,54.99,Rat,Education,False
+643,Lamb_education_Alina,65.59,57.52,Lamb,Education,False
+644,Rat_education_Susana,65.59,56.46,Rat,Education,False
+645,Rat_education_Willy,65.55,55.7,Rat,Education,False
+646,Bear_education_Benjamin,65.49,53.76,Bear,Education,False
+647,Rat_education_Jeanne,65.44,52.24,Rat,Education,False
+648,Bear_education_Deborah,65.01,51.71,Bear,Education,False
+649,Fox_education_Maureen,64.92,49.92,Fox,Education,False
+650,Moose_education_Sasha,64.47,49.65,Moose,Education,False
+651,Rat_education_Donnell,64.01,52.53,Rat,Education,False
+652,Eagle_office_Michele,63.77,46.02,Eagle,Office,False
+653,Eagle_office_Joette,63.69,46.02,Eagle,Office,False
+654,Rat_education_Denise,63.41,46.5,Rat,Education,False
+655,Rat_education_Eleonora,63.16,46.63,Rat,Education,False
+656,Bobcat_education_Karin,63.09,44.85,Bobcat,Education,False
+657,Rat_education_Mavis,62.47,46.76,Rat,Education,False
+658,Peacock_education_Weldon,62.45,43.18,Peacock,Education,False
+659,Peacock_education_Bianca,62.39,42.98,Peacock,Education,False
+660,Peacock_education_Karl,62.35,43.15,Peacock,Education,False
+661,Peacock_education_Lucie,62.16,42.25,Peacock,Education,False
+662,Rat_education_Romana,62.12,44.86,Rat,Education,False
+663,Fox_education_Vernon,61.83,42.45,Fox,Education,False
+664,Rat_education_Edmund,61.26,43.01,Rat,Education,False
+665,Hog_education_Darryl,60.17,37.93,Hog,Education,False
+666,Fox_assembly_Renna,59.98,99.98,Fox,Entertainment/public assembly,False
+667,Hog_office_Sarah,59.98,99.98,Hog,Office,False
+668,Hog_public_Brad,59.97,99.94,Hog,Public services,False
+669,Peacock_lodging_Lou,59.97,99.96,Peacock,Lodging/residential,False
+670,Fox_lodging_Isabell,59.97,99.98,Fox,Lodging/residential,False
+671,Hog_office_Charla,59.96,99.99,Hog,Office,False
+672,Wolf_office_Elisabeth,59.96,99.99,Wolf,Office,False
+673,Fox_parking_Tommie,59.95,99.94,Fox,Parking,False
+674,Fox_office_Alice,59.95,99.98,Fox,Office,False
+675,Wolf_science_Alfreda,59.95,99.96,Wolf,Technology/science,False
+676,Fox_public_Lauren,59.95,99.94,Fox,Public services,False
+677,Rat_office_Colby,59.95,99.98,Rat,Office,False
+678,Fox_office_Bernard,59.94,99.98,Fox,Office,False
+679,Fox_assembly_Gary,59.94,99.98,Fox,Entertainment/public assembly,False
+680,Peacock_office_Burl,59.94,99.95,Peacock,Office,False
+681,Fox_public_Martin,59.94,99.94,Fox,Public services,False
+682,Fox_lodging_Jina,59.94,99.96,Fox,Lodging/residential,False
+683,Peacock_lodging_Matthew,59.93,99.94,Peacock,Lodging/residential,False
+684,Fox_lodging_Winifred,59.93,99.98,Fox,Lodging/residential,False
+685,Fox_lodging_Wallace,59.93,99.98,Fox,Lodging/residential,False
+686,Hog_health_Kesha,59.92,99.91,Hog,Healthcare,False
+687,Hog_health_Hisako,59.92,99.95,Hog,Healthcare,False
+688,Wolf_office_Joana,59.92,99.97,Wolf,Office,False
+689,Fox_lodging_Morris,59.92,99.9,Fox,Lodging/residential,False
+690,Peacock_office_Elton,59.92,99.86,Peacock,Office,False
+691,Hog_office_Eloise,59.91,99.99,Hog,Office,False
+692,Hog_lodging_Celeste,59.91,99.99,Hog,Lodging/residential,False
+693,Hog_lodging_Shonda,59.91,99.99,Hog,Lodging/residential,False
+694,Fox_lodging_Alana,59.91,99.98,Fox,Lodging/residential,False
+695,Bear_science_Alison,59.91,99.81,Bear,Technology/science,False
+696,Fox_lodging_Stephen,59.91,99.98,Fox,Lodging/residential,False
+697,Hog_office_Man,59.91,99.98,Hog,Office,False
+698,Bear_parking_Gordon,59.9,99.74,Bear,Parking,False
+699,Fox_office_Edythe,59.9,99.99,Fox,Office,False
+700,Fox_lodging_Helen,59.9,99.99,Fox,Lodging/residential,False
+701,Fox_lodging_Stephan,59.9,99.89,Fox,Lodging/residential,False
+702,Hog_office_Josefina,59.9,99.99,Hog,Office,False
+703,Fox_assembly_Cindy,59.9,99.94,Fox,Entertainment/public assembly,False
+704,Fox_lodging_Frances,59.9,99.91,Fox,Lodging/residential,False
+705,Hog_office_Leanne,59.89,99.99,Hog,Office,False
+706,Rat_other_Hazel,59.89,99.7,Rat,Other,False
+707,Hog_office_Elnora,59.89,99.99,Hog,Office,False
+708,Peacock_lodging_Wes,59.89,99.94,Peacock,Lodging/residential,False
+709,Peacock_lodging_Sergio,59.89,99.94,Peacock,Lodging/residential,False
+710,Robin_lodging_Armand,59.89,100.0,Robin,Lodging/residential,False
+711,Hog_public_Octavia,59.88,100.0,Hog,Public services,False
+712,Robin_office_Maryann,59.88,100.0,Robin,Office,False
+713,Hog_other_Noma,59.88,100.0,Hog,Other,False
+714,Hog_office_Elizbeth,59.88,99.87,Hog,Office,False
+715,Robin_lodging_Donna,59.88,100.0,Robin,Lodging/residential,False
+716,Robin_office_Antonina,59.88,100.0,Robin,Office,False
+717,Fox_lodging_Warren,59.87,99.94,Fox,Lodging/residential,False
+718,Peacock_lodging_Francesca,59.87,99.91,Peacock,Lodging/residential,False
+719,Rat_public_Stella,59.87,99.7,Rat,Public services,False
+720,Hog_health_Jenny,59.87,99.9,Hog,Healthcare,False
+721,Peacock_assembly_Russ,59.87,99.73,Peacock,Entertainment/public assembly,False
+722,Peacock_lodging_Terrie,59.87,99.77,Peacock,Lodging/residential,False
+723,Bear_assembly_Ruby,59.87,99.77,Bear,Entertainment/public assembly,False
+724,Hog_office_Sydney,59.87,100.0,Hog,Office,False
+725,Hog_office_Roger,59.86,99.76,Hog,Office,False
+726,Hog_other_Lynette,59.86,99.89,Hog,Other,False
+727,Hog_lodging_Shanti,59.86,100.0,Hog,Lodging/residential,False
+728,Robin_office_Adolph,59.86,100.0,Robin,Office,False
+729,Fox_office_Israel,59.85,99.98,Fox,Office,False
+730,Bear_public_Lowell,59.85,99.98,Bear,Public services,False
+731,Peacock_lodging_Jamaal,59.85,99.94,Peacock,Lodging/residential,False
+732,Bear_utility_Sidney,59.84,99.58,Bear,Utility,False
+733,Peacock_office_Norman,59.84,99.89,Peacock,Office,False
+734,Hog_lodging_Ora,59.84,100.0,Hog,Lodging/residential,False
+735,Robin_public_Carolina,59.83,100.0,Robin,Public services,False
+736,Rat_warehouse_Doretta,59.83,99.85,Rat,Warehouse/storage,False
+737,Hog_lodging_Brian,59.83,99.99,Hog,Lodging/residential,False
+738,Bear_public_Jocelyn,59.83,99.99,Bear,Public services,False
+739,Robin_office_Shirlene,59.82,100.0,Robin,Office,False
+740,Hog_parking_Antoinette,59.82,99.99,Hog,Parking,False
+741,Robin_lodging_Renea,59.82,100.0,Robin,Lodging/residential,False
+742,Hog_assembly_Maribel,59.82,99.98,Hog,Entertainment/public assembly,False
+743,Rat_public_Sharron,59.81,99.74,Rat,Public services,False
+744,Hog_services_Kerrie,59.81,100.0,Hog,Services,False
+745,Peacock_lodging_James,59.81,99.58,Peacock,Lodging/residential,False
+746,Fox_assembly_Audrey,59.81,99.98,Fox,Entertainment/public assembly,False
+747,Hog_lodging_Nikki,59.81,100.0,Hog,Lodging/residential,False
+748,Hog_office_Elsy,59.81,99.95,Hog,Office,False
+749,Robin_public_Cami,59.8,100.0,Robin,Public services,False
+750,Bear_assembly_Beatrice,59.8,99.78,Bear,Entertainment/public assembly,False
+751,Robin_office_Addie,59.8,100.0,Robin,Office,False
+752,Hog_office_Napoleon,59.8,100.0,Hog,Office,False
+753,Peacock_lodging_Mathew,59.8,99.72,Peacock,Lodging/residential,False
+754,Fox_public_Denny,59.8,99.96,Fox,Public services,False
+755,Rat_public_Johnny,59.8,99.7,Rat,Public services,False
+756,Hog_office_Rolando,59.8,99.99,Hog,Office,False
+757,Rat_public_Wilbur,59.79,99.54,Rat,Public services,False
+758,Fox_assembly_Emma,59.79,99.93,Fox,Entertainment/public assembly,False
+759,Hog_office_Mike,59.79,100.0,Hog,Office,False
+760,Hog_assembly_Dona,59.79,100.0,Hog,Entertainment/public assembly,False
+761,Robin_lodging_Elmer,59.78,100.0,Robin,Lodging/residential,False
+762,Robin_office_Zelma,59.78,100.0,Robin,Office,False
+763,Hog_parking_Cliff,59.78,99.78,Hog,Parking,False
+764,Hog_office_Candi,59.78,99.82,Hog,Office,False
+765,Rat_warehouse_Breanna,59.77,99.57,Rat,Warehouse/storage,False
+766,Rat_office_Adele,59.77,99.83,Rat,Office,False
+767,Fox_assembly_Tony,59.77,99.99,Fox,Entertainment/public assembly,False
+768,Fox_parking_Felipa,59.77,99.7,Fox,Parking,False
+769,Rat_public_Leo,59.76,99.77,Rat,Public services,False
+770,Bear_parking_Bruce,59.76,99.25,Bear,Parking,False
+771,Hog_lodging_Francisco,59.76,100.0,Hog,Lodging/residential,False
+772,Fox_office_Joy,59.76,99.95,Fox,Office,False
+773,Robin_office_Dina,59.75,100.0,Robin,Office,False
+774,Robin_lodging_Oliva,59.75,100.0,Robin,Lodging/residential,False
+775,Hog_assembly_Jasmine,59.75,100.0,Hog,Entertainment/public assembly,False
+776,Robin_office_Sammie,59.75,100.0,Robin,Office,False
+777,Hog_lodging_Hal,59.75,100.0,Hog,Lodging/residential,False
+778,Hog_parking_Bernardo,59.75,99.99,Hog,Parking,False
+779,Hog_office_Shon,59.75,100.0,Hog,Office,False
+780,Peacock_public_Kelvin,59.75,99.94,Peacock,Public services,False
+781,Wolf_office_Emanuel,59.75,99.98,Wolf,Office,False
+782,Rat_warehouse_Eloisa,59.75,99.84,Rat,Warehouse/storage,False
+783,Peacock_lodging_Chloe,59.75,99.77,Peacock,Lodging/residential,False
+784,Rat_public_Sharonda,59.74,99.83,Rat,Public services,False
+785,Rat_public_Allyson,59.74,99.54,Rat,Public services,False
+786,Rat_public_Desiree,59.74,99.64,Rat,Public services,False
+787,Rat_assembly_Teddy,59.74,99.57,Rat,Entertainment/public assembly,False
+788,Rat_public_Clyde,59.74,99.58,Rat,Public services,False
+789,Rat_office_Tracy,59.73,99.64,Rat,Office,False
+790,Fox_office_Yong,59.73,99.94,Fox,Office,False
+791,Rat_public_Nelson,59.73,99.57,Rat,Public services,False
+792,Wolf_office_Nadia,59.73,99.98,Wolf,Office,False
+793,Hog_office_Darline,59.72,99.19,Hog,Office,False
+794,Robin_assembly_Colleen,59.72,100.0,Robin,Entertainment/public assembly,False
+795,Rat_assembly_Monica,59.72,99.44,Rat,Entertainment/public assembly,False
+796,Fox_assembly_Adrianne,59.72,99.86,Fox,Entertainment/public assembly,False
+797,Fox_office_Vicki,59.72,99.94,Fox,Office,False
+798,Bear_lodging_Erick,59.71,99.78,Bear,Lodging/residential,False
+799,Rat_public_Grover,59.71,99.7,Rat,Public services,False
+800,Rat_assembly_Francine,59.71,99.51,Rat,Entertainment/public assembly,False
+801,Robin_office_Soledad,59.7,99.97,Robin,Office,False
+802,Hog_office_Joey,59.7,99.99,Hog,Office,False
+803,Robin_lodging_Celia,59.7,100.0,Robin,Lodging/residential,False
+804,Rat_lodging_Jeannette,59.7,99.83,Rat,Lodging/residential,False
+805,Hog_other_Tobias,59.7,100.0,Hog,Other,False
+806,Fox_health_Lorena,59.7,99.77,Fox,Healthcare,False
+807,Hog_industrial_Jay,59.7,99.98,Hog,Manufacturing/industrial,False
+808,Rat_public_Dexter,59.7,99.43,Rat,Public services,False
+809,Rat_public_Wilma,59.69,99.7,Rat,Public services,False
+810,Fox_office_Carson,59.69,99.98,Fox,Office,False
+811,Fox_food_Francesco,59.69,99.97,Fox,Food sales and service,False
+812,Rat_public_Tamra,59.69,99.57,Rat,Public services,False
+813,Fox_lodging_Angla,59.69,99.89,Fox,Lodging/residential,False
+814,Hog_office_Miriam,59.69,100.0,Hog,Office,False
+815,Rat_public_Joann,59.69,99.84,Rat,Public services,False
+816,Wolf_retail_Marcella,59.68,99.99,Wolf,Retail,False
+817,Rat_public_Deidre,59.68,99.84,Rat,Public services,False
+818,Fox_public_Belle,59.68,99.89,Fox,Public services,False
+819,Rat_public_Nell,59.68,99.84,Rat,Public services,False
+820,Robin_office_Donald,59.68,99.6,Robin,Office,False
+821,Robin_lodging_Dorthy,59.67,100.0,Robin,Lodging/residential,False
+822,Rat_public_Mark,59.67,99.78,Rat,Public services,False
+823,Rat_assembly_Trent,59.67,99.68,Rat,Entertainment/public assembly,False
+824,Rat_public_Helena,59.67,99.5,Rat,Public services,False
+825,Hog_office_Byron,59.67,99.31,Hog,Office,False
+826,Hog_office_Merilyn,59.67,100.0,Hog,Office,False
+827,Fox_assembly_Johnnie,59.67,99.66,Fox,Entertainment/public assembly,False
+828,Rat_public_Nancy,59.67,99.52,Rat,Public services,False
+829,Rat_public_Berry,59.67,99.7,Rat,Public services,False
+830,Rat_office_Jacinta,59.67,99.42,Rat,Office,False
+831,Rat_office_Ronald,59.66,99.81,Rat,Office,False
+832,Rat_assembly_Kimberley,59.66,99.83,Rat,Entertainment/public assembly,False
+833,Fox_office_Zachary,59.66,99.91,Fox,Office,False
+834,Robin_office_Gayle,59.66,100.0,Robin,Office,False
+835,Wolf_office_Cary,59.66,99.9,Wolf,Office,False
+836,Rat_office_Sammy,59.65,99.82,Rat,Office,False
+837,Bear_lodging_Evan,59.65,99.78,Bear,Lodging/residential,False
+838,Rat_office_Loyd,59.65,99.84,Rat,Office,False
+839,Fox_public_Rhonda,59.65,99.96,Fox,Public services,False
+840,Hog_industrial_Mariah,59.65,100.0,Hog,Manufacturing/industrial,False
+841,Fox_assembly_Sheldon,59.65,99.98,Fox,Entertainment/public assembly,False
+842,Rat_public_Kelly,59.65,99.44,Rat,Public services,False
+843,Peacock_assembly_Dena,59.64,99.77,Peacock,Entertainment/public assembly,False
+844,Hog_services_Marshall,59.64,99.83,Hog,Services,False
+845,Hog_office_Richelle,59.64,99.99,Hog,Office,False
+846,Rat_assembly_Kenya,59.64,99.81,Rat,Entertainment/public assembly,False
+847,Fox_public_Bart,59.64,99.98,Fox,Public services,False
+848,Fox_office_Demetrius,59.64,99.9,Fox,Office,False
+849,Hog_public_Gerard,59.63,100.0,Hog,Public services,False
+850,Rat_public_Ramona,59.63,99.69,Rat,Public services,False
+851,Rat_public_Tommy,59.63,99.56,Rat,Public services,False
+852,Rat_public_Caroline,59.63,99.83,Rat,Public services,False
+853,Robin_office_Victor,59.63,100.0,Robin,Office,False
+854,Rat_public_Ramon,59.63,99.69,Rat,Public services,False
+855,Peacock_lodging_Nova,59.63,99.86,Peacock,Lodging/residential,False
+856,Rat_public_Darren,59.63,99.33,Rat,Public services,False
+857,Rat_parking_Ronnie,59.63,99.66,Rat,Parking,False
+858,Hog_services_Adrianna,59.62,100.0,Hog,Services,False
+859,Bear_assembly_Jose,59.62,99.78,Bear,Entertainment/public assembly,False
+860,Rat_other_Daphne,59.62,99.59,Rat,Other,False
+861,Rat_public_Tricia,59.62,99.84,Rat,Public services,False
+862,Rat_public_Leta,59.62,99.83,Rat,Public services,False
+863,Rat_assembly_Ida,59.62,99.42,Rat,Entertainment/public assembly,False
+864,Rat_lodging_Marion,59.61,99.38,Rat,Lodging/residential,False
+865,Hog_warehouse_Rosanna,59.6,99.17,Hog,Warehouse/storage,False
+866,Fox_assembly_Cathy,59.6,99.32,Fox,Entertainment/public assembly,False
+867,Rat_health_Guy,59.6,98.99,Rat,Healthcare,False
+868,Rat_health_Mildred,59.6,99.69,Rat,Healthcare,False
+869,Peacock_office_Effie,59.59,99.94,Peacock,Office,False
+870,Hog_parking_Shannon,59.59,100.0,Hog,Parking,False
+871,Rat_public_Isabel,59.59,99.7,Rat,Public services,False
+872,Rat_public_Lynda,59.59,99.7,Rat,Public services,False
+873,Rat_assembly_Damaris,59.58,99.56,Rat,Entertainment/public assembly,False
+874,Hog_office_Almeda,59.58,100.0,Hog,Office,False
+875,Hog_office_Bill,59.58,100.0,Hog,Office,False
+876,Bear_science_Eleanor,59.57,99.65,Bear,Technology/science,False
+877,Fox_office_Rowena,59.57,99.87,Fox,Office,False
+878,Rat_religion_Kathy,59.57,99.68,Rat,Religious worship,False
+879,Hog_office_Mack,59.57,99.2,Hog,Office,False
+880,Rat_health_Gaye,59.57,99.57,Rat,Healthcare,False
+881,Rat_other_Lan,59.56,98.65,Rat,Other,False
+882,Hog_office_Bessie,59.56,100.0,Hog,Office,False
+883,Rat_public_Dalia,59.56,99.53,Rat,Public services,False
+884,Hog_lodging_Mauricio,59.56,99.99,Hog,Lodging/residential,False
+885,Hog_office_Sonny,59.56,99.26,Hog,Office,False
+886,Hog_office_Migdalia,59.56,99.99,Hog,Office,False
+887,Bear_public_Valorie,59.55,99.99,Bear,Public services,False
+888,Bear_lodging_Dannie,59.55,99.75,Bear,Lodging/residential,False
+889,Rat_public_Laverne,59.55,99.72,Rat,Public services,False
+890,Rat_public_Laurie,59.55,99.3,Rat,Public services,False
+891,Rat_public_Carole,59.55,99.46,Rat,Public services,False
+892,Hog_office_Emmanuel,59.55,99.24,Hog,Office,False
+893,Rat_health_Shane,59.54,98.71,Rat,Healthcare,False
+894,Rat_office_Craig,59.54,99.29,Rat,Office,False
+895,Fox_food_Scott,59.54,99.91,Fox,Food sales and service,False
+896,Hog_assembly_Pedro,59.54,99.98,Hog,Entertainment/public assembly,False
+897,Fox_office_Thelma,59.53,99.99,Fox,Office,False
+898,Rat_public_Josiah,59.53,99.7,Rat,Public services,False
+899,Peacock_office_Major,59.53,98.57,Peacock,Office,False
+900,Rat_public_Roberta,59.53,99.57,Rat,Public services,False
+901,Hog_office_Corie,59.53,99.99,Hog,Office,False
+902,Wolf_office_Bobbie,59.53,99.98,Wolf,Office,False
+903,Bear_assembly_Genia,59.52,99.05,Bear,Entertainment/public assembly,False
+904,Robin_lodging_Phillip,59.52,99.62,Robin,Lodging/residential,False
+905,Rat_public_Mabel,59.52,99.29,Rat,Public services,False
+906,Hog_office_Patrick,59.52,99.96,Hog,Office,False
+907,Rat_assembly_Adolfo,59.52,99.84,Rat,Entertainment/public assembly,False
+908,Lamb_office_Callie,59.51,99.74,Lamb,Office,False
+909,Rat_assembly_Kaitlyn,59.51,99.57,Rat,Entertainment/public assembly,False
+910,Hog_office_Lizzie,59.51,100.0,Hog,Office,False
+911,Rat_public_Jason,59.51,99.7,Rat,Public services,False
+912,Hog_food_Morgan,59.51,100.0,Hog,Food sales and service,False
+913,Rat_office_Jessica,59.51,98.68,Rat,Office,False
+914,Hog_office_Shawnna,59.5,100.0,Hog,Office,False
+915,Hog_office_Marilyn,59.5,99.22,Hog,Office,False
+916,Rat_public_Becky,59.5,99.56,Rat,Public services,False
+917,Rat_office_Rosemary,59.5,99.7,Rat,Office,False
+918,Fox_retail_Manie,59.5,99.91,Fox,Retail,False
+919,Hog_office_Clemencia,59.48,98.51,Hog,Office,False
+920,Rat_office_Arron,59.48,99.61,Rat,Office,False
+921,Rat_public_Loretta,59.47,98.84,Rat,Public services,False
+922,Fox_assembly_Leeanne,59.47,99.94,Fox,Entertainment/public assembly,False
+923,Wolf_office_Darleen,59.47,99.99,Wolf,Office,False
+924,Wolf_assembly_Sallie,59.47,99.47,Wolf,Entertainment/public assembly,False
+925,Rat_assembly_Mirta,59.46,99.82,Rat,Entertainment/public assembly,False
+926,Rat_public_Laura,59.46,98.98,Rat,Public services,False
+927,Bull_office_Claudia,59.46,98.28,Bull,Office,False
+928,Rat_public_Sue,59.46,99.69,Rat,Public services,False
+929,Rat_public_Kathleen,59.46,98.87,Rat,Public services,False
+930,Rat_public_Lloyd,59.45,99.57,Rat,Public services,False
+931,Rat_assembly_Gwen,59.45,99.37,Rat,Entertainment/public assembly,False
+932,Rat_public_Amber,59.45,99.7,Rat,Public services,False
+933,Rat_public_Sade,59.45,99.42,Rat,Public services,False
+934,Rat_other_Al,59.44,99.46,Rat,Other,False
+935,Peacock_office_Dara,59.44,99.78,Peacock,Office,False
+936,Rat_office_Annis,59.44,99.7,Rat,Office,False
+937,Hog_office_Buford,59.44,99.05,Hog,Office,False
+938,Rat_public_Hortencia,59.44,99.57,Rat,Public services,False
+939,Hog_lodging_Retha,59.43,98.27,Hog,Lodging/residential,False
+940,Rat_lodging_Ardell,59.43,99.57,Rat,Lodging/residential,False
+941,Hog_office_Guadalupe,59.43,99.99,Hog,Office,False
+942,Rat_public_Duane,59.43,99.83,Rat,Public services,False
+943,Rat_office_Jeannie,59.42,99.7,Rat,Office,False
+944,Rat_health_Rosaria,59.42,99.69,Rat,Healthcare,False
+945,Robin_office_Serena,59.42,100.0,Robin,Office,False
+946,Rat_assembly_Frieda,59.42,99.57,Rat,Entertainment/public assembly,False
+947,Bull_lodging_Caren,59.42,98.24,Bull,Lodging/residential,False
+948,Rat_public_Marcellus,59.42,99.81,Rat,Public services,False
+949,Bull_lodging_Perry,59.42,98.29,Bull,Lodging/residential,False
+950,Hog_public_Crystal,59.42,100.0,Hog,Public services,False
+951,Rat_health_Tanya,59.42,99.84,Rat,Healthcare,False
+952,Bull_assembly_Lance,59.42,98.22,Bull,Entertainment/public assembly,False
+953,Rat_public_Kelle,59.41,98.8,Rat,Public services,False
+954,Rat_public_Michael,59.41,99.43,Rat,Public services,False
+955,Bull_lodging_Abby,59.41,98.11,Bull,Lodging/residential,False
+956,Bull_office_Lilla,59.41,98.31,Bull,Office,False
+957,Hog_office_Sung,59.41,98.61,Hog,Office,False
+958,Bull_public_Hyun,59.41,98.13,Bull,Public services,False
+959,Bull_assembly_Brandon,59.41,98.23,Bull,Entertainment/public assembly,False
+960,Bull_lodging_Carie,59.4,98.12,Bull,Lodging/residential,False
+961,Rat_public_Frank,59.4,99.29,Rat,Public services,False
+962,Peacock_office_Julian,59.4,99.94,Peacock,Office,False
+963,Hog_office_Carri,59.4,99.58,Hog,Office,False
+964,Bull_services_Nadine,59.4,98.25,Bull,Services,False
+965,Bull_lodging_Melissa,59.4,98.14,Bull,Lodging/residential,False
+966,Bull_services_Rachelle,59.4,98.15,Bull,Services,False
+967,Bull_assembly_Amalia,59.39,98.15,Bull,Entertainment/public assembly,False
+968,Hog_office_Gustavo,59.39,100.0,Hog,Office,False
+969,Lamb_industrial_Enrique,59.39,100.0,Lamb,Manufacturing/industrial,False
+970,Bull_office_Anne,59.39,98.06,Bull,Office,False
+971,Bull_office_Ella,59.39,98.26,Bull,Office,False
+972,Rat_office_Ramiro,59.39,98.7,Rat,Office,False
+973,Rat_public_Frederick,59.39,99.53,Rat,Public services,False
+974,Hog_office_Mary,59.39,100.0,Hog,Office,False
+975,Hog_office_Myles,59.39,100.0,Hog,Office,False
+976,Hog_office_Cornell,59.38,99.16,Hog,Office,False
+977,Rat_assembly_Aisha,59.38,99.41,Rat,Entertainment/public assembly,False
+978,Bull_lodging_Leonard,59.38,98.12,Bull,Lodging/residential,False
+979,Robin_lodging_Pricilla,59.38,99.99,Robin,Lodging/residential,False
+980,Bull_assembly_Beau,59.38,98.29,Bull,Entertainment/public assembly,False
+981,Rat_public_Yessenia,59.37,99.7,Rat,Public services,False
+982,Bull_lodging_Hugo,59.37,98.2,Bull,Lodging/residential,False
+983,Hog_office_Vera,59.37,99.99,Hog,Office,False
+984,Wolf_public_Norma,59.37,99.99,Wolf,Public services,False
+985,Robin_office_Lindsay,59.37,100.0,Robin,Office,False
+986,Bull_lodging_Lettie,59.37,98.11,Bull,Lodging/residential,False
+987,Rat_lodging_Dwight,59.37,99.81,Rat,Lodging/residential,False
+988,Bull_lodging_Dave,59.36,98.14,Bull,Lodging/residential,False
+989,Rat_public_Kimber,59.36,99.98,Rat,Public services,False
+990,Hog_office_Corey,59.36,99.36,Hog,Office,False
+991,Rat_public_Angelina,59.36,99.57,Rat,Public services,False
+992,Fox_assembly_Carlos,59.36,99.76,Fox,Entertainment/public assembly,False
+993,Fox_parking_Lynelle,59.35,99.98,Fox,Parking,False
+994,Hog_parking_Jeana,59.35,99.22,Hog,Parking,False
+995,Rat_lodging_Marguerite,59.35,99.1,Rat,Lodging/residential,False
+996,Fox_office_Margarita,59.35,99.01,Fox,Office,False
+997,Hog_assembly_Letha,59.34,97.9,Hog,Entertainment/public assembly,False
+998,Bull_assembly_Vanessa,59.34,98.28,Bull,Entertainment/public assembly,False
+999,Fox_office_Berniece,59.34,99.89,Fox,Office,False
+1000,Rat_public_Alanna,59.34,98.63,Rat,Public services,False
+1001,Hog_assembly_Colette,59.34,100.0,Hog,Entertainment/public assembly,False
+1002,Rat_public_Damon,59.33,99.41,Rat,Public services,False
+1003,Rat_office_Randy,59.33,99.57,Rat,Office,False
+1004,Bull_lodging_Elena,59.33,98.1,Bull,Lodging/residential,False
+1005,Robin_office_Saul,59.32,99.98,Robin,Office,False
+1006,Hog_office_Lanell,59.32,99.99,Hog,Office,False
+1007,Rat_public_Faye,59.32,99.43,Rat,Public services,False
+1008,Rat_public_Bronwyn,59.32,98.06,Rat,Public services,False
+1009,Rat_public_Toya,59.32,99.29,Rat,Public services,False
+1010,Lamb_industrial_Venessa,59.31,99.74,Lamb,Manufacturing/industrial,False
+1011,Hog_office_Elke,59.31,99.93,Hog,Office,False
+1012,Hog_office_Leon,59.3,99.99,Hog,Office,False
+1013,Lamb_assembly_Alden,59.3,99.48,Lamb,Entertainment/public assembly,False
+1014,Rat_lodging_Christine,59.29,99.7,Rat,Lodging/residential,False
+1015,Rat_assembly_Trudy,59.29,99.56,Rat,Entertainment/public assembly,False
+1016,Rat_public_Stacey,59.29,99.7,Rat,Public services,False
+1017,Peacock_assembly_Socorro,59.29,99.93,Peacock,Entertainment/public assembly,False
+1018,Peacock_office_Annie,59.29,99.95,Peacock,Office,False
+1019,Rat_assembly_Deandre,59.28,99.7,Rat,Entertainment/public assembly,False
+1020,Rat_office_Kasey,59.28,99.57,Rat,Office,False
+1021,Bull_assembly_Freddie,59.28,98.12,Bull,Entertainment/public assembly,False
+1022,Hog_office_Nancie,59.27,99.94,Hog,Office,False
+1023,Rat_public_Fern,59.27,98.9,Rat,Public services,False
+1024,Hog_industrial_Joanne,59.27,100.0,Hog,Manufacturing/industrial,False
+1025,Rat_retail_Jeffrey,59.26,99.85,Rat,Retail,False
+1026,Wolf_office_Rochelle,59.26,99.9,Wolf,Office,False
+1027,Lamb_office_Velma,59.26,99.99,Lamb,Office,False
+1028,Fox_office_Clayton,59.26,99.99,Fox,Office,False
+1029,Fox_assembly_Christie,59.26,99.86,Fox,Entertainment/public assembly,False
+1030,Bull_services_Winford,59.25,98.15,Bull,Services,False
+1031,Fox_office_Sheila,59.25,99.97,Fox,Office,False
+1032,Rat_public_Corinne,59.24,99.7,Rat,Public services,False
+1033,Fox_assembly_Lakeisha,59.23,99.93,Fox,Entertainment/public assembly,False
+1034,Rat_office_Mei,59.23,98.04,Rat,Office,False
+1035,Bull_lodging_Jeremiah,59.22,98.11,Bull,Lodging/residential,False
+1036,Fox_office_Susanne,59.22,99.98,Fox,Office,False
+1037,Lamb_office_Vasiliki,59.21,99.75,Lamb,Office,False
+1038,Bull_office_Yvonne,59.21,98.11,Bull,Office,False
+1039,Fox_assembly_Terrell,59.21,99.26,Fox,Entertainment/public assembly,False
+1040,Rat_office_Jamal,59.21,99.98,Rat,Office,False
+1041,Rat_public_Courtney,59.2,99.56,Rat,Public services,False
+1042,Rat_lodging_Ben,59.2,98.85,Rat,Lodging/residential,False
+1043,Rat_office_Lora,59.2,99.84,Rat,Office,False
+1044,Hog_office_Denita,59.2,100.0,Hog,Office,False
+1045,Bull_assembly_Goldie,59.19,98.14,Bull,Entertainment/public assembly,False
+1046,Lamb_health_Ken,59.19,100.0,Lamb,Healthcare,False
+1047,Fox_office_Easter,59.18,99.38,Fox,Office,False
+1048,Bull_public_Jefferson,59.18,98.27,Bull,Public services,False
+1049,Hog_services_Joe,59.17,99.89,Hog,Services,False
+1050,Robin_office_Wai,59.17,99.75,Robin,Office,False
+1051,Rat_public_Roma,59.17,99.69,Rat,Public services,False
+1052,Hog_science_Max,59.17,97.31,Hog,Technology/science,False
+1053,Hog_office_Shawna,59.16,100.0,Hog,Office,False
+1054,Rat_warehouse_Shari,59.16,99.43,Rat,Warehouse/storage,False
+1055,Robin_lodging_Janie,59.16,100.0,Robin,Lodging/residential,False
+1056,Hog_office_Sherrie,59.16,100.0,Hog,Office,False
+1057,Hog_office_Simon,59.16,99.99,Hog,Office,False
+1058,Bull_assembly_Dorethea,59.15,98.1,Bull,Entertainment/public assembly,False
+1059,Bull_assembly_Nick,59.15,97.42,Bull,Entertainment/public assembly,False
+1060,Rat_assembly_Silvia,59.15,99.7,Rat,Entertainment/public assembly,False
+1061,Bull_services_Jeanmarie,59.15,97.38,Bull,Services,False
+1062,Rat_office_Avis,59.14,97.93,Rat,Office,False
+1063,Rat_public_Margart,59.14,99.7,Rat,Public services,False
+1064,Bull_office_Hilton,59.14,97.29,Bull,Office,False
+1065,Rat_assembly_Archie,59.14,99.37,Rat,Entertainment/public assembly,False
+1066,Hog_office_Garrett,59.13,99.0,Hog,Office,False
+1067,Hog_parking_Marcus,59.13,99.78,Hog,Parking,False
+1068,Hog_office_Valda,59.13,100.0,Hog,Office,False
+1069,Rat_assembly_Viola,59.13,99.83,Rat,Entertainment/public assembly,False
+1070,Wolf_office_Haydee,59.13,99.99,Wolf,Office,False
+1071,Hog_office_Catharine,59.11,97.39,Hog,Office,False
+1072,Rat_assembly_Dovie,59.11,99.84,Rat,Entertainment/public assembly,False
+1073,Bull_services_Juanita,59.11,97.38,Bull,Services,False
+1074,Bull_office_Ivette,59.1,97.5,Bull,Office,False
+1075,Bull_office_Chantel,59.09,97.39,Bull,Office,False
+1076,Bull_lodging_Travis,59.09,97.12,Bull,Lodging/residential,False
+1077,Bull_lodging_Graciela,59.09,97.35,Bull,Lodging/residential,False
+1078,Rat_public_Chrissy,59.09,97.72,Rat,Public services,False
+1079,Bull_office_Rob,59.08,97.77,Bull,Office,False
+1080,Bull_assembly_Gerri,59.08,98.14,Bull,Entertainment/public assembly,False
+1081,Rat_assembly_Rolland,59.08,99.82,Rat,Entertainment/public assembly,False
+1082,Hog_office_Randi,59.07,99.98,Hog,Office,False
+1083,Rat_public_Allie,59.07,99.83,Rat,Public services,False
+1084,Rat_assembly_Kristine,59.07,97.81,Rat,Entertainment/public assembly,False
+1085,Bull_assembly_Gigi,59.07,97.42,Bull,Entertainment/public assembly,False
+1086,Bull_office_Myron,59.06,97.66,Bull,Office,False
+1087,Bull_office_Nicolas,59.05,97.42,Bull,Office,False
+1088,Lamb_assembly_Dillon,59.05,99.99,Lamb,Entertainment/public assembly,False
+1089,Fox_office_Juana,59.05,98.92,Fox,Office,False
+1090,Lamb_public_Vania,59.04,99.0,Lamb,Public services,False
+1091,Bull_assembly_Lesa,59.04,98.07,Bull,Entertainment/public assembly,False
+1092,Fox_warehouse_Pearl,59.04,99.45,Fox,Warehouse/storage,False
+1093,Lamb_assembly_Bertie,59.04,99.9,Lamb,Entertainment/public assembly,False
+1094,Rat_assembly_Suzanne,59.03,99.37,Rat,Entertainment/public assembly,False
+1095,Rat_assembly_Rosemarie,59.01,99.4,Rat,Entertainment/public assembly,False
+1096,Fox_office_Karima,59.01,99.99,Fox,Office,False
+1097,Rat_public_Michelle,59.01,99.66,Rat,Public services,False
+1098,Rat_public_Sean,59.01,99.7,Rat,Public services,False
+1099,Rat_assembly_Kelley,59.01,99.12,Rat,Entertainment/public assembly,False
+1100,Lamb_assembly_Cherie,59.0,100.0,Lamb,Entertainment/public assembly,False
+1101,Hog_industrial_Jeremy,58.99,100.0,Hog,Manufacturing/industrial,False
+1102,Rat_public_Neil,58.99,99.75,Rat,Public services,False
+1103,Rat_assembly_Ezequiel,58.98,99.83,Rat,Entertainment/public assembly,False
+1104,Lamb_industrial_Carla,58.98,100.0,Lamb,Manufacturing/industrial,False
+1105,Rat_public_Kermit,58.97,97.24,Rat,Public services,False
+1106,Bull_office_Sally,58.97,97.65,Bull,Office,False
+1107,Rat_education_Penny,58.96,36.25,Rat,Education,False
+1108,Rat_public_Shanta,58.95,99.43,Rat,Public services,False
+1109,Bull_office_Debbie,58.94,97.99,Bull,Office,False
+1110,Gator_assembly_Blanca,58.93,97.12,Gator,Entertainment/public assembly,False
+1111,Hog_office_Alexis,58.92,99.99,Hog,Office,False
+1112,Bull_assembly_Nathanial,58.92,96.81,Bull,Entertainment/public assembly,False
+1113,Bear_public_Orville,58.92,99.99,Bear,Public services,False
+1114,Gator_assembly_Kimberly,58.91,96.57,Gator,Entertainment/public assembly,False
+1115,Fox_assembly_Boyce,58.91,96.97,Fox,Entertainment/public assembly,False
+1116,Gator_assembly_Enid,58.91,96.57,Gator,Entertainment/public assembly,False
+1117,Lamb_office_Stefani,58.91,99.61,Lamb,Office,False
+1118,Hog_office_Mari,58.9,99.99,Hog,Office,False
+1119,Bull_office_Efren,58.89,98.4,Bull,Office,False
+1120,Hog_office_Cordelia,58.88,99.99,Hog,Office,False
+1121,Gator_public_Randall,58.88,96.71,Gator,Public services,False
+1122,Rat_office_Olivia,58.88,99.7,Rat,Office,False
+1123,Fox_assembly_Kathie,58.86,98.28,Fox,Entertainment/public assembly,False
+1124,Gator_public_Cheri,58.86,96.43,Gator,Public services,False
+1125,Wolf_retail_Harriett,58.85,97.24,Wolf,Retail,False
+1126,Bear_public_Rayna,58.84,99.99,Bear,Public services,False
+1127,Fox_assembly_Bradley,58.84,97.04,Fox,Entertainment/public assembly,False
+1128,Gator_assembly_Loyce,58.84,96.3,Gator,Entertainment/public assembly,False
+1129,Lamb_assembly_Isa,58.82,99.49,Lamb,Entertainment/public assembly,False
+1130,Rat_public_Tammara,58.81,99.83,Rat,Public services,False
+1131,Gator_public_Marcie,58.8,96.3,Gator,Public services,False
+1132,Lamb_assembly_Dorothy,58.8,100.0,Lamb,Entertainment/public assembly,False
+1133,Wolf_assembly_Elaine,58.78,97.75,Wolf,Entertainment/public assembly,False
+1134,Rat_lodging_Lorenzo,58.78,99.0,Rat,Lodging/residential,False
+1135,Rat_public_Emilee,58.78,99.43,Rat,Public services,False
+1136,Rat_assembly_Alex,58.78,98.88,Rat,Entertainment/public assembly,False
+1137,Rat_assembly_Kristy,58.78,99.72,Rat,Entertainment/public assembly,False
+1138,Rat_public_Muriel,58.77,99.33,Rat,Public services,False
+1139,Hog_office_Catalina,58.76,99.24,Hog,Office,False
+1140,Gator_assembly_Marjorie,58.75,96.71,Gator,Entertainment/public assembly,False
+1141,Lamb_assembly_Katelyn,58.74,100.0,Lamb,Entertainment/public assembly,False
+1142,Wolf_retail_Toshia,58.73,99.99,Wolf,Retail,False
+1143,Hog_office_Nia,58.73,98.54,Hog,Office,False
+1144,Rat_education_Roxanne,58.72,37.19,Rat,Education,False
+1145,Hog_office_Marlene,58.71,99.22,Hog,Office,False
+1146,Hog_industrial_Quentin,58.71,100.0,Hog,Manufacturing/industrial,False
+1147,Gator_public_Jayme,58.7,96.16,Gator,Public services,False
+1148,Gator_public_Kenny,58.7,96.57,Gator,Public services,False
+1149,Gator_public_Beulah,58.69,96.43,Gator,Public services,False
+1150,Rat_assembly_Cristina,58.69,99.67,Rat,Entertainment/public assembly,False
+1151,Rat_assembly_Jamie,58.68,99.56,Rat,Entertainment/public assembly,False
+1152,Fox_office_Gaylord,58.68,98.56,Fox,Office,False
+1153,Lamb_assembly_Elinor,58.68,100.0,Lamb,Entertainment/public assembly,False
+1154,Gator_assembly_Virgie,58.66,95.88,Gator,Entertainment/public assembly,False
+1155,Gator_public_Marissa,58.64,96.02,Gator,Public services,False
+1156,Fox_assembly_Cecelia,58.63,99.98,Fox,Entertainment/public assembly,False
+1157,Hog_public_Kevin,58.63,100.0,Hog,Public services,False
+1158,Fox_office_Molly,58.62,99.9,Fox,Office,False
+1159,Rat_assembly_Erwin,58.6,99.7,Rat,Entertainment/public assembly,False
+1160,Hog_warehouse_Louise,58.58,99.99,Hog,Warehouse/storage,False
+1161,Rat_assembly_Aubrey,58.56,99.79,Rat,Entertainment/public assembly,False
+1162,Rat_public_Fredrick,58.53,96.56,Rat,Public services,False
+1163,Gator_public_Leroy,58.53,96.43,Gator,Public services,False
+1164,Hog_office_Betsy,58.51,100.0,Hog,Office,False
+1165,Rat_assembly_Horace,58.51,99.7,Rat,Entertainment/public assembly,False
+1166,Gator_public_Lindsey,58.51,95.47,Gator,Public services,False
+1167,Hog_office_Terry,58.5,99.94,Hog,Office,False
+1168,Bull_lodging_Charlotte,58.49,98.28,Bull,Lodging/residential,False
+1169,Lamb_public_Gracie,58.49,99.6,Lamb,Public services,False
+1170,Gator_other_Elfriede,58.46,96.3,Gator,Other,False
+1171,Fox_office_Brandy,58.45,99.94,Fox,Office,False
+1172,Bear_assembly_Roxy,58.44,97.27,Bear,Entertainment/public assembly,False
+1173,Rat_assembly_Jennie,58.4,98.54,Rat,Entertainment/public assembly,False
+1174,Hog_parking_Jean,58.4,100.0,Hog,Parking,False
+1175,Lamb_assembly_Tasha,58.39,99.87,Lamb,Entertainment/public assembly,False
+1176,Rat_office_Jill,58.38,98.34,Rat,Office,False
+1177,Rat_warehouse_Maegan,58.37,95.13,Rat,Warehouse/storage,False
+1178,Rat_assembly_Pam,58.35,99.66,Rat,Entertainment/public assembly,False
+1179,Lamb_assembly_Cesar,58.33,99.74,Lamb,Entertainment/public assembly,False
+1180,Bull_lodging_Xavier,58.32,98.29,Bull,Lodging/residential,False
+1181,Bull_lodging_Allen,58.31,98.29,Bull,Lodging/residential,False
+1182,Rat_assembly_Ruth,58.25,99.51,Rat,Entertainment/public assembly,False
+1183,Lamb_other_Katharina,58.21,99.74,Lamb,Other,False
+1184,Gator_public_Everette,58.21,94.38,Gator,Public services,False
+1185,Bobcat_lodging_Melaine,58.16,94.05,Bobcat,Lodging/residential,False
+1186,Bobcat_lodging_Nickolas,58.16,94.05,Bobcat,Lodging/residential,False
+1187,Rat_public_Vickie,58.13,99.68,Rat,Public services,False
+1188,Lamb_assembly_Dorathy,58.11,99.59,Lamb,Entertainment/public assembly,False
+1189,Gator_assembly_Joni,58.11,94.93,Gator,Entertainment/public assembly,False
+1190,Rat_assembly_Michel,58.1,99.84,Rat,Entertainment/public assembly,False
+1191,Rat_assembly_Teodoro,58.1,95.73,Rat,Entertainment/public assembly,False
+1192,Gator_other_Cassandra,58.08,95.88,Gator,Other,False
+1193,Lamb_assembly_Corliss,58.08,99.74,Lamb,Entertainment/public assembly,False
+1194,Bobcat_lodging_Darin,58.08,93.98,Bobcat,Lodging/residential,False
+1195,Lamb_office_Gerardo,58.07,99.74,Lamb,Office,False
+1196,Lamb_office_Raymond,58.07,99.74,Lamb,Office,False
+1197,Rat_assembly_Donny,58.06,98.1,Rat,Entertainment/public assembly,False
+1198,Lamb_assembly_Steven,58.06,99.87,Lamb,Entertainment/public assembly,False
+1199,Fox_office_Essie,58.05,99.89,Fox,Office,False
+1200,Rat_lodging_Ted,58.05,97.63,Rat,Lodging/residential,False
+1201,Bull_assembly_Daryl,58.05,95.06,Bull,Entertainment/public assembly,False
+1202,Gator_public_Dionna,58.04,93.7,Gator,Public services,False
+1203,Lamb_office_Peggy,58.03,99.19,Lamb,Office,False
+1204,Gator_public_Alexandra,58.0,95.34,Gator,Public services,False
+1205,Lamb_office_Bertha,57.95,100.0,Lamb,Office,False
+1206,Gator_public_Dewey,57.93,93.56,Gator,Public services,False
+1207,Lamb_assembly_Ossie,57.93,99.73,Lamb,Entertainment/public assembly,False
+1208,Lamb_assembly_Walter,57.92,99.71,Lamb,Entertainment/public assembly,False
+1209,Gator_other_Gertrude,57.89,95.07,Gator,Other,False
+1210,Gator_office_Lisa,57.88,93.15,Gator,Office,False
+1211,Gator_public_Kendall,57.87,93.01,Gator,Public services,False
+1212,Fox_assembly_Dixie,57.87,99.9,Fox,Entertainment/public assembly,False
+1213,Gator_assembly_Lilli,57.84,93.42,Gator,Entertainment/public assembly,False
+1214,Gator_public_Janna,57.83,92.88,Gator,Public services,False
+1215,Gator_public_Nettie,57.82,93.01,Gator,Public services,False
+1216,Gator_office_Julie,57.77,93.42,Gator,Office,False
+1217,Gator_warehouse_Constance,57.76,95.06,Gator,Warehouse/storage,False
+1218,Gator_assembly_Lelia,57.71,93.29,Gator,Entertainment/public assembly,False
+1219,Gator_office_Betty,57.7,92.74,Gator,Office,False
+1220,Hog_office_Marlena,57.67,99.28,Hog,Office,False
+1221,Rat_assembly_Victorina,57.66,96.95,Rat,Entertainment/public assembly,False
+1222,Gator_public_Noe,57.65,93.01,Gator,Public services,False
+1223,Bobcat_other_Timothy,57.65,93.9,Bobcat,Other,False
+1224,Bobcat_office_Alma,57.63,93.05,Bobcat,Office,False
+1225,Lamb_lodging_Burt,57.63,99.73,Lamb,Lodging/residential,False
+1226,Bull_assembly_Maren,57.6,92.4,Bull,Entertainment/public assembly,False
+1227,Gator_public_Erika,57.6,92.33,Gator,Public services,False
+1228,Lamb_public_Grace,57.58,99.9,Lamb,Public services,False
+1229,Lamb_assembly_Tawana,57.57,93.74,Lamb,Entertainment/public assembly,False
+1230,Gator_public_Geraldine,57.56,92.6,Gator,Public services,False
+1231,Lamb_assembly_Louis,57.55,96.71,Lamb,Entertainment/public assembly,False
+1232,Cockatoo_public_Valerie,57.55,91.88,Cockatoo,Public services,False
+1233,Lamb_assembly_Librada,57.54,100.0,Lamb,Entertainment/public assembly,False
+1234,Gator_public_Dale,57.54,92.88,Gator,Public services,False
+1235,Cockatoo_lodging_Jim,57.53,91.88,Cockatoo,Lodging/residential,False
+1236,Lamb_industrial_Willard,57.53,93.72,Lamb,Manufacturing/industrial,False
+1237,Gator_assembly_Daisy,57.52,92.07,Gator,Entertainment/public assembly,False
+1238,Cockatoo_office_Kristin,57.52,91.84,Cockatoo,Office,False
+1239,Cockatoo_lodging_Homer,57.52,91.88,Cockatoo,Lodging/residential,False
+1240,Gator_public_Tiffany,57.5,92.19,Gator,Public services,False
+1241,Cockatoo_lodging_Mandy,57.5,91.78,Cockatoo,Lodging/residential,False
+1242,Cockatoo_office_Laila,57.49,91.83,Cockatoo,Office,False
+1243,Cockatoo_office_Georgia,57.49,91.87,Cockatoo,Office,False
+1244,Fox_utility_Marian,57.49,99.98,Fox,Utility,False
+1245,Gator_public_Clara,57.48,92.88,Gator,Public services,False
+1246,Bull_assembly_Katia,57.47,92.84,Bull,Entertainment/public assembly,False
+1247,Cockatoo_lodging_Katharine,57.46,91.84,Cockatoo,Lodging/residential,False
+1248,Cockatoo_office_Jodie,57.45,91.84,Cockatoo,Office,False
+1249,Hog_warehouse_Porsha,57.45,99.98,Hog,Warehouse/storage,False
+1250,Cockatoo_office_Christy,57.45,91.84,Cockatoo,Office,False
+1251,Cockatoo_science_Rex,57.44,91.87,Cockatoo,Technology/science,False
+1252,Gator_warehouse_Stacie,57.44,92.46,Gator,Warehouse/storage,False
+1253,Cockatoo_lodging_Cletus,57.44,91.81,Cockatoo,Lodging/residential,False
+1254,Cockatoo_lodging_Albert,57.44,91.87,Cockatoo,Lodging/residential,False
+1255,Cockatoo_lodging_Aimee,57.44,91.85,Cockatoo,Lodging/residential,False
+1256,Cockatoo_office_Paige,57.43,91.88,Cockatoo,Office,False
+1257,Cockatoo_office_Roxanna,57.43,91.74,Cockatoo,Office,False
+1258,Cockatoo_assembly_Pierre,57.43,91.85,Cockatoo,Entertainment/public assembly,False
+1259,Cockatoo_lodging_Johnathan,57.43,91.88,Cockatoo,Lodging/residential,False
+1260,Rat_assembly_Pauline,57.43,97.12,Rat,Entertainment/public assembly,False
+1261,Cockatoo_office_Delores,57.42,91.88,Cockatoo,Office,False
+1262,Gator_public_Natasha,57.42,93.56,Gator,Public services,False
+1263,Cockatoo_industrial_Sarita,57.42,91.88,Cockatoo,Manufacturing/industrial,False
+1264,Cockatoo_lodging_Emory,57.42,91.82,Cockatoo,Lodging/residential,False
+1265,Cockatoo_lodging_Javier,57.42,91.88,Cockatoo,Lodging/residential,False
+1266,Bobcat_office_Nikita,57.42,93.18,Bobcat,Office,False
+1267,Cockatoo_office_Elbert,57.41,91.68,Cockatoo,Office,False
+1268,Cockatoo_assembly_Emilio,57.41,91.87,Cockatoo,Entertainment/public assembly,False
+1269,Gator_public_Latasha,57.41,91.92,Gator,Public services,False
+1270,Cockatoo_lodging_Lana,57.41,91.79,Cockatoo,Lodging/residential,False
+1271,Cockatoo_lodging_Alicia,57.41,91.55,Cockatoo,Lodging/residential,False
+1272,Gator_assembly_Regina,57.4,92.6,Gator,Entertainment/public assembly,False
+1273,Cockatoo_lodging_Kyle,57.4,91.88,Cockatoo,Lodging/residential,False
+1274,Gator_assembly_Maurine,57.4,96.16,Gator,Entertainment/public assembly,False
+1275,Cockatoo_office_Giovanni,57.4,91.7,Cockatoo,Office,False
+1276,Cockatoo_office_Margaret,57.4,91.77,Cockatoo,Office,False
+1277,Cockatoo_public_Leah,57.4,91.87,Cockatoo,Public services,False
+1278,Cockatoo_lodging_Lynne,57.39,91.88,Cockatoo,Lodging/residential,False
+1279,Cockatoo_lodging_Linwood,57.39,91.88,Cockatoo,Lodging/residential,False
+1280,Cockatoo_public_Harland,57.38,91.81,Cockatoo,Public services,False
+1281,Cockatoo_lodging_Elvia,57.38,91.85,Cockatoo,Lodging/residential,False
+1282,Cockatoo_assembly_Tabitha,57.37,91.84,Cockatoo,Entertainment/public assembly,False
+1283,Cockatoo_office_Alton,57.37,91.88,Cockatoo,Office,False
+1284,Cockatoo_lodging_Raphael,57.37,91.88,Cockatoo,Lodging/residential,False
+1285,Gator_other_Glen,57.36,91.93,Gator,Other,False
+1286,Cockatoo_public_Shad,57.35,91.84,Cockatoo,Public services,False
+1287,Cockatoo_lodging_Tesha,57.35,91.7,Cockatoo,Lodging/residential,False
+1288,Cockatoo_lodging_Tessie,57.35,91.85,Cockatoo,Lodging/residential,False
+1289,Cockatoo_assembly_Meredith,57.34,91.79,Cockatoo,Entertainment/public assembly,False
+1290,Lamb_office_Jo,57.34,97.78,Lamb,Office,False
+1291,Cockatoo_assembly_Heath,57.34,91.87,Cockatoo,Entertainment/public assembly,False
+1292,Cockatoo_public_Chiquita,57.33,91.85,Cockatoo,Public services,False
+1293,Cockatoo_office_Lorraine,57.33,91.61,Cockatoo,Office,False
+1294,Lamb_lodging_Harley,57.31,93.74,Lamb,Lodging/residential,False
+1295,Cockatoo_assembly_Griselda,57.31,91.88,Cockatoo,Entertainment/public assembly,False
+1296,Cockatoo_assembly_Rodger,57.31,91.79,Cockatoo,Entertainment/public assembly,False
+1297,Bull_lodging_Terence,57.31,91.48,Bull,Lodging/residential,False
+1298,Cockatoo_lodging_Eric,57.3,91.88,Cockatoo,Lodging/residential,False
+1299,Cockatoo_lodging_Carmen,57.3,91.88,Cockatoo,Lodging/residential,False
+1300,Cockatoo_public_Caleb,57.3,91.83,Cockatoo,Public services,False
+1301,Cockatoo_lodging_Josephine,57.28,91.83,Cockatoo,Lodging/residential,False
+1302,Cockatoo_office_Rodney,57.28,91.88,Cockatoo,Office,False
+1303,Lamb_warehouse_Allan,57.28,93.86,Lamb,Warehouse/storage,False
+1304,Gator_assembly_Bailey,57.26,92.46,Gator,Entertainment/public assembly,False
+1305,Cockatoo_lodging_Judi,57.25,91.88,Cockatoo,Lodging/residential,False
+1306,Lamb_assembly_Delilah,57.24,99.74,Lamb,Entertainment/public assembly,False
+1307,Cockatoo_religion_Diedre,57.22,91.88,Cockatoo,Religious worship,False
+1308,Bobcat_assembly_Franklin,57.21,92.44,Bobcat,Entertainment/public assembly,False
+1309,Cockatoo_lodging_Ana,57.21,91.87,Cockatoo,Lodging/residential,False
+1310,Gator_assembly_Lucia,57.18,90.83,Gator,Entertainment/public assembly,False
+1311,Cockatoo_office_Gail,57.17,91.84,Cockatoo,Office,False
+1312,Cockatoo_assembly_Doyle,57.16,91.85,Cockatoo,Entertainment/public assembly,False
+1313,Bull_office_Marco,57.15,91.87,Bull,Office,False
+1314,Cockatoo_assembly_Ed,57.14,91.69,Cockatoo,Entertainment/public assembly,False
+1315,Gator_assembly_Gene,57.13,91.1,Gator,Entertainment/public assembly,False
+1316,Bull_lodging_Danielle,57.13,90.81,Bull,Lodging/residential,False
+1317,Cockatoo_assembly_Genoveva,57.12,91.81,Cockatoo,Entertainment/public assembly,False
+1318,Cockatoo_office_Pansy,57.12,91.85,Cockatoo,Office,False
+1319,Gator_public_Maude,57.11,90.55,Gator,Public services,False
+1320,Gator_public_Ross,57.09,90.69,Gator,Public services,False
+1321,Gator_other_Reginald,57.09,91.51,Gator,Other,False
+1322,Cockatoo_assembly_Evelyn,57.01,91.55,Cockatoo,Entertainment/public assembly,False
+1323,Rat_assembly_Gerald,57.01,94.32,Rat,Entertainment/public assembly,False
+1324,Gator_public_Lona,57.0,90.69,Gator,Public services,False
+1325,Cockatoo_office_Jimmy,56.99,91.79,Cockatoo,Office,False
+1326,Gator_assembly_Selma,56.98,92.74,Gator,Entertainment/public assembly,False
+1327,Mouse_health_Estela,56.98,90.55,Mouse,Healthcare,False
+1328,Cockatoo_lodging_Olga,56.98,91.88,Cockatoo,Lodging/residential,False
+1329,Mouse_health_Justin,56.97,90.46,Mouse,Healthcare,False
+1330,Lamb_other_Minerva,56.96,93.58,Lamb,Other,False
+1331,Mouse_lodging_Vicente,56.94,90.56,Mouse,Lodging/residential,False
+1332,Gator_office_Hunter,56.94,90.41,Gator,Office,False
+1333,Fox_religion_Maurice,56.92,93.8,Fox,Religious worship,False
+1334,Rat_education_Abigail,56.9,30.3,Rat,Education,False
+1335,Cockatoo_utility_Sherri,56.89,91.85,Cockatoo,Utility,False
+1336,Lamb_office_Donita,56.88,93.17,Lamb,Office,False
+1337,Gator_other_Refugio,56.86,91.1,Gator,Other,False
+1338,Hog_office_Lavon,56.86,100.0,Hog,Office,False
+1339,Mouse_health_Modesto,56.86,90.52,Mouse,Healthcare,False
+1340,Cockatoo_assembly_Valencia,56.86,91.87,Cockatoo,Entertainment/public assembly,False
+1341,Fox_assembly_Jerrod,56.85,94.51,Fox,Entertainment/public assembly,False
+1342,Lamb_office_Caitlin,56.84,100.0,Lamb,Office,False
+1343,Gator_office_Lucy,56.8,91.23,Gator,Office,False
+1344,Gator_public_Philip,56.79,91.92,Gator,Public services,False
+1345,Rat_public_Julieann,56.69,99.61,Rat,Public services,False
+1346,Bull_assembly_Newton,56.65,89.69,Bull,Entertainment/public assembly,False
+1347,Bull_lodging_Anibal,56.57,89.1,Bull,Lodging/residential,False
+1348,Lamb_assembly_Theresa,56.55,93.72,Lamb,Entertainment/public assembly,False
+1349,Lamb_assembly_Rosa,56.4,100.0,Lamb,Entertainment/public assembly,False
+1350,Cockatoo_assembly_Fernanda,56.38,88.41,Cockatoo,Entertainment/public assembly,False
+1351,Rat_assembly_Lillie,56.36,99.75,Rat,Entertainment/public assembly,False
+1352,Mouse_health_Ileana,56.26,89.62,Mouse,Healthcare,False
+1353,Rat_education_Moises,56.16,28.55,Rat,Education,False
+1354,Lamb_public_Nyla,56.15,93.72,Lamb,Public services,False
+1355,Cockatoo_lodging_Jarrod,56.14,88.18,Cockatoo,Lodging/residential,False
+1356,Gator_other_Russel,56.12,87.41,Gator,Other,False
+1357,Bear_public_Arlean,56.1,87.64,Bear,Public services,False
+1358,Lamb_office_Maggie,56.06,98.27,Lamb,Office,False
+1359,Bobcat_assembly_Camilla,56.04,86.92,Bobcat,Entertainment/public assembly,False
+1360,Cockatoo_lodging_Jimmie,55.99,86.74,Cockatoo,Lodging/residential,False
+1361,Bobcat_assembly_Adam,55.95,86.87,Bobcat,Entertainment/public assembly,False
+1362,Lamb_office_William,55.92,92.3,Lamb,Office,False
+1363,Hog_office_Thomas,55.83,94.37,Hog,Office,False
+1364,Gator_office_August,55.78,86.73,Gator,Office,False
+1365,Rat_public_Sana,55.71,86.03,Rat,Public services,False
+1366,Bear_assembly_Diana,55.71,87.08,Bear,Entertainment/public assembly,False
+1367,Cockatoo_industrial_Nathaniel,55.67,91.44,Cockatoo,Manufacturing/industrial,False
+1368,Bobcat_assembly_Billy,55.67,86.36,Bobcat,Entertainment/public assembly,False
+1369,Fox_warehouse_Lorretta,55.66,95.7,Fox,Warehouse/storage,False
+1370,Panther_retail_Lester,55.6,88.98,Panther,Retail,False
+1371,Lamb_food_Sylvia,55.54,93.87,Lamb,Food sales and service,False
+1372,Hog_lodging_Edgar,55.48,85.84,Hog,Lodging/residential,False
+1373,Rat_public_Norene,55.44,85.35,Rat,Public services,False
+1374,Gator_assembly_Kayleigh,55.25,91.23,Gator,Entertainment/public assembly,False
+1375,Gator_office_Merle,55.13,85.77,Gator,Office,False
+1376,Hog_office_Cortney,55.11,87.85,Hog,Office,False
+1377,Gator_other_Minda,55.08,88.36,Gator,Other,False
+1378,Bobcat_other_Howard,54.85,92.33,Bobcat,Other,False
+1379,Lamb_assembly_Kurt,54.83,87.1,Lamb,Entertainment/public assembly,False
+1380,Panther_lodging_Kirk,54.69,82.37,Panther,Lodging/residential,False
+1381,Panther_office_Clementine,54.48,81.87,Panther,Office,False
+1382,Bear_assembly_Angel,54.42,82.28,Bear,Entertainment/public assembly,False
+1383,Rat_public_Johnna,54.4,86.35,Rat,Public services,False
+1384,Cockatoo_lodging_Kerri,54.38,81.66,Cockatoo,Lodging/residential,False
+1385,Panther_lodging_Willa,54.3,81.24,Panther,Lodging/residential,False
+1386,Panther_lodging_Cora,54.24,80.9,Panther,Lodging/residential,False
+1387,Panther_lodging_Kara,54.23,80.85,Panther,Lodging/residential,False
+1388,Panther_lodging_Marisol,54.19,80.69,Panther,Lodging/residential,False
+1389,Panther_lodging_Gale,54.18,80.68,Panther,Lodging/residential,False
+1390,Panther_office_Lois,54.17,80.7,Panther,Office,False
+1391,Panther_other_Bettie,54.17,80.68,Panther,Other,False
+1392,Panther_lodging_Myrtle,54.16,80.68,Panther,Lodging/residential,False
+1393,Panther_retail_Romeo,54.16,80.7,Panther,Retail,False
+1394,Panther_assembly_Gwyneth,54.15,80.69,Panther,Entertainment/public assembly,False
+1395,Panther_lodging_Alita,54.15,80.69,Panther,Lodging/residential,False
+1396,Panther_office_Ruthie,54.15,80.69,Panther,Office,False
+1397,Panther_lodging_Janice,54.13,80.68,Panther,Lodging/residential,False
+1398,Panther_office_Taryn,54.12,80.68,Panther,Office,False
+1399,Panther_office_Lauretta,54.12,80.68,Panther,Office,False
+1400,Panther_lodging_Awilda,54.12,80.68,Panther,Lodging/residential,False
+1401,Panther_lodging_Anastasia,54.11,80.69,Panther,Lodging/residential,False
+1402,Panther_office_Lavinia,54.1,80.69,Panther,Office,False
+1403,Bobcat_office_Kassandra,54.1,83.2,Bobcat,Office,False
+1404,Panther_lodging_Hattie,54.1,80.69,Panther,Lodging/residential,False
+1405,Panther_lodging_Edison,54.09,80.69,Panther,Lodging/residential,False
+1406,Panther_assembly_Denice,54.08,80.69,Panther,Entertainment/public assembly,False
+1407,Panther_lodging_Dianna,54.08,80.68,Panther,Lodging/residential,False
+1408,Panther_lodging_Sonja,54.07,80.68,Panther,Lodging/residential,False
+1409,Panther_parking_Lorriane,54.07,80.72,Panther,Parking,False
+1410,Panther_office_Patti,54.06,80.68,Panther,Office,False
+1411,Panther_lodging_Floyd,54.04,80.69,Panther,Lodging/residential,False
+1412,Bobcat_other_Jovita,54.03,91.54,Bobcat,Other,False
+1413,Panther_lodging_Russell,54.01,80.69,Panther,Lodging/residential,False
+1414,Panther_office_Kristen,54.0,80.69,Panther,Office,False
+1415,Panther_office_Garth,54.0,80.69,Panther,Office,False
+1416,Panther_parking_Mellissa,53.99,80.95,Panther,Parking,False
+1417,Panther_other_Bethel,53.99,80.68,Panther,Other,False
+1418,Panther_lodging_Fausto,53.98,80.69,Panther,Lodging/residential,False
+1419,Panther_lodging_Blaine,53.98,80.68,Panther,Lodging/residential,False
+1420,Panther_lodging_Jorge,53.98,80.72,Panther,Lodging/residential,False
+1421,Panther_office_Christian,53.97,80.68,Panther,Office,False
+1422,Panther_office_Valarie,53.97,80.68,Panther,Office,False
+1423,Panther_office_Larry,53.97,80.68,Panther,Office,False
+1424,Panther_lodging_Teresita,53.95,80.69,Panther,Lodging/residential,False
+1425,Panther_lodging_Jana,53.91,80.69,Panther,Lodging/residential,False
+1426,Panther_lodging_Cornelia,53.9,80.69,Panther,Lodging/residential,False
+1427,Panther_office_Antonette,53.9,80.68,Panther,Office,False
+1428,Panther_lodging_Else,53.89,80.69,Panther,Lodging/residential,False
+1429,Panther_lodging_Kaitlin,53.87,80.69,Panther,Lodging/residential,False
+1430,Panther_lodging_Edmond,53.87,80.69,Panther,Lodging/residential,False
+1431,Panther_parking_Stanley,53.84,80.61,Panther,Parking,False
+1432,Panther_lodging_Tracie,53.82,80.69,Panther,Lodging/residential,False
+1433,Panther_parking_Charlene,53.8,80.68,Panther,Parking,False
+1434,Panther_parking_Alaina,53.75,80.77,Panther,Parking,False
+1435,Panther_other_Lucina,53.75,79.26,Panther,Other,False
+1436,Panther_office_Danica,53.74,80.69,Panther,Office,False
+1437,Rat_education_Alonzo,53.74,20.25,Rat,Education,False
+1438,Panther_office_Shauna,53.7,80.68,Panther,Office,False
+1439,Panther_office_Catherine,53.69,80.68,Panther,Office,False
+1440,Panther_parking_Asia,53.69,80.69,Panther,Parking,False
+1441,Panther_retail_Felix,53.68,80.69,Panther,Retail,False
+1442,Lamb_assembly_Jerry,53.67,86.76,Lamb,Entertainment/public assembly,False
+1443,Panther_office_Karla,53.67,80.69,Panther,Office,False
+1444,Bobcat_office_Melody,53.67,79.41,Bobcat,Office,False
+1445,Panther_office_Jeane,53.66,80.71,Panther,Office,False
+1446,Panther_office_Graham,53.66,79.87,Panther,Office,False
+1447,Panther_retail_Rachel,53.66,80.68,Panther,Retail,False
+1448,Panther_parking_Adela,53.63,80.69,Panther,Parking,False
+1449,Panther_office_Jesus,53.62,80.69,Panther,Office,False
+1450,Panther_other_Tyrone,53.58,80.71,Panther,Other,False
+1451,Panther_retail_Kristina,53.57,80.78,Panther,Retail,False
+1452,Panther_assembly_Carrol,53.55,80.69,Panther,Entertainment/public assembly,False
+1453,Panther_office_Hannah,53.48,80.68,Panther,Office,False
+1454,Cockatoo_office_Ada,53.47,78.37,Cockatoo,Office,False
+1455,Rat_public_Elmira,53.46,79.6,Rat,Public services,False
+1456,Bobcat_education_Rodrick,53.43,22.3,Bobcat,Education,False
+1457,Lamb_public_Angeline,53.4,83.86,Lamb,Public services,False
+1458,Bobcat_office_Justine,53.34,78.85,Bobcat,Office,False
+1459,Panther_assembly_David,53.31,78.81,Panther,Entertainment/public assembly,False
+1460,Cockatoo_utility_Kimiko,53.22,82.75,Cockatoo,Utility,False
+1461,Panther_office_Brent,53.12,77.94,Panther,Office,False
+1462,Lamb_assembly_Nicole,53.1,83.94,Lamb,Entertainment/public assembly,False
+1463,Panther_other_Lula,53.01,80.69,Panther,Other,False
+1464,Rat_education_Veronica,52.87,21.89,Rat,Education,False
+1465,Rat_assembly_Jannie,52.75,99.54,Rat,Entertainment/public assembly,False
+1466,Gator_assembly_Milton,52.7,79.33,Gator,Entertainment/public assembly,False
+1467,Panther_assembly_Pamella,52.51,80.64,Panther,Entertainment/public assembly,False
+1468,Rat_public_Lea,52.47,75.35,Rat,Public services,False
+1469,Panther_office_Christin,52.33,77.41,Panther,Office,False
+1470,Panther_retail_Gilbert,52.18,75.1,Panther,Retail,False
+1471,Bull_office_Trevor,52.16,74.42,Bull,Office,False
+1472,Rat_office_Chris,51.96,74.53,Rat,Office,False
+1473,Gator_office_Carrie,51.43,71.53,Gator,Office,False
+1474,Bobcat_education_Emile,51.36,17.3,Bobcat,Education,False
+1475,Hog_office_Alisha,51.3,71.48,Hog,Office,False
+1476,Panther_parking_Jody,51.27,75.87,Panther,Parking,False
+1477,Gator_assembly_Alexa,50.69,70.71,Gator,Entertainment/public assembly,False
+1478,Bear_assembly_Danial,50.67,69.47,Bear,Entertainment/public assembly,False
+1479,Lamb_office_Kent,50.62,69.76,Lamb,Office,False
+1480,Bear_lodging_Esperanza,50.44,68.57,Bear,Lodging/residential,False
+1481,Rat_lodging_Lakisha,50.26,76.5,Rat,Lodging/residential,False
+1482,Bear_parking_Bridget,49.99,66.95,Bear,Parking,False
+1483,Bear_assembly_Harry,49.25,65.13,Bear,Entertainment/public assembly,False
+1484,Gator_assembly_Stacy,49.16,79.07,Gator,Entertainment/public assembly,False
+1485,Lamb_assembly_Queen,48.85,65.69,Lamb,Entertainment/public assembly,False
+1486,Lamb_assembly_Eugenia,48.52,65.14,Lamb,Entertainment/public assembly,False
+1487,Cockatoo_assembly_Ralph,48.34,61.23,Cockatoo,Entertainment/public assembly,False
+1488,Shrew_office_Rose,48.29,61.94,Shrew,Office,False
+1489,Rat_office_Ashlee,48.01,62.2,Rat,Office,False
+1490,Rat_public_Maxine,46.97,58.09,Rat,Public services,False
+1491,Lamb_assembly_Dudley,46.76,57.07,Lamb,Entertainment/public assembly,False
+1492,Lamb_office_Kerry,46.69,59.56,Lamb,Office,False
+1493,Gator_assembly_Erich,46.66,55.83,Gator,Entertainment/public assembly,False
+1494,Rat_lodging_Lucille,46.51,59.54,Rat,Lodging/residential,False
+1495,Lamb_public_Bradly,46.38,58.57,Lamb,Public services,False
+1496,Shrew_office_Katherine,45.86,53.35,Shrew,Office,False
+1497,Shrew_office_Doug,45.84,53.3,Shrew,Office,False
+1498,Shrew_office_Lin,45.84,53.48,Shrew,Office,False
+1499,Shrew_office_Ila,45.83,53.49,Shrew,Office,False
+1500,Shrew_office_Doris,45.79,53.49,Shrew,Office,False
+1501,Hog_office_Concetta,45.67,57.8,Hog,Office,False
+1502,Shrew_office_Sherill,45.64,53.49,Shrew,Office,False
+1503,Lamb_assembly_Zita,45.62,65.18,Lamb,Entertainment/public assembly,False
+1504,Gator_public_Jolene,45.62,52.53,Gator,Public services,False
+1505,Shrew_office_Nora,45.48,53.49,Shrew,Office,False
+1506,Shrew_office_Kenneth,45.4,53.35,Shrew,Office,False
+1507,Lamb_assembly_Ethel,45.06,53.19,Lamb,Entertainment/public assembly,False
+1508,Panther_office_Otto,44.93,50.44,Panther,Office,False
+1509,Bull_office_Mai,44.84,51.68,Bull,Office,False
+1510,Swan_unknown_Valeria,44.57,48.67,Swan,,False
+1511,Swan_unknown_Jan,44.56,48.63,Swan,,False
+1512,Swan_unknown_Andres,44.56,49.28,Swan,,False
+1513,Gator_other_Samuel,44.55,55.99,Gator,Other,False
+1514,Swan_unknown_Raquel,44.47,48.63,Swan,,False
+1515,Hog_office_Bryan,44.43,49.44,Hog,Office,False
+1516,Gator_assembly_Lera,44.4,53.48,Gator,Entertainment/public assembly,False
+1517,Swan_unknown_Fabian,44.37,48.61,Swan,,False
+1518,Gator_assembly_Beryl,44.32,48.56,Gator,Entertainment/public assembly,False
+1519,Swan_unknown_Bette,44.25,48.65,Swan,,False
+1520,Swan_unknown_Wendy,44.17,48.64,Swan,,False
+1521,Swan_unknown_Christoper,44.08,48.61,Swan,,False
+1522,Swan_unknown_Noelia,44.05,48.6,Swan,,False
+1523,Swan_unknown_Esteban,44.05,47.38,Swan,,False
+1524,Swan_unknown_Isaiah,44.03,48.63,Swan,,False
+1525,Swan_unknown_Reyna,43.98,48.62,Swan,,False
+1526,Swan_unknown_Ike,43.79,48.64,Swan,,False
+1527,Swan_unknown_Allison,43.72,48.6,Swan,,False
+1528,Lamb_office_Corine,43.63,51.11,Lamb,Office,False
+1529,Swan_unknown_Tom,43.59,48.63,Swan,,False
+1530,Rat_assembly_Karen,43.51,46.47,Rat,Entertainment/public assembly,False
+1531,Swan_unknown_Rudy,43.37,44.64,Swan,,False
+1532,Swan_unknown_Rocco,43.37,44.67,Swan,,False
+1533,Swan_unknown_Douglas,43.34,44.65,Swan,,False
+1534,Swan_unknown_Jerold,43.34,44.55,Swan,,False
+1535,Rat_public_Yetta,42.47,44.96,Rat,Public services,False
+1536,Cockatoo_assembly_Mimi,42.38,45.76,Cockatoo,Entertainment/public assembly,False
+1537,Peacock_assembly_Mamie,42.31,43.07,Peacock,Entertainment/public assembly,False
+1538,Peacock_office_Jonathon,42.0,42.23,Peacock,Office,False
+1539,Rat_public_Angle,41.91,41.57,Rat,Public services,False
+1540,Peacock_office_Glenn,41.61,42.53,Peacock,Office,False
+1541,Mouse_science_Micheal,41.42,41.34,Mouse,Technology/science,False
+1542,Rat_public_Andrea,41.27,40.29,Rat,Public services,False
+1543,Rat_assembly_Myrna,41.03,40.04,Rat,Entertainment/public assembly,False
+1544,Robin_office_Erma,41.02,42.54,Robin,Office,False
+1545,Bobcat_science_Tammy,39.74,38.23,Bobcat,Technology/science,False
+1546,Rat_health_Ann,39.67,38.84,Rat,Healthcare,False
+1547,Rat_assembly_Don,39.59,40.34,Rat,Entertainment/public assembly,False
+1548,Mouse_health_Buddy,39.06,34.58,Mouse,Healthcare,False
+1549,Hog_assembly_Edward,38.8,35.73,Hog,Entertainment/public assembly,False
+1550,Peacock_office_Naomi,38.38,32.43,Peacock,Office,False
+1551,Gator_assembly_Roy,37.7,29.41,Gator,Entertainment/public assembly,False
+1552,Rat_public_Percy,36.99,31.71,Rat,Public services,False
+1553,Rat_public_Alexander,35.3,23.97,Rat,Public services,False
+1554,Hog_office_Judith,31.84,17.97,Hog,Office,False
+1555,Bobcat_public_Angie,31.34,16.99,Bobcat,Public services,False
+1556,Peacock_public_Linda,30.76,15.69,Peacock,Public services,False
+1557,Gator_assembly_Hue,30.63,19.03,Gator,Entertainment/public assembly,False

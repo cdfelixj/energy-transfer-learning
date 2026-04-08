@@ -1,0 +1,6 @@
+source_building,checkpoint,val_mae,soup_weight
+Eagle_education_Samantha,prime_source_Eagle_education_Sama_epoch=24_val_loss=8.0036.ckpt,24.3278,0.1455
+Eagle_education_Will,prime_source_Eagle_education_Will_epoch=12_val_loss=3.3404.ckpt,8.4603,0.4185
+Eagle_education_Luther,prime_source_Eagle_education_Luth_epoch=16_val_loss=9.3961.ckpt,31.3419,0.113
+Eagle_education_Teresa,prime_source_Eagle_education_Tere_epoch=04_val_loss=5.0421.ckpt,13.8013,0.2565
+Eagle_education_Sherrill,prime_source_Eagle_education_Sher_epoch=21_val_loss=20.1219.ckpt,53.2558,0.0665

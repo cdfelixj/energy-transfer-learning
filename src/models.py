@@ -4,11 +4,38 @@ import pytorch_lightning as pl
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
+
+class QuantileLoss(nn.Module):
+    """Asymmetric quantile loss for energy forecasting.
+
+    Penalises underprediction more than overprediction, which is appropriate
+    for energy provisioning: running short of capacity is costlier than
+    having a small surplus.
+
+    Args:
+        alpha: Quantile level in (0, 1).  alpha=0.7 means underprediction
+               (error > 0) is penalised at 0.7× and overprediction at 0.3×.
+    """
+
+    def __init__(self, alpha: float = 0.7):
+        super().__init__()
+        self.alpha = alpha
+
+    def forward(self, y_hat: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        error = y - y_hat  # positive when model underpredicts
+        return torch.mean(
+            torch.where(error >= 0, self.alpha * error, (self.alpha - 1) * error)
+        )
+
+    def extra_repr(self) -> str:
+        return f'alpha={self.alpha}'
+
+
 class EnergyLSTM(pl.LightningModule):
     """Baseline LSTM model for building energy forecasting"""
     
-    def __init__(self, input_size, hidden_size=128, num_layers=3, 
-                 dropout=0.2, learning_rate=1e-3):
+    def __init__(self, input_size, hidden_size=128, num_layers=3,
+                 dropout=0.2, learning_rate=1e-3, loss_alpha=0.7):
         super().__init__()
         self.save_hyperparameters()
         
@@ -27,7 +54,7 @@ class EnergyLSTM(pl.LightningModule):
             nn.Dropout(0.3),
             nn.Linear(hidden_size // 2, 1)
         )
-        self.criterion = nn.MSELoss()
+        self.criterion = QuantileLoss(loss_alpha)
         
     def forward(self, x):
         lstm_out, (h_n, c_n) = self.lstm(x)
@@ -47,7 +74,7 @@ class EnergyLSTM(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log('val_mae', mae, on_step=False, on_epoch=True)
@@ -59,7 +86,7 @@ class EnergyLSTM(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         
         self.log('test_loss', loss)
         self.log('test_mae', mae)
@@ -94,7 +121,7 @@ class EnergyLSTMFrozen(pl.LightningModule):
     """
 
     def __init__(self, input_size, hidden_size=128, num_layers=3,
-                 dropout=0.2, learning_rate=1e-3):
+                 dropout=0.2, learning_rate=1e-3, loss_alpha=0.7):
         super().__init__()
         self.save_hyperparameters()
 
@@ -112,7 +139,7 @@ class EnergyLSTMFrozen(pl.LightningModule):
             nn.Dropout(0.3),
             nn.Linear(hidden_size // 2, 1)
         )
-        self.criterion = nn.MSELoss()
+        self.criterion = QuantileLoss(loss_alpha)
 
         # Freeze the LSTM encoder immediately
         for param in self.lstm.parameters():
@@ -135,7 +162,7 @@ class EnergyLSTMFrozen(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log('val_mae', mae, on_step=False, on_epoch=True)
         self.log('val_rmse', rmse, on_step=False, on_epoch=True)
@@ -146,7 +173,7 @@ class EnergyLSTMFrozen(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         self.log('test_loss', loss)
         self.log('test_mae', mae)
         self.log('test_rmse', rmse)
@@ -209,7 +236,7 @@ class EnergyLSTMAdapter(pl.LightningModule):
     """
 
     def __init__(self, input_size, hidden_size=128, num_layers=3,
-                 dropout=0.2, learning_rate=1e-3, adapter_bottleneck=32):
+                 dropout=0.2, learning_rate=1e-3, adapter_bottleneck=32, loss_alpha=0.7):
         super().__init__()
         self.save_hyperparameters()
 
@@ -229,7 +256,7 @@ class EnergyLSTMAdapter(pl.LightningModule):
             nn.Dropout(0.3),
             nn.Linear(hidden_size // 2, 1)
         )
-        self.criterion = nn.MSELoss()
+        self.criterion = QuantileLoss(loss_alpha)
 
         # Freeze LSTM encoder; adapter + fc remain trainable
         for param in self.lstm.parameters():
@@ -253,7 +280,7 @@ class EnergyLSTMAdapter(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         self.log('val_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
         self.log('val_mae', mae, on_step=False, on_epoch=True)
         self.log('val_rmse', rmse, on_step=False, on_epoch=True)
@@ -264,7 +291,7 @@ class EnergyLSTMAdapter(pl.LightningModule):
         y_hat = self(x)
         loss = self.criterion(y_hat, y)
         mae = torch.mean(torch.abs(y_hat - y))
-        rmse = torch.sqrt(loss)
+        rmse = torch.sqrt(torch.mean((y_hat - y) ** 2))
         self.log('test_loss', loss)
         self.log('test_mae', mae)
         self.log('test_rmse', rmse)

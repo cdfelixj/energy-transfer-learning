@@ -1,0 +1,3 @@
+model,data_limit_weeks,test_rmse,test_mae
+PRIME_Transfer,8,646.3308,643.537
+PreTransfer,8,100.5538,90.5086
