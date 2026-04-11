@@ -1,0 +1,2 @@
+experiment,source_building,target_building,transfer_benefit_mae_pct,domain_shift_penalty_pct,baseline_source_mae,baseline_target_mae,pretransfer_mae,transfer_mae
+rat_education,Rat_education_Colin,Rat_education_Denise,17.07,152.02,14.7615,37.2019,18.2613,15.1443

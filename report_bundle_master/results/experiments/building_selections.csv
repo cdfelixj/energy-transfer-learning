@@ -1,0 +1,7 @@
+experiment_name,site_id,building_type,source_building,target_building,source_completeness_pct,target_completeness_pct
+rat_education,Rat,Education,Rat_education_Colin,Rat_education_Denise,99.57,46.5
+rat_education_new,Rat,Education,Rat_education_Theo,Rat_education_Lee,99.98,99.98
+eagle_education,Eagle,Education,Eagle_education_Samantha,Eagle_education_Brooke,99.93,99.78
+lamb_education,Lamb,Education,Lamb_education_Lucas,Lamb_education_Mae,100.0,100.0
+office_any,Any,Office,Hog_office_Miriam,Hog_office_Denita,100.0,100.0
+lodging_any,Any,Lodging/residential,Robin_lodging_Celia,Robin_lodging_Oliva,100.0,100.0

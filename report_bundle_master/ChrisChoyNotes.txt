@@ -1,0 +1,16 @@
+Chris Choy — Carnot Innovations Comments
+Predict power usage based on time of day and temperature.
+
+Use the forecast to control the AC system so it can provide only the resources needed.
+
+The goal is to save money by:
+
+reducing manpower spent babysitting the model,
+
+using a tighter confidence interval when accuracy improves,
+
+avoiding over-allocation of resources.
+
+Consider combining models using a weighted average.
+
+Switch modeling approaches depending on whether there is more or less data available.
