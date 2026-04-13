@@ -20,6 +20,7 @@ COLORS = {
     'scratch':       '#2196F3',
     'transfer':      '#F44336',
     'frozen':        '#4CAF50',
+    'adapter':       '#E91E63',
     'multitransfer': '#FF9800',
     'prime':         '#9C27B0',
     'ensemble':      '#795548',
@@ -53,9 +54,11 @@ exp = os.path.join(RESULTS, "rat_education")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 ax.plot(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],   label='Scratch',         lw=2, ms=6)
 ax.plot(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'],  label='Full Fine-Tuning', lw=2, ms=6)
 ax.plot(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],    label='Frozen Backbone',  lw=2, ms=6)
+ax.plot(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],   label='Adapter Layers',   lw=2, ms=6)
 ax.set_xscale('log', base=2)
 ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
 ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh)')
@@ -70,9 +73,11 @@ exp = os.path.join(RESULTS, "rat_education_new")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 ax.plot(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],   label='Scratch',         lw=2, ms=6)
 ax.plot(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'],  label='Full Fine-Tuning', lw=2, ms=6)
 ax.plot(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],    label='Frozen Backbone',  lw=2, ms=6)
+ax.plot(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],   label='Adapter Layers',   lw=2, ms=6)
 ax.set_xscale('log', base=2)
 ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
 ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh)')
@@ -87,10 +92,12 @@ exp = os.path.join(RESULTS, "eagle_education")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 for ax in (ax1, ax2):
     ax.semilogy(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],  label='Scratch',         lw=2, ms=6)
     ax.semilogy(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'], label='Full Fine-Tuning', lw=2, ms=6)
     ax.semilogy(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+    ax.semilogy(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
     ax.set_xscale('log', base=2)
     ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
     ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh, log scale)')
@@ -98,7 +105,7 @@ for ax in (ax1, ax2):
 ax1.set_title('Eagle/Education: Samantha → Brooke\n(Full Scale — log y-axis)')
 ax2.set_ylim(10, 1000)
 ax2.set_title('Eagle/Education: Samantha → Brooke\n(Zoomed — log y-axis)')
-fig.suptitle('Full Fine-Tuning catastrophically fails on Eagle/Brooke; Frozen Backbone excels',
+fig.suptitle('Full Fine-Tuning catastrophically fails on Eagle/Brooke; Frozen Backbone and Adapter Layers excel',
              fontweight='bold', y=1.02)
 savefig('fig03_eagle_education_efficiency.png')
 
@@ -109,9 +116,11 @@ exp = os.path.join(RESULTS, "lamb_education")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 ax.plot(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],  label='Scratch',         lw=2, ms=6)
 ax.plot(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'], label='Full Fine-Tuning', lw=2, ms=6)
 ax.plot(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+ax.plot(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
 ax.set_xscale('log', base=2)
 ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
 ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh)')
@@ -126,9 +135,11 @@ exp = os.path.join(RESULTS, "office_any")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 ax.plot(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],  label='Scratch',         lw=2, ms=6)
 ax.plot(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'], label='Full Fine-Tuning', lw=2, ms=6)
 ax.plot(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+ax.plot(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
 ax.set_xscale('log', base=2)
 ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
 ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh)')
@@ -143,9 +154,11 @@ exp = os.path.join(RESULTS, "lodging_any")
 scratch  = load_csv(os.path.join(exp, "data_efficiency_pretransfer.csv"))
 transfer = load_csv(os.path.join(exp, "data_efficiency_transfer.csv"))
 frozen   = load_csv(os.path.join(exp, "data_efficiency_frozen.csv"))
+adapter  = load_csv(os.path.join(exp, "data_efficiency_adapter.csv"))
 ax.plot(scratch['weeks'],  scratch['mae'],  'o-', color=COLORS['scratch'],  label='Scratch',         lw=2, ms=6)
 ax.plot(transfer['weeks'], transfer['mae'], 's-', color=COLORS['transfer'], label='Full Fine-Tuning', lw=2, ms=6)
 ax.plot(frozen['weeks'],   frozen['mae'],   '^-', color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+ax.plot(adapter['weeks'],  adapter['mae'],  'P-', color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
 ax.set_xscale('log', base=2)
 ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS])
 ax.set_xlabel('Training Data (weeks)'); ax.set_ylabel('MAE (kWh)')
@@ -159,12 +172,14 @@ labels = ['Rat/Colin→Denise', 'Rat/Theo→Lee', 'Eagle/Sam→Brooke',
           'Lamb/Lucas→Mae',   'Hog/Miriam→Denita', 'Robin/Celia→Oliva']
 scratch_8  = [18.24, 71.84, 77.71, 38.12, 27.62, 13.11]
 ft_8       = [15.35, 67.29, 335.36, 27.08, 20.80, 12.47]
-frozen_8   = [17.21, 69.03,  50.87, 32.29, 24.22, 12.65]
-x = np.arange(len(labels)); w = 0.25
-fig, ax = plt.subplots(figsize=(13, 6))
-ax.bar(x - w, scratch_8, w, label='Scratch',         color=COLORS['scratch'],  alpha=0.85)
-ax.bar(x,     [min(v, 200) for v in ft_8], w, label='Full Fine-Tuning (clipped at 200)', color=COLORS['transfer'], alpha=0.85)
-ax.bar(x + w, frozen_8,  w, label='Frozen Backbone', color=COLORS['frozen'],   alpha=0.85)
+frozen_8   = [17.21, 69.03,  50.87, 32.29, 24.22, 12.96]
+adapter_8  = [16.21, 68.76,  48.05, 29.62, 23.73, 12.91]
+x = np.arange(len(labels)); w = 0.20
+fig, ax = plt.subplots(figsize=(14, 6))
+ax.bar(x - 1.5*w, scratch_8, w, label='Scratch',         color=COLORS['scratch'],  alpha=0.85)
+ax.bar(x - 0.5*w, [min(v, 200) for v in ft_8], w, label='Full Fine-Tuning (clipped at 200)', color=COLORS['transfer'], alpha=0.85)
+ax.bar(x + 0.5*w, frozen_8,  w, label='Frozen Backbone', color=COLORS['frozen'],   alpha=0.85)
+ax.bar(x + 1.5*w, adapter_8, w, label='Adapter Layers',  color=COLORS['adapter'],  alpha=0.85)
 ax.text(2, 205, 'FT=335 kWh ↑', ha='center', fontsize=8, color='red', fontweight='bold')
 ax.set_ylim(0, 230)
 ax.set_xticks(x); ax.set_xticklabels(labels, rotation=20, ha='right')
@@ -358,4 +373,44 @@ ax2.legend(); ax2.grid(True, alpha=0.3); ax2.set_ylim(-3, 1)
 fig.suptitle('Eagle/Brooke: Frozen Backbone is the Best Strategy at Low Data', fontweight='bold', y=1.02)
 savefig('fig15_eagle_strategies_summary.png')
 
-print("\nAll 15 figures generated in:", FIGURES_DIR)
+# ── FIG 16: Adapter vs Frozen Backbone — Cross-Experiment Summary ─────────────
+print("Generating fig16 …")
+exp_names = ['rat_education', 'rat_education_new', 'eagle_education',
+             'lamb_education', 'office_any', 'lodging_any']
+exp_labels_short = ['Rat/Colin→Denise', 'Rat/Theo→Lee', 'Eagle/Sam→Brooke',
+                    'Lamb/Lucas→Mae',   'Office/Miriam→Denita', 'Lodging/Celia→Oliva']
+
+fig, axes = plt.subplots(2, 3, figsize=(16, 10))
+axes = axes.flatten()
+
+for i, (exp_name, exp_label) in enumerate(zip(exp_names, exp_labels_short)):
+    ax = axes[i]
+    exp_path = os.path.join(RESULTS, exp_name)
+    frozen  = load_csv(os.path.join(exp_path, "data_efficiency_frozen.csv"))
+    adapter = load_csv(os.path.join(exp_path, "data_efficiency_adapter.csv"))
+    scratch = load_csv(os.path.join(exp_path, "data_efficiency_pretransfer.csv"))
+
+    if exp_name == 'eagle_education':
+        ax.semilogy(scratch['weeks'],  scratch['mae'],  'o--', color=COLORS['scratch'],  label='Scratch',         lw=1.5, ms=5, alpha=0.6)
+        ax.semilogy(frozen['weeks'],   frozen['mae'],   '^-',  color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+        ax.semilogy(adapter['weeks'],  adapter['mae'],  'P-',  color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
+        ax.set_ylabel('MAE (kWh, log scale)')
+    else:
+        ax.plot(scratch['weeks'],  scratch['mae'],  'o--', color=COLORS['scratch'],  label='Scratch',         lw=1.5, ms=5, alpha=0.6)
+        ax.plot(frozen['weeks'],   frozen['mae'],   '^-',  color=COLORS['frozen'],   label='Frozen Backbone',  lw=2, ms=6)
+        ax.plot(adapter['weeks'],  adapter['mae'],  'P-',  color=COLORS['adapter'],  label='Adapter Layers',   lw=2, ms=6)
+        ax.set_ylabel('MAE (kWh)')
+
+    ax.set_xscale('log', base=2)
+    ax.set_xticks(WEEKS); ax.set_xticklabels([str(w) for w in WEEKS], fontsize=8)
+    ax.set_xlabel('Training Data (weeks)')
+    ax.set_title(exp_label, fontsize=10)
+    ax.legend(fontsize=8); ax.grid(True, alpha=0.3)
+
+fig.suptitle('Adapter Layers vs Frozen Backbone: All Six Core Experiments\n'
+             '(Adapter closely tracks Frozen Backbone — frozen LSTM encoder in both strategies)',
+             fontweight='bold', fontsize=13)
+plt.tight_layout()
+savefig('fig16_adapter_vs_frozen.png')
+
+print("\nAll 16 figures generated in:", FIGURES_DIR)

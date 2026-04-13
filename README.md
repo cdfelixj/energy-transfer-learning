@@ -201,7 +201,7 @@ Transfer benefit is always reported relative to Scratch: `(Scratch_MAE − Strat
 - **PRIME on hard targets with diverse sources**: Test PRIME on Eagle/Brooke with cross-site source diversity to verify whether domain diversity addresses the Eagle-regime collapse
 - **Architecture alternatives**: Transformer (PatchTST, Informer), TCN, GRU as LSTM replacements
 - **Continual learning**: EWC or replay buffers to prevent catastrophic forgetting during long-term deployment
-- **Adapter strategy**: Complete training runs (currently untrained — all CSVs contain NaN)
+- **Adapter hyperparameter tuning**: Tune bottleneck dimension and learning rate per experiment; all 6 experiments now evaluated with fixed b=32 configuration
 
 ## 📚 References
 

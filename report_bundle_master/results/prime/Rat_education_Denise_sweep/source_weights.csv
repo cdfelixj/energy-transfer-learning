@@ -1,0 +1,6 @@
+source_building,checkpoint,val_mae,soup_weight
+Rat_education_Nellie,prime_source_Rat_education_Nellie_epoch=26_val_loss=41.3486.ckpt,97.072,0.0402
+Rat_education_Meghan,prime_source_Rat_education_Meghan_epoch=09_val_loss=5.0090.ckpt,11.8529,0.3293
+Rat_education_Beverly,prime_source_Rat_education_Beverl_epoch=27_val_loss=68.3353.ckpt,156.9747,0.0249
+Rat_education_Earnest,prime_source_Rat_education_Earnes_epoch=29_val_loss=4.6853.ckpt,11.8113,0.3305
+Rat_education_Irma,prime_source_Rat_education_Irma_epoch=14_val_loss=5.8989.ckpt,14.1862,0.2751

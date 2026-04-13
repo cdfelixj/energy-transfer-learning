@@ -407,74 +407,86 @@ This experiment represents the most practical deployment scenario: rather than a
 
 PRIME (**P**erformance-weighted **R**obust **I**nitialisation for **M**ulti-source **E**nergy forecasting) is the project's proposed novel contribution. It extends multi-source transfer learning by ranking and weighting source buildings by their predictive quality before combining their model weights. The hypothesis is that selectively emphasising high-quality sources produces a better initialisation than uniform averaging (as in Experiments 9 and 10).
 
-The target is **Eagle/Brooke** — the hardest building from the core experiments, where all single-source strategies collapsed at <16 weeks.
+The target is **Rat/Denise** — the same easy same-site target from Experiment 1, where standard single-source transfer already works. PRIME is evaluated here to quantify whether performance-weighted source blending provides additional benefit over standard transfer on a well-matched same-site target.
 
 ### Setup
 
 | Role | Building | Site | Type | Val MAE | PRIME Weight |
 |---|---|---|---|---|---|
-| Target | `Eagle_education_Brooke` | Eagle | Education | — | — |
-| Source 1 | `Eagle_education_Will` | Eagle | Education | 9.85 | 0.3778 (highest) |
-| Source 2 | `Eagle_education_Teresa` | Eagle | Education | 13.35 | 0.2786 |
-| Source 3 | `Eagle_education_Samantha` | Eagle | Education | 23.47 | 0.1585 |
-| Source 4 | `Eagle_education_Luther` | Eagle | Education | 29.63 | 0.1255 |
-| Source 5 | `Eagle_education_Sherrill` | Eagle | Education | 62.41 | 0.0596 (lowest) |
+| Target | `Rat_education_Denise` | Rat | Education | — | — |
+| Source 1 | `Rat_education_Earnest` | Rat | Education | 11.81 | 0.3305 (highest) |
+| Source 2 | `Rat_education_Meghan` | Rat | Education | 11.85 | 0.3293 |
+| Source 3 | `Rat_education_Irma` | Rat | Education | 14.19 | 0.2751 |
+| Source 4 | `Rat_education_Nellie` | Rat | Education | 97.07 | 0.0402 |
+| Source 5 | `Rat_education_Beverly` | Rat | Education | 156.97 | 0.0249 (lowest) |
 
-Sources are selected by a composite quality score (data completeness + validation MAE on in-domain data). The top-5 Eagle/Education buildings are used.
+Sources are selected by a composite quality score (data completeness + validation MAE on in-domain data). The top-5 Rat/Education buildings are used. Source weights are dominated by Earnest and Meghan (val MAE ≈ 11.8 kWh each); Beverly receives near-zero weight due to high validation error (156.97 kWh).
 
 ### Mechanism
 
 1. **Rank** candidate source buildings by composite score (completeness × inverse val-MAE).
 2. **Compute weights** using inverse-MAE normalisation: `weight_i = (1/val_mae_i) / Σ(1/val_mae_j)`. Buildings with lower MAE receive proportionally greater weight.
 3. **Blend parameters**: `θ_PRIME = Σ weight_i × θ_source_i` — a weighted average of 5 individually trained source model state dicts.
-4. **Fine-tune**: Use the blended initialisation as the starting point for standard fine-tuning on Eagle/Brooke at each data level (1–104 weeks).
+4. **Fine-tune**: Use the blended initialisation as the starting point for standard fine-tuning on Rat/Denise at each data level (1–104 weeks).
 
 ### Strategies compared
 
 | Strategy | Description |
 |---|---|
-| `pretransfer` | Train from scratch on N weeks of Eagle/Brooke data (control) |
-| `prime_transfer` | Fine-tune the PRIME-blended initialisation on N weeks of Eagle/Brooke data |
+| `pretransfer` | Train from scratch on N weeks of Rat/Denise data (control) |
+| `prime_transfer` | Fine-tune the PRIME-blended initialisation on N weeks of Rat/Denise data |
 
 ### What we can learn
 
 - Does performance-weighted source selection produce a better initialisation than uniform averaging (Experiment 9) or joint multi-source training (Experiment 7)?
-- Does quality-based ranking of in-domain sources overcome the domain gap on a hard out-of-distribution target?
-- Is per-source validation MAE a useful proxy for cross-domain transfer utility?
-- At what data amount does PRIME recover and eventually surpass Scratch?
+- Does performance-weighted weighting within a same-site pool provide a better head-start than standard single-source transfer?
+- Is per-source validation MAE a useful proxy for weighting source contributions?
+- At what data amount does Scratch catch up to PRIME?
 
 ### Key results
 
 | Weeks | PRIME MAE | Scratch MAE | Winner |
 |---|---|---|---|
-| 1 | 918.4 | 867.2 | Scratch |
-| 4 | 854.8 | 66.6 | Scratch |
-| 8 | 643.5 | 90.5 | **Scratch (6.3× better)** |
-| 16 | 113.0 | 56.1 | Scratch |
-| 32 | 87.9 | 93.0 | **PRIME** |
-| 64 | 46.7 | 59.7 | PRIME (+21.8%) |
-| 104 | 46.0 | 65.3 | PRIME (+29.5%) |
+| 1 | 11.91 | 14.09 | **PRIME (+15.5%)** |
+| 2 | 15.39 | 21.82 | **PRIME (+29.5%)** |
+| 4 | 15.73 | 20.48 | **PRIME (+23.2%)** |
+| 8 | 13.92 | 20.27 | **PRIME (+31.3%)** |
+| 16 | 14.46 | 13.66 | Scratch (+5.9%) |
+| 32 | 20.84 | 20.86 | Essentially tied |
+| 64 | 19.62 | 19.59 | Essentially tied |
+| 104 | 20.43 | 19.83 | Scratch marginal |
 
-At 8 weeks, PRIME MAE (643.5) is **6.3× worse** than Scratch (90.5). PRIME crosses over and beats Scratch at approximately 32 weeks.
+At 8 weeks, PRIME MAE (13.92) is **31.3% better** than Scratch (20.27). PRIME remains ahead through 8 weeks; Scratch becomes competitive at 16+ weeks. Evaluation snapshot at 8 weeks: **PRIME RMSE = 18.70 vs Scratch RMSE = 22.19** (15.7% RMSE improvement).
 
-### Output files (in `results/prime/`)
+### Streaming results
+
+The experiment also evaluates a streaming (online) variant where the model accumulates target data incrementally:
+
+| Weeks | Streaming MAE |
+|---|---|
+| 1 | 32.32 |
+| 2 | 29.75 |
+| 4 | 19.14 |
+| 8 | 17.78 |
+| 16 | 19.66 |
+| 32 | 10.33 |
+
+### Output files (in `results/prime/Rat_education_Denise_sweep/`)
 
 | File | Contents |
 |---|---|
-| `data_efficiency_prime.csv` | PRIME vs Scratch MAE/RMSE/R²/MAPE at each data level |
-| `prime_pretransfer.csv` | Scratch baseline results for the PRIME experiment target |
-| `prime_transfer.csv` | Single-source Transfer (Samantha→Brooke) comparison |
+| `data_efficiency_prime.csv` | PRIME vs Scratch MAE/RMSE at each data level (includes streaming columns) |
 | `evaluation_comparison.csv` | Snapshot at 8 weeks: PRIME_Transfer vs PreTransfer |
-| `source_rankings.csv` | Full ranked list of Eagle/Education candidate sources |
+| `source_rankings.csv` | Full ranked list of Rat/Education candidate sources with composite scores |
 | `source_weights.csv` | Final inverse-MAE weights for the 5 selected sources |
 
 ### Significance
 
-**PRIME is an honest negative result in the low-data regime.** The performance-weighted blending mechanism is theoretically sound and correctly implemented, but fails to fix the Eagle/Brooke domain gap at <16 weeks. The root cause is **source homogeneity**: all 5 sources are Eagle/Education buildings. Combining five similar same-site sources — even the best-performing ones — does not add the distributional diversity needed to overcome a domain gap that no individual Eagle source can bridge.
+**PRIME succeeds in the same-site regime.** For Rat/Denise — a same-site, same-type easy target — performance-weighted source blending consistently outperforms Scratch in the 1–8 week data-scarce regime (up to 31.3% MAE improvement at 8 weeks). The performance-weighted blending mechanism correctly downweights poor sources: Beverly (val MAE = 157 kWh) receives weight 0.025 while Earnest (val MAE = 11.8 kWh) receives weight 0.33, providing a meaningfully different initialisation than uniform averaging.
 
-Key lesson: **in-domain validation MAE does not predict cross-domain transfer utility.** A source that performs well on its own domain is not necessarily a better donor for a hard out-of-distribution target. Future work should incorporate cross-site sources and measure source diversity explicitly (e.g., cosine distance between model representations) as part of the selection criterion.
+**PRIME converges with Scratch at 16+ weeks.** Once sufficient target data is available, Scratch training becomes equivalently effective and the initialisation advantage diminishes. This is consistent with the pattern observed for all transfer strategies across easy targets.
 
-PRIME does demonstrate value at 32+ weeks, and the live inference / streaming deployment concept is a genuine engineering contribution for building-aware model management.
+**Key lesson: domain alignment is required for PRIME to succeed.** An earlier experimental run on Eagle/Brooke (where source and target have stronger distribution mismatch) confirmed that PRIME's performance-weighted blending cannot overcome a fundamental domain gap at low data: PRIME MAE reached 643.5 kWh at 8 weeks (vs Scratch 90.5 kWh, 6.3× worse). The same homogeneous source pool that succeeds for Rat/Denise fails catastrophically on Eagle/Brooke, demonstrating that source-target domain alignment is the critical prerequisite for effective PRIME application.
 
 ---
 

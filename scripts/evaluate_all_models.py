@@ -250,7 +250,7 @@ def prepare_test_data(target_building, data_limit_months=1, seq_length=24,
     
     # Match architecture if needed
     if architecture_match:
-        baseline_model = EnergyLSTM.load_from_checkpoint(architecture_match)
+        baseline_model = EnergyLSTM.load_from_checkpoint(architecture_match, strict=False)
         expected_input_size = baseline_model.hparams.input_size
         actual_input_size = target_data.shape[1] - 1
         
@@ -769,14 +769,16 @@ def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8
     print(f"  DATA EFFICIENCY EVALUATION: {model_type.upper()} Models  [{experiment_name}]")
     print(f"{'='*90}")
 
+    _project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
     results = []
 
     for weeks in weeks_list:
         print(f"\n[Evaluating {weeks} week(s) model...]")
 
-        # Find model checkpoint
+        # Find model checkpoint (use absolute path so this works regardless of CWD)
         pattern = os.path.join(
-            'models', 'experiments', experiment_name, 'data_efficiency',
+            _project_root, 'models', 'experiments', experiment_name, 'data_efficiency',
             f'{model_type}_{target_building[:15]}_{weeks}week_*.ckpt'
         )
         model_files = glob.glob(pattern)
@@ -802,7 +804,7 @@ def evaluate_data_efficiency(model_type, target_building, weeks_list=[1, 2, 4, 8
         try:
             # Load model using the correct class for this strategy
             model_cls = _MODEL_CLASS.get(model_type, EnergyLSTM)
-            model = model_cls.load_from_checkpoint(model_path)
+            model = model_cls.load_from_checkpoint(model_path, strict=(model_type != 'adapter'))
 
             # Prepare test data with same weeks as training
             train_loader, val_loader, test_loader = prepare_test_data(

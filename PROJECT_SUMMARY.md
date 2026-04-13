@@ -170,7 +170,7 @@ energy-transfer-learning/
 5. **N-source optimum is N=3**: Diminishing returns beyond 3 sources; pool diversity (site + type) matters more than raw quantity.
 6. **Auto-switching (Switch Modelling, Exp 12)** achieves RMSE 22.72 vs oracle 22.70 vs always-transfer 25.45 — a 10.7% improvement with a trivial post-hoc rule.
 7. **PRIME succeeds in the same-site regime**: PRIME MAE @ 8 weeks = 13.9 vs Scratch = 20.3 (31.3% improvement, Rat/Denise target). All 5 sources are Rat/Education — strong source-target domain alignment enables effective performance-weighted blending. PRIME converges with Scratch at 16+ weeks. An earlier Eagle/Brooke run confirmed domain alignment is required: PRIME collapsed catastrophically on that mismatched target (643.5 vs 90.5 kWh, 6.3× worse).
-8. **Adapter strategy untrained**: Adapter CSVs contain NaN — adapter training was not completed. Results are Scratch/Transfer/Frozen only for all experiments.
+8. **Adapter strategy evaluated**: Adapter CSVs now contain real results for all 6 experiments. The adapter (frozen LSTM + 32-dim bottleneck + trainable head) generally performs comparably to Frozen Backbone across data regimes.
 
 ## 🔄 Next Steps / Open Questions
 
