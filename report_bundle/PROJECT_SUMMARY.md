@@ -165,7 +165,7 @@ energy-transfer-learning/
 
 1. **Stratified split is essential**: Education buildings have school-holiday patterns that cause a 52% train→test mean shift with chronological splits — fixed by month stratification.
 2. **Same-site TL works**: Experiment 1 (Rat/Colin→Rat/Denise) shows 17% MAE improvement at 8 weeks; Transfer consistently beats Scratch in the same-site/same-type setting.
-3. **Eagle/Brooke is a hard target**: Single-source Transfer collapses at <16 weeks (MAE up to 904 kWh, 30–45% worse than Scratch). Multi-source pre-training with N=5 eliminates collapse.
+3. **Eagle/Brooke is a hard target**: Single-source Transfer collapses at <16 weeks (MAE up to 904 kWh, 30–45% worse than Scratch). Multi-source full fine-tuning with N=5 does **not** eliminate collapse; Frozen Backbone is the reliable low-data strategy.
 4. **Frozen Backbone is most reliable at 1–4 weeks** of target data; Full Fine-Tuning catches up at ≥32 weeks.
 5. **N-source optimum is N=3**: Diminishing returns beyond 3 sources; pool diversity (site + type) matters more than raw quantity.
 6. **Auto-switching (Switch Modelling, Exp 12)** achieves RMSE 22.72 vs oracle 22.70 vs always-transfer 25.45 — a 10.7% improvement with a trivial post-hoc rule.

@@ -1174,7 +1174,7 @@ This design enables fair comparison across strategies, buildings, and data regim
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{fig01_rat_education_efficiency}
-\caption{Data-efficiency curves for Rat/Education (Colin $\to$ Denise). Full Fine-Tuning is detrimental at 1 week but consistently better than Scratch from 2--16 weeks. Scratch catches up after 32 weeks. Frozen Backbone remains slightly below Scratch across all data regimes for this easy target.}
+\caption{Data-efficiency curves for Rat/Education (Colin $\to$ Denise). Full Fine-Tuning is detrimental at 1 week but consistently better than Scratch from 2--16 weeks. Scratch catches up after 32 weeks. Frozen Backbone remains slightly below Scratch across all data regimes for this easy target. Adapter Layers closely track Frozen Backbone throughout, marginally outperforming it at 8 weeks (16.2 vs.\ 17.2~kWh).}
 \label{fig:rat_colin_denise}
 \end{figure}
 
@@ -1196,7 +1196,7 @@ This design enables fair comparison across strategies, buildings, and data regim
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{fig02_rat_education_new_efficiency}
-\caption{Data-efficiency curves for Rat/Education-2 (Theo $\to$ Lee). Transfer learning gives exceptional benefit at 1--2 weeks (+67.5\% and +55.3\%) for a high-variability target building. Benefit erodes as Scratch accumulates data.}
+\caption{Data-efficiency curves for Rat/Education-2 (Theo $\to$ Lee). Transfer learning gives exceptional benefit at 1--2 weeks (+67.5\% and +55.3\%) for a high-variability target building. Benefit erodes as Scratch accumulates data. Adapter Layers closely parallel Frozen Backbone at all data levels; both are far more stable than Scratch at 1--2 weeks and converge toward Full~FT from 8 weeks onward (68.8 vs.\ 67.3~kWh at 8 weeks).}
 \label{fig:rat_theo_lee}
 \end{figure}
 
@@ -1236,7 +1236,7 @@ While Scratch and FT fail catastrophically in the 1--4 week regime, Frozen Backb
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{fig03_eagle_education_efficiency}
-\caption{Data-efficiency curves for Eagle/Education (Samantha $\to$ Brooke). \textit{Top panel:} Full scale showing the catastrophic failures of Scratch and Full Fine-Tuning at 1--2 weeks. \textit{Bottom panel:} Log-scale view revealing that Frozen Backbone achieves 52.6 kWh at 2 weeks while all other strategies remain above 500 kWh. Frozen Backbone is the only viable strategy below 4 weeks.}
+\caption{Data-efficiency curves for Eagle/Education (Samantha $\to$ Brooke). \textit{Top panel:} Full scale showing the catastrophic failures of Scratch and Full Fine-Tuning at 1--2 weeks. \textit{Bottom panel:} Log-scale view. Notably, Adapter Layers achieves the lowest MAE at 1 week (47.8~kWh), dramatically outperforming Frozen Backbone (421.5~kWh) and remaining stable across all data regimes (44--52~kWh). This suggests that the adapter bottleneck provides a more stable low-data initialisation than head-only adaptation for hard targets.}
 \label{fig:eagle_brooke}
 \end{figure}
 
@@ -1265,7 +1265,7 @@ While Scratch and FT fail catastrophically in the 1--4 week regime, Frozen Backb
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{fig04_lamb_education_efficiency}
-\caption{Data-efficiency curves for Lamb/Education (Lucas $\to$ Mae). Full Fine-Tuning harms at 1 week ($-$42.5\%) but provides strong benefit at 2--8 weeks (+20--29\%). This demonstrates that transfer timing matters: fine-tuning with $<$2 weeks may degrade performance even for well-matched building pairs.}
+\caption{Data-efficiency curves for Lamb/Education (Lucas $\to$ Mae). Full Fine-Tuning harms at 1 week ($-$42.5\%) but provides strong benefit at 2--8 weeks (+20--29\%). This demonstrates that transfer timing matters: fine-tuning with $<$2 weeks may degrade performance even for well-matched building pairs. Adapter Layers achieves the lowest MAE at 1 week (28.1~kWh) vs.\ Scratch (36.7), FT (52.2), and Frozen (37.6~kWh), then closely tracks Full~FT from 4 weeks onward.}
 \label{fig:lamb}
 \end{figure}
 
@@ -1289,7 +1289,7 @@ While Scratch and FT fail catastrophically in the 1--4 week regime, Frozen Backb
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{fig05_office_efficiency}
-\caption{Data-efficiency curves for Office (Miriam $\to$ Denita). Frozen Backbone outperforms Full FT at extreme data scarcity (1--4 weeks). Full FT is strongest at 8 weeks (+24.7\%). Scratch surpasses transfer after 32 weeks for this building type.}
+\caption{Data-efficiency curves for Office (Miriam $\to$ Denita). Frozen Backbone outperforms Full FT at extreme data scarcity (1--4 weeks). Full FT is strongest at 8 weeks (+24.7\%). Scratch surpasses transfer after 32 weeks for this building type. Adapter Layers closely mirrors Frozen Backbone at all data levels (24.4 vs.\ 24.3~kWh at 1 week; 23.7 vs.\ 24.2~kWh at 8 weeks).}
 \label{fig:office}
 \end{figure}
 
@@ -1311,7 +1311,7 @@ While Scratch and FT fail catastrophically in the 1--4 week regime, Frozen Backb
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{fig06_lodging_efficiency}
-\caption{Data-efficiency curves for Lodging (Celia $\to$ Oliva). Transfer benefits are consistently small ($<$10\%) across all data levels, reflecting the low intrinsic variability of 24/7 lodging operations. Both strategies converge by 32 weeks.}
+\caption{Data-efficiency curves for Lodging (Celia $\to$ Oliva). Transfer benefits are consistently small ($<$10\%) across all data levels, reflecting the low intrinsic variability of 24/7 lodging operations. Both strategies converge by 32 weeks. Adapter Layers closely tracks Frozen Backbone throughout (12.9 vs.\ 13.0~kWh at 8 weeks); both constrained strategies converge with all others by 32 weeks.}
 \label{fig:lodging}
 \end{figure}
 
@@ -1836,6 +1836,19 @@ All five selected sources are on the same Rat site and share the same Education 
 \label{fig:prime_comparison}
 \end{figure}
 
+\subsection{Additional PRIME Output Coverage}
+
+To ensure complete reproducibility, this section explicitly covers all generated PRIME evaluation artifacts under \texttt{results/prime/Rat\_education\_Denise\_sweep/}:
+
+\begin{itemize}
+    \item \textbf{Primary sweep file (combined):} \texttt{data\_efficiency\_prime.csv} contains PRIME, Scratch (PreTransfer), and streaming columns in one table across 1--104 weeks.
+    \item \textbf{Separated strategy files:} \texttt{data\_efficiency\_prime\_transfer.csv} (PRIME-only MAE/RMSE) and \texttt{data\_efficiency\_prime\_pretransfer.csv} (Scratch/PreTransfer-only MAE/RMSE) provide the same sweep in split form for downstream analysis scripts.
+    \item \textbf{Snapshot comparison file:} \texttt{evaluation\_comparison.csv} records the 8-week evaluation used in the main text (PRIME: MAE 13.917, RMSE 18.6998; PreTransfer: MAE 20.2701, RMSE 22.1884).
+    \item \textbf{Streaming variant file:} \texttt{data\_efficiency\_prime\_streaming.csv} reports online accumulation results (MAE: 32.32 at 1 week, 17.78 at 8 weeks, 10.33 at 32 weeks; 64 and 104 weeks were not produced in this run).
+    \item \textbf{Source selection artifacts:} \texttt{source\_rankings.csv} stores full candidate ranking by composite score; \texttt{source\_weights.csv} stores final inverse-MAE blend weights used to construct $\theta_{\text{PRIME}}$.
+    \item \textbf{Inference traces and figures:} \texttt{live\_inference.csv}, per-window streaming traces in \texttt{streaming/}, and generated PRIME figures (blend weights, data efficiency, rolling MAE, uncertainty bands) are retained as supplementary artifacts.
+\end{itemize}
+
 \subsection{Analysis: Why PRIME Succeeded}
 
 \textbf{Root cause: Strong source--target domain alignment.}
@@ -1994,19 +2007,19 @@ The collapse mechanism is \textit{architectural}, not \textit{source-quality dri
 
 \textbf{Answer:}
 
-\textbf{PRIME (performance-weighted blending) catastrophically failed in low-data regimes:}
+\textbf{PRIME shows conditional effectiveness:}
 
 \begin{itemize}
-    \item PRIME source pool: top-5 buildings ranked by data completeness = \textit{Eagle/Samantha, Will, Luther, Teresa, Sherrill} --- all Eagle Education, same-site same-type as target.
-    \item At 8 weeks: PRIME = 643.5~kWh vs.\ Scratch = 90.5~kWh → \textbf{$-$611\% relative to Scratch} (not merely worse, but catastrophically collapsed).
-    \item PRIME's data-completeness scoring selected a fully homogeneous source pool. Even within this homogeneous pool, performance weighting provides no benefit because all five sources exhibit the same collapse behaviour when fine-tuned.
+    \item \textbf{Matched target (Rat/Denise):} PRIME provides a strong low-data benefit (1--8 weeks), peaking at +31.3\% MAE improvement at 8 weeks (13.9 vs.\ 20.3~kWh), then converges with Scratch at 16+ weeks.
+    \item \textbf{Mismatched target (Eagle/Brooke, comparative run):} performance-weighted blending fails catastrophically in low-data regimes (8 weeks: 643.5 vs.\ 90.5~kWh; $-$611\%), showing that weighting cannot compensate for severe source--target mismatch.
+    \item \textbf{Interpretation:} in-domain source validation performance is useful only when the transfer setting is already domain-aligned. It is not a reliable standalone proxy for cross-domain transfer utility.
 \end{itemize}
 
-\textbf{Key Insight:} Data completeness (the metric PRIME optimises) is a proxy for source data quality, not for \textit{cross-domain transfer utility}. A building with 99.9\% complete data is not automatically a better transfer source. All five PRIME-selected buildings are the same Eagle Education type and ultimately all fail as fine-tuning sources due to the hard-target collapse mechanism.
+\textbf{Key Insight:} Data completeness and in-domain MAE are proxies for source quality, not guarantees of transferability. They work well for same-site same-type adaptation (Rat/Denise) but do not predict behavior under strong distribution shift (Eagle/Brooke).
 
-\textbf{PRIME only succeeds at 32+ weeks:} At 32~weeks, PRIME = 87.9~kWh vs.\ Scratch = 93.0~kWh (+5.5\%), and at 64~weeks, PRIME = 46.7~kWh vs.\ Scratch = 59.6~kWh (+21.6\%). Once sufficient target data neutralises the collapse, the same-site homogeneous initialisation provides a genuine and growing advantage.
+\textbf{Implication:} Use PRIME for strongly matched same-site same-type cold-start scenarios (especially 1--8 weeks), and avoid relying on PRIME full fine-tuning for hard, distribution-mismatched targets where Frozen Backbone remains the safer default.
 
-\textbf{Implication:} Use Frozen Backbone (not PRIME-FT) for new buildings with $\leq$16 weeks data. PRIME-style performance-based selection may be viable as a \textit{frozen backbone} source selector (to find the best source for head-only adaptation), but should not drive full fine-tuning decisions.
+\textbf{Practical Rule:} For uncertain targets, validate transfer stability first (or use Frozen Backbone). Promote PRIME only after evidence of domain alignment and non-collapse behavior.
 
 \textbf{Future Directions for Source Selection:}
 \begin{itemize}

@@ -476,9 +476,14 @@ The experiment also evaluates a streaming (online) variant where the model accum
 | File | Contents |
 |---|---|
 | `data_efficiency_prime.csv` | PRIME vs Scratch MAE/RMSE at each data level (includes streaming columns) |
+| `data_efficiency_prime_transfer.csv` | PRIME-only MAE/RMSE sweep (1–104 weeks) |
+| `data_efficiency_prime_pretransfer.csv` | Scratch/PreTransfer-only MAE/RMSE sweep (1–104 weeks) |
+| `data_efficiency_prime_streaming.csv` | Streaming PRIME MAE/RMSE sweep (reported to 32 weeks in current run) |
 | `evaluation_comparison.csv` | Snapshot at 8 weeks: PRIME_Transfer vs PreTransfer |
 | `source_rankings.csv` | Full ranked list of Rat/Education candidate sources with composite scores |
 | `source_weights.csv` | Final inverse-MAE weights for the 5 selected sources |
+| `live_inference.csv` + `streaming/live_inference_*week.csv` | Per-timestep inference traces for offline/streaming evaluation windows |
+| `figures/*` | Generated PRIME diagnostics (blend weights, data efficiency, rolling MAE, uncertainty bands) |
 
 ### Significance
 

@@ -1323,18 +1323,18 @@ Trainable params: ~16 K (adapter layers + head). LSTM layers remain frozen.
 
 ### 10.9 PRIME Experiment
 
-**Motivation**: All prior multi-source experiments (7, 9, 10, 11) combine sources with uniform blending or joint training. Can quality-aware weighting of sources produce a better initialisation — particularly for Eagle/Brooke, the hardest target across all experiments?
+**Motivation**: All prior multi-source experiments (7, 9, 10, 11) combine sources with uniform blending or joint training. Can quality-aware weighting of sources produce a better initialisation on a strongly matched target (Rat/Denise), and what does a harder mismatched comparison imply?
 
 **Implementation**:
 - `run_prime_experiment.py` orchestrates the full PRIME pipeline.
-- Source ranking: candidate Eagle/Education buildings are scored by a composite of data completeness and inverse validation MAE. The top-5 are selected: Will (0.3778), Teresa (0.2786), Samantha (0.1585), Luther (0.1255), Sherrill (0.0596).
+- Source ranking: candidate Rat/Education buildings are scored by a composite of data completeness and inverse validation MAE. The selected top-5 for Rat/Denise are Earnest, Meghan, Irma, Nellie, and Beverly.
 - Blending: `θ_PRIME = Σ weight_i × θ_source_i` where `weight_i = (1/val_mae_i) / Σ(1/val_mae_j)`.
-- Fine-tuning: Standard protocol on Eagle/Brooke from 1 to 104 weeks (LR=1e-4, 50 epochs max, patience=5).
-- Outputs: `results/prime/` — `data_efficiency_prime.csv`, `source_rankings.csv`, `source_weights.csv`, `evaluation_comparison.csv`.
+- Fine-tuning: Standard protocol on Rat/Denise from 1 to 104 weeks (LR=1e-4, 50 epochs max, patience=5).
+- Outputs: `results/prime/Rat_education_Denise_sweep/` — `data_efficiency_prime.csv`, `data_efficiency_prime_transfer.csv`, `data_efficiency_prime_pretransfer.csv`, `data_efficiency_prime_streaming.csv`, `source_rankings.csv`, `source_weights.csv`, `evaluation_comparison.csv`, plus live inference traces and figures.
 
 **Key findings**:
-- PRIME MAE @ 8 weeks = 643.5 vs Scratch = 90.5 → **6.3× worse**.
-- PRIME crosses Scratch and outperforms it at approximately 32 weeks; +21.8% at 64 weeks, +29.5% at 104 weeks.
-- Root cause of low-data failure: all 5 selected sources are Eagle/Education buildings. Combining same-site/same-type sources does not add distributional diversity.
-- Key lesson: **in-domain validation MAE does not predict cross-domain transfer utility**. A source that is accurate on its own domain is not necessarily the best donor for an out-of-distribution target.
-- Future direction: score sources by cross-domain distance (e.g., MMD, cosine distance between model representations) rather than in-domain accuracy.
+- Rat/Denise (matched target): PRIME beats Scratch/PreTransfer in the low-data regime (1–8 weeks), peaking at +31.3% MAE improvement at 8 weeks (13.9 vs 20.3), and converges by 16+ weeks.
+- Streaming PRIME outputs are available up to 32 weeks (best reported MAE 10.33 at 32 weeks in this run; 64/104 not produced).
+- Historical comparative run on Eagle/Brooke (mismatched target) failed catastrophically at low data (8 weeks: 643.5 vs 90.5, 6.3× worse), confirming that performance weighting alone cannot overcome strong domain mismatch.
+- Key lesson: **in-domain validation MAE is conditionally useful** (works in aligned settings) but is not a standalone predictor of cross-domain transfer utility.
+- Future direction: augment source ranking with explicit domain-similarity signals (e.g., MMD or representation-distance metrics) before applying performance-weighted blending.
