@@ -2532,52 +2532,6 @@ Hog/Miriam$\to$Denita (FT) & +4.4 & +16.9 & $-$24.9 & +24.7 & +25.5 & $-$24.1 & 
 Robin/Celia$\to$Oliva (FT) & +7.2 & +0.7 & +4.3 & +4.9 & --- & --- & --- \\
 \end{longtable}
 
-\chapter{Additional Figures and Charts}
-
-This appendix contains all visualizations from the experiments. Due to file path limitations in LaTeX compilation, figure references are provided as placeholders. In a complete deployment, these would reference the actual image files.
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{transfer_benefit_heatmap-20.jpg}
-\caption{Transfer Benefit Heatmap: Percentage improvement over Scratch across all experiments and training weeks. Green indicates positive transfer; red indicates negative transfer (catastrophic collapse).}
-\label{fig:benefit_heatmap}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{r2_progression-18.jpg}
-\caption{R\textsuperscript{2} Progression: Model fit quality across training weeks for all six core experiments. Shows catastrophic collapse (negative R\textsuperscript{2}) for Eagle/Brooke single-source transfer.}
-\label{fig:r2_progression}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{scaling_curve-19.jpg}
-\caption{N-Source Ablation Scaling Curve: MAE vs. number of source buildings for Eagle/Brooke target. Demonstrates diminishing returns beyond N=5 sources.}
-\label{fig:nsource_scaling}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{scaling_curve-19.jpg}
-\caption{Marginal Gain Analysis: Percentage MAE improvement from adding each additional source building. Highlights the importance of diversity over quantity.}
-\label{fig:marginal_gain}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{cross_type_comparison-15.jpg}
-\caption{Cross-Building-Type Comparison: MAE and R\textsuperscript{2} progression for Education, Office, and Lodging buildings under Scratch and Full Fine-Tuning strategies.}
-\label{fig:cross_type}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-% \includegraphics[width=\textwidth]{benefit_distributions-14.jpg}
-\caption{Benefit Distributions: Box plots showing transfer benefit variability across strategies and training weeks. Demonstrates Frozen Backbone stability and Full Fine-Tuning high variance.}
-\label{fig:benefit_dist}
-\end{figure}
-
 \chapter{Model Architecture and Training Details}
 
 \section{Baseline LSTM Architecture}
