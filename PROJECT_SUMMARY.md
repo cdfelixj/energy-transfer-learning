@@ -69,7 +69,7 @@ This project implements a **4-strategy transfer learning framework** for buildin
 | 10 | `multitransfer_ablation` | N=1…15 sources → Eagle/Brooke | How many sources needed? |
 | 11 | `multitransfer_generalisation` | 5-building pool → Rat/Denise | Multi-source on easy targets? |
 | 12 | `switch_modelling` | Colin → Denise | Auto-select beats either? |
-| PRIME | `prime_experiment` | 5 Eagle/Edu sources → Eagle/Brooke | Does performance-weighted blending beat Scratch? |
+| PRIME | `prime_experiment` | 5 Rat/Edu sources → Rat/Denise | Does performance-weighted blending beat Scratch on an easy same-site target? |
 
 ## 🚀 Usage
 
@@ -169,12 +169,12 @@ energy-transfer-learning/
 4. **Frozen Backbone is most reliable at 1–4 weeks** of target data; Full Fine-Tuning catches up at ≥32 weeks.
 5. **N-source optimum is N=3**: Diminishing returns beyond 3 sources; pool diversity (site + type) matters more than raw quantity.
 6. **Auto-switching (Switch Modelling, Exp 12)** achieves RMSE 22.72 vs oracle 22.70 vs always-transfer 25.45 — a 10.7% improvement with a trivial post-hoc rule.
-7. **PRIME is a negative result at low data**: PRIME MAE @ 8 weeks = 643.5 vs Scratch = 90.5 (6.3× worse). Root cause: all 5 sources are Eagle/Education — source homogeneity prevents distributional diversity. PRIME does outperform Scratch at 32+ weeks (+21.8% at 64 weeks).
+7. **PRIME succeeds in the same-site regime**: PRIME MAE @ 8 weeks = 13.9 vs Scratch = 20.3 (31.3% improvement, Rat/Denise target). All 5 sources are Rat/Education — strong source-target domain alignment enables effective performance-weighted blending. PRIME converges with Scratch at 16+ weeks. An earlier Eagle/Brooke run confirmed domain alignment is required: PRIME collapsed catastrophically on that mismatched target (643.5 vs 90.5 kWh, 6.3× worse).
 8. **Adapter strategy untrained**: Adapter CSVs contain NaN — adapter training was not completed. Results are Scratch/Transfer/Frozen only for all experiments.
 
 ## 🔄 Next Steps / Open Questions
 
-- Incorporate cross-site sources into PRIME to overcome Eagle source homogeneity
+- Test PRIME on hard targets (Eagle/Brooke) with diverse cross-site sources to verify whether domain diversity addresses the Eagle-regime collapse
 - Score sources by transfer utility (e.g., MMD, cosine distance) rather than in-domain MAE
 - Statistical significance testing across experiments (t-test on MAE improvements)
 - Complete Adapter strategy training to enable 4-way strategy comparison

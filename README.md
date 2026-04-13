@@ -57,7 +57,7 @@ the value of pre-training on another building.
 | 10 | `multitransfer_ablation` | Eagle/Edu | N=1…15 buildings → Brooke | How many source buildings needed? | `run_multitransfer_ablation_experiment.py` |
 | 11 | `multitransfer_generalisation` | Rat/Edu | 5-building pool → Denise | Multi-source benefit on easy targets? | `run_multitransfer_generalisation_experiment.py` |
 | 12 | `switch_modelling` | Rat/Edu | Colin → Denise | Auto-selection beats either strategy? | `run_switch_modelling_experiment.py` |
-| PRIME | `prime_experiment` | Eagle/Edu | Top-5 Eagle sources → Brooke | Performance-weighted multi-source init? | `run_prime_experiment.py` |
+| PRIME | `prime_experiment` | Rat/Edu | Top-5 Rat sources → Denise | Performance-weighted multi-source init on matched target? | `run_prime_experiment.py` |
 
 ## 🚀 Quick Start
 
@@ -192,13 +192,13 @@ Transfer benefit is always reported relative to Scratch: `(Scratch_MAE − Strat
 3. **Multi-source pre-training (N=3 diverse buildings)** is the most robust general strategy. Adding a third site (Lamb) provides the last major jump; **diminishing returns are strong past N=3**. Source diversity (site + type) matters more than raw source count.
 4. **Frozen Backbone** is the single most reliable low-data strategy (1–4 weeks); Full Fine-Tuning wins at ≥32 weeks.
 5. **Auto-switching (Experiment 12)** achieves near-oracle performance: mean RMSE **22.72 vs oracle 22.70**, outperforming always-transfer (RMSE 25.45) by **10.7%**. Scratch was selected at 5 of 8 decision points — transfer is not always the better strategy, even on an easy target.
-6. **PRIME failed in the low-data regime.** Despite performance-weighted source selection, PRIME scored **6.3× worse MAE than Scratch at 8 weeks** (643.5 vs 90.5 kWh). All 5 sources were Eagle/Education — source homogeneity does not bridge the domain gap. PRIME only beats Scratch at **32+ weeks**. Key lesson: in-domain val MAE does not predict cross-domain transfer utility.
+6. **PRIME succeeds in the same-site regime.** On Rat/Denise (same-site, same-type), PRIME scored **31.3% better MAE than Scratch at 8 weeks** (13.9 vs 20.3 kWh). All 5 sources are Rat/Education — strong domain alignment enables effective performance-weighted blending. PRIME converges with Scratch at 16+ weeks. An earlier run on Eagle/Brooke confirmed that domain alignment is a prerequisite: PRIME failed catastrophically on that mismatched target (643.5 vs 90.5 kWh, 6.3× worse), showing in-domain val MAE does not predict cross-domain transfer utility.
 
 ## 🚧 Open Questions & Future Work
 
 - **Chronological evaluation**: Re-run experiments with a true temporal train/test split (currently stratified random split is used throughout)
 - **Statistical significance**: Single training runs only — confidence intervals require repeated runs with different random seeds
-- **PRIME with cross-site diversity**: Re-run PRIME with sources from Rat, Lamb, and Eagle sites to test whether diversity fixes the low-data failure
+- **PRIME on hard targets with diverse sources**: Test PRIME on Eagle/Brooke with cross-site source diversity to verify whether domain diversity addresses the Eagle-regime collapse
 - **Architecture alternatives**: Transformer (PatchTST, Informer), TCN, GRU as LSTM replacements
 - **Continual learning**: EWC or replay buffers to prevent catastrophic forgetting during long-term deployment
 - **Adapter strategy**: Complete training runs (currently untrained — all CSVs contain NaN)

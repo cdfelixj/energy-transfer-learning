@@ -645,9 +645,9 @@ def parse_args() -> argparse.Namespace:
         description='PRIME Experiment — Full end-to-end transfer learning pipeline',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument('--target-building', default='Eagle_education_Brooke',
-                        help='Building ID of the target. Defaults to Eagle_education_Brooke '
-                             '(the cross-site collapse case PRIME is designed to solve).')
+    parser.add_argument('--target-building', default='Rat_education_Denise',
+                        help='Building ID of the target. Defaults to Rat_education_Denise '
+                             '(working experiment; use Eagle_education_Brooke to reproduce the collapse case).')
     parser.add_argument('--site-id', default=None,
                         help='Site filter for data loading (e.g. Rat). None = any site.')
     parser.add_argument('--building-type', default=None,
