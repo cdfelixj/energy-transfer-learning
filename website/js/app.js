@@ -31,8 +31,9 @@ const SPEED_MAP   = { '1x': 24, '5x': 120, '20x': 480 };
 // Helpers
 // =====================================================================
 
-Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-Chart.defaults.color = '#6b7280';
+Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+Chart.defaults.color = '#64748b';
+Chart.defaults.font.size = 11;
 
 function parseCSV(url) {
   return new Promise((resolve, reject) => {
@@ -56,16 +57,23 @@ function baseOptions(yLabel) {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#1a1a1a', titleColor: '#ffffff',
-        bodyColor: '#aaaaaa', padding: 9, borderColor: '#333333', borderWidth: 1,
+        backgroundColor: '#0f172a',
+        titleColor: '#f8fafc',
+        bodyColor: '#94a3b8',
+        padding: 10,
+        borderColor: '#1e293b',
+        borderWidth: 1,
+        cornerRadius: 8,
+        titleFont: { size: 12, weight: '600' },
+        bodyFont: { size: 11 },
       },
     },
     scales: {
-      x: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { size: 10 }, maxRotation: 0 } },
+      x: { grid: { color: 'rgba(15,23,42,.04)' }, ticks: { font: { size: 11 }, maxRotation: 0 } },
       y: {
-        grid: { color: 'rgba(0,0,0,.04)' },
-        ticks: { font: { size: 10 } },
-        title: { display: !!yLabel, text: yLabel, font: { size: 10 } },
+        grid: { color: 'rgba(15,23,42,.04)' },
+        ticks: { font: { size: 11 } },
+        title: { display: !!yLabel, text: yLabel, font: { size: 11 } },
       },
     },
   };
@@ -109,10 +117,10 @@ async function initLiveInference() {
     data: {
       labels: [],
       datasets: [
-        { label: 'Actual',         data: [], borderColor: '#111827', backgroundColor: '#111827', borderWidth: 2,   pointRadius: 0, tension: 0.1 },
-        { label: 'Blended Pred.',  data: [], borderColor: '#2563eb', backgroundColor: '#2563eb', borderWidth: 2,   pointRadius: 0, tension: 0.1 },
-        { label: 'Transfer Only',  data: [], borderColor: '#0891b2', backgroundColor: '#0891b2', borderWidth: 1.5, pointRadius: 0, tension: 0.1, borderDash: [4,3] },
-        { label: 'Pre-Transfer',   data: [], borderColor: '#7c3aed', backgroundColor: '#7c3aed', borderWidth: 1.5, pointRadius: 0, tension: 0.1, borderDash: [2,3] },
+        { label: 'Actual',         data: [], borderColor: '#0f172a', backgroundColor: '#0f172a', borderWidth: 2,   pointRadius: 0, tension: 0.2 },
+        { label: 'Blended Pred.',  data: [], borderColor: '#2563eb', backgroundColor: '#2563eb', borderWidth: 2,   pointRadius: 0, tension: 0.2 },
+        { label: 'Transfer Only',  data: [], borderColor: '#0891b2', backgroundColor: '#0891b2', borderWidth: 1.5, pointRadius: 0, tension: 0.2, borderDash: [5,3] },
+        { label: 'Pre-Transfer',   data: [], borderColor: '#7c3aed', backgroundColor: '#7c3aed', borderWidth: 1.5, pointRadius: 0, tension: 0.2, borderDash: [3,3] },
       ],
     },
     options: {
@@ -120,17 +128,17 @@ async function initLiveInference() {
       animation: false,
       scales: {
         x: {
-          grid: { color: 'rgba(0,0,0,.04)' },
+          grid: { color: 'rgba(15,23,42,.04)' },
           ticks: {
-            font: { size: 9 },
+            font: { size: 11 },
             maxTicksLimit: 8,
             maxRotation: 0,
           },
         },
         y: {
-          grid: { color: 'rgba(0,0,0,.04)' },
-          ticks: { font: { size: 10 } },
-          title: { display: true, text: 'Energy (kWh)', font: { size: 10 } },
+          grid: { color: 'rgba(15,23,42,.04)' },
+          ticks: { font: { size: 11 } },
+          title: { display: true, text: 'Energy (kWh)', font: { size: 11 } },
         },
       },
     },
@@ -382,8 +390,8 @@ function renderRaceChart() {
       type: 'line',
       data: { labels, datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Training data (weeks)',font:{size:10}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Training data (weeks)',font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -430,8 +438,8 @@ function renderEfficiency() {
       type: 'line',
       data: { labels: WEEKS.map(String), datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Training data (weeks)',font:{size:10}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Training data (weeks)',font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -478,8 +486,8 @@ function renderSnapshot(data, metric) {
       type: 'bar',
       data: { labels, datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{display:false}, ticks:{font:{size:9}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -532,8 +540,8 @@ function renderAblation(all, metric) {
       type: 'line',
       data: { labels: ns.map(String), datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Number of source buildings (N)',font:{size:10}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Number of source buildings (N)',font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -600,8 +608,8 @@ function renderPrime(data, metric) {
     primeChart = new Chart(document.getElementById('prime-chart').getContext('2d'), {
       type: 'line', data: { labels, datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Training data (weeks)',font:{size:10}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Training data (weeks)',font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -630,8 +638,8 @@ function renderCrossType({ ssData, stData, ctData }, metric) {
     ctChart = new Chart(document.getElementById('crosstype-chart').getContext('2d'), {
       type: 'line', data: { labels, datasets },
       options: { ...baseOptions(getMetricLabel(metric)), scales: {
-        x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Training data (weeks)',font:{size:10}} },
-        y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:getMetricLabel(metric),font:{size:10}} },
+        x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Training data (weeks)',font:{size:11}} },
+        y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:getMetricLabel(metric),font:{size:11}} },
       }},
     });
   }
@@ -659,8 +667,8 @@ async function initSwitch() {
   switchChart = new Chart(document.getElementById('switch-chart').getContext('2d'), {
     type: 'line', data: { labels, datasets },
     options: { ...baseOptions('MAE (kWh)'), scales: {
-      x: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'Training data (weeks)',font:{size:10}} },
-      y: { grid:{color:'rgba(0,0,0,.04)'}, ticks:{font:{size:10}}, title:{display:true,text:'MAE (kWh)',font:{size:10}} },
+      x: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'Training data (weeks)',font:{size:11}} },
+      y: { grid:{color:'rgba(15,23,42,.04)'}, ticks:{font:{size:11}}, title:{display:true,text:'MAE (kWh)',font:{size:11}} },
     }},
   });
   buildLegend('switch-legend', [

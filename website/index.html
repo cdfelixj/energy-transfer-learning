@@ -4,36 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Few-Shot Transfer Learning for Building Energy Forecasting</title>
-  <meta name="description" content="Few-shot transfer learning for building energy forecasting — live inference simulation and interactive experiment results." />
+  <meta name="description" content="Few-shot transfer learning for building energy forecasting — live inference simulation and interactive experiment results across 12 experiments and 4 fine-tuning strategies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-<!-- ===== Nav ===== -->
+<!-- ===== Navigation ===== -->
 <nav id="site-nav">
-  <span class="nav-logo">Few-Shot Transfer Learning<span> — Building Energy</span></span>
+  <span class="nav-logo">
+    <span class="nav-logo-icon">E</span>
+    Few-Shot Transfer Learning
+    <span>— Building Energy</span>
+  </span>
   <div class="nav-links">
     <a class="nav-link" href="#live-inference">Live Demo</a>
+    <a class="nav-link" href="#efficiency-race">Strategy Race</a>
     <a class="nav-link" href="#results">Results</a>
     <a class="nav-link" href="#gallery">Gallery</a>
     <a class="nav-cta" href="https://github.com/cdfelixj/energy-transfer-learning" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
 </nav>
 
-
-
-
-
-
-
-
+<!-- ===== Hero Header ===== -->
+<header id="page-header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Final Year Project · Building Energy Forecasting</div>
+    <h1>Few-Shot Transfer Learning<br>for <em>Building Energy</em> Forecasting</h1>
+    <p class="header-sub">
+      Pre-training LSTM networks on data-rich buildings to improve prediction accuracy for buildings with limited historical data.
+      Evaluated across 12 experiments and 4 fine-tuning strategies using the Building Data Genome Project 2 dataset.
+    </p>
+    <div class="header-stats">
+      <div class="stat-badge">
+        <div class="sv">12</div>
+        <div class="sl">Experiments</div>
+      </div>
+      <div class="stat-badge">
+        <div class="sv">4</div>
+        <div class="sl">Strategies</div>
+      </div>
+      <div class="stat-badge">
+        <div class="sv">17%</div>
+        <div class="sl">Best MAE Gain</div>
+      </div>
+      <div class="stat-badge">
+        <div class="sv">0.09%</div>
+        <div class="sl">Gap to Oracle</div>
+      </div>
+      <div class="stat-badge">
+        <div class="sv">1–104</div>
+        <div class="sl">Weeks of Data</div>
+      </div>
+    </div>
+  </div>
+</header>
 
 <!-- ===== Live Inference ===== -->
 <section id="live-inference">
   <div class="section-inner">
     <div class="section-header">
+      <div class="section-eyebrow">Interactive Demo</div>
       <h2>Live Inference Simulation</h2>
-      <p>Watch the PRIME deployment system predict in real time. The blend weight shifts as the transfer model earns confidence against the pre-transfer baseline. Rat/Denise, 2016–2017.</p>
+      <p>Watch the PRIME deployment system predict in real time. The blend weight shifts dynamically as the transfer model earns confidence against the pre-transfer baseline. Building: Rat/Denise, 2016–2017.</p>
     </div>
 
     <!-- Controls -->
@@ -80,7 +114,7 @@
     </div>
 
     <!-- Chart -->
-    <div id="inference-loading" class="loading-msg" style="display:none;">Loading 15 k rows of inference data…</div>
+    <div id="inference-loading" class="loading-msg" style="display:none;">Loading inference data…</div>
     <div class="chart-wrap">
       <canvas id="inference-chart"></canvas>
     </div>
@@ -104,16 +138,17 @@
 <section id="efficiency-race">
   <div class="section-inner">
     <div class="section-header">
+      <div class="section-eyebrow">Animated Comparison</div>
       <h2>Strategy Race</h2>
-      <p>Animated data efficiency — watch how each strategy's error evolves as more target-building training data is added week by week. Select an experiment and metric, then hit Play.</p>
+      <p>Watch how each strategy's error evolves as more target-building training data is added week by week. Select an experiment and metric, then hit Play.</p>
     </div>
 
     <div class="ctrl-bar">
       <button class="btn primary" id="race-play-btn">▶ Play</button>
       <button class="btn" id="race-reset-btn">↺ Reset</button>
       <div class="ctrl-sep-v"></div>
-      <div class="ctrl-group" style="flex-direction:row;align-items:center;gap:.5rem;">
-        <label for="race-experiment" style="font-size:.75rem;white-space:nowrap;">Experiment</label>
+      <div class="ctrl-group">
+        <label for="race-experiment">Experiment</label>
         <select id="race-experiment">
           <option value="rat_education">Rat / Education (Exp 1)</option>
           <option value="rat_education_new">Rat / Education — Replication (Exp 2)</option>
@@ -124,8 +159,8 @@
         </select>
       </div>
       <div class="ctrl-sep-v"></div>
-      <div class="ctrl-group" style="flex-direction:row;align-items:center;gap:.5rem;">
-        <label for="race-metric" style="font-size:.75rem;">Metric</label>
+      <div class="ctrl-group">
+        <label for="race-metric">Metric</label>
         <select id="race-metric">
           <option value="mae">MAE</option>
           <option value="rmse">RMSE</option>
@@ -169,8 +204,9 @@
 <section id="results">
   <div class="section-inner">
     <div class="section-header">
-      <h2>Experiment Results</h2>
-      <p>Interactive charts across all 12 experiments. Strategy Race animates the data-efficiency competition. Results tabs let you drill into ablations, PRIME, cross-type, and the switch policy.</p>
+      <div class="section-eyebrow">Experiment Results</div>
+      <h2>Interactive Charts</h2>
+      <p>Explore all 12 experiments through interactive charts. Switch between data-efficiency curves, the 8-week snapshot, N-source ablation, PRIME and cross-type comparisons, and the auto-switch policy.</p>
     </div>
 
     <div class="tabs-nav">
@@ -181,7 +217,7 @@
       <button class="tab-btn" data-tab="tab-switch">Switch Policy</button>
     </div>
 
-    <!-- Tab 1 -->
+    <!-- Tab 1 — Data Efficiency -->
     <div id="tab-efficiency" class="tab-panel active">
       <div class="chart-controls">
         <div class="ctrl-group">
@@ -216,7 +252,7 @@
       <div class="chart-legend" id="eff-legend"></div>
     </div>
 
-    <!-- Tab 2 -->
+    <!-- Tab 2 — 8-Week Snapshot -->
     <div id="tab-snapshot" class="tab-panel">
       <div class="chart-controls">
         <div class="ctrl-group">
@@ -226,13 +262,13 @@
             <option value="rmse">RMSE</option>
           </select>
         </div>
-        <span style="font-size:.75rem;color:var(--text-muted);">All 6 experiments at the 8-week data mark</span>
+        <span style="font-size:.78rem;color:var(--text-muted);">All 6 experiments at the 8-week data mark</span>
       </div>
       <div class="chart-wrap"><canvas id="snapshot-chart"></canvas></div>
       <div class="chart-legend" id="snap-legend"></div>
     </div>
 
-    <!-- Tab 3 -->
+    <!-- Tab 3 — N-Source Ablation -->
     <div id="tab-ablation" class="tab-panel">
       <div class="chart-controls">
         <div class="ctrl-group">
@@ -253,10 +289,10 @@
       </div>
       <div class="chart-wrap"><canvas id="ablation-chart"></canvas></div>
       <div class="chart-legend" id="abl-legend"></div>
-      <p style="margin-top:.6rem;font-size:.75rem;color:var(--text-muted);">Eagle/Education target. N=1–15 source buildings pooled. <strong>N=3 is optimal</strong>; diminishing returns beyond due to source homogeneity.</p>
+      <p class="chart-note">Eagle/Education target. N = 1–15 source buildings pooled. <strong>N = 3 is optimal</strong>; diminishing returns beyond this point due to source building homogeneity.</p>
     </div>
 
-    <!-- Tab 4 -->
+    <!-- Tab 4 — Advanced: PRIME + Cross-Type -->
     <div id="tab-advanced" class="tab-panel">
       <div class="sub-tabs">
         <button class="sub-tab-btn active" data-target="sub-prime">PRIME vs Scratch</button>
@@ -266,36 +302,51 @@
         <div class="chart-controls">
           <div class="ctrl-group">
             <label for="prime-metric">Metric</label>
-            <select id="prime-metric"><option value="mae">MAE</option><option value="rmse">RMSE</option></select>
+            <select id="prime-metric">
+              <option value="mae">MAE</option>
+              <option value="rmse">RMSE</option>
+            </select>
           </div>
-          <span style="font-size:.75rem;color:var(--text-muted);">Rat/Denise — PRIME (weighted ensemble) vs from-scratch LSTM, plus live streaming</span>
+          <span style="font-size:.78rem;color:var(--text-muted);">Rat/Denise — PRIME (weighted ensemble) vs from-scratch LSTM, plus live streaming</span>
         </div>
         <div class="chart-wrap"><canvas id="prime-chart"></canvas></div>
         <div class="chart-legend" id="prime-legend"></div>
-        <p style="margin-top:.6rem;font-size:.75rem;color:var(--text-muted);">Rat/Denise target. PRIME beats Scratch from 1 wk. Streaming line shows live-deployment MAE — soft-blend adapts as more data flows in.</p>
+        <p class="chart-note">Rat/Denise target. PRIME beats Scratch from week 1. The streaming line shows live-deployment MAE — the soft blend adapts as more data flows in.</p>
       </div>
       <div id="sub-crosstype" class="sub-tab-panel">
         <div class="chart-controls">
           <div class="ctrl-group">
             <label for="ct-metric">Metric</label>
-            <select id="ct-metric"><option value="mae">MAE</option><option value="rmse">RMSE</option></select>
+            <select id="ct-metric">
+              <option value="mae">MAE</option>
+              <option value="rmse">RMSE</option>
+            </select>
           </div>
-          <span style="font-size:.75rem;color:var(--text-muted);">Eagle/Brooke target — same-site / same-type / cross-type source buildings</span>
+          <span style="font-size:.78rem;color:var(--text-muted);">Eagle/Brooke target — same-site / same-type / cross-type source buildings</span>
         </div>
         <div class="chart-wrap"><canvas id="crosstype-chart"></canvas></div>
         <div class="chart-legend" id="ct-legend"></div>
-        <p style="margin-top:.6rem;font-size:.75rem;color:var(--text-muted);">All conditions collapse early. Cross-type worst at 1 wk (MAE 948). All converge within 5 MAE by 64+ wk — domain distance dominates in data-scarce regime.</p>
+        <p class="chart-note">All conditions collapse early. Cross-type is worst at 1 week (MAE ~948). All conditions converge within 5 MAE by 64+ weeks — domain distance dominates in the data-scarce regime.</p>
       </div>
     </div>
 
-    <!-- Tab 5 -->
+    <!-- Tab 5 — Switch Policy -->
     <div id="tab-switch" class="tab-panel">
       <div class="chart-wrap"><canvas id="switch-chart"></canvas></div>
       <div class="chart-legend" id="switch-legend"></div>
       <div class="switch-stats">
-        <div class="switch-stat"><div class="sv">62.5%</div><div class="sl">Switch rate</div></div>
-        <div class="switch-stat"><div class="sv">0.09%</div><div class="sl">Gap to oracle</div></div>
-        <div class="switch-stat"><div class="sv">10.7%</div><div class="sl">Gain vs always-transfer</div></div>
+        <div class="switch-stat">
+          <div class="sv">62.5%</div>
+          <div class="sl">Switch rate</div>
+        </div>
+        <div class="switch-stat">
+          <div class="sv">0.09%</div>
+          <div class="sl">Gap to oracle</div>
+        </div>
+        <div class="switch-stat">
+          <div class="sv">10.7%</div>
+          <div class="sl">Gain vs always-transfer</div>
+        </div>
       </div>
     </div>
   </div>
@@ -305,68 +356,69 @@
 <section id="gallery">
   <div class="section-inner">
     <div class="section-header">
+      <div class="section-eyebrow">Figures</div>
       <h2>Figure Gallery</h2>
-      <p>All 15 experiment figures. Click to enlarge.</p>
+      <p>All experiment figures. Click any image to enlarge.</p>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item" data-src="../figures/fig01_rat_education_efficiency.png" data-caption="Fig 1 — Rat/Education: data efficiency across 4 strategies">
-        <img src="../figures/fig01_rat_education_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig01_rat_education_efficiency.png" data-caption="Fig 1 — Rat/Education: data efficiency across 4 strategies">
+        <img src="data/fig01_rat_education_efficiency.png" alt="Rat/Education data efficiency" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 1 — Rat/Education</strong>~17% MAE gain at 8 wk</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig02_rat_education_new_efficiency.png" data-caption="Fig 2 — Rat/Education replication (Exp 2)">
-        <img src="../figures/fig02_rat_education_new_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig02_rat_education_new_efficiency.png" data-caption="Fig 2 — Rat/Education replication (Exp 2)">
+        <img src="data/fig02_rat_education_new_efficiency.png" alt="Rat/Education replication" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 2 — Rat/Education Rep.</strong>Transfer benefit replicated</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig03_eagle_education_efficiency.png" data-caption="Fig 3 — Eagle/Education: catastrophic collapse at <16 wk">
-        <img src="../figures/fig03_eagle_education_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig03_eagle_education_efficiency.png" data-caption="Fig 3 — Eagle/Education: catastrophic collapse at <16 wk">
+        <img src="data/fig03_eagle_education_efficiency.png" alt="Eagle/Education collapse" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 3 — Eagle/Education</strong>Collapse — MAE ~640 kWh at 8 wk</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig04_lamb_education_efficiency.png" data-caption="Fig 4 — Lamb/Education (Exp 4)">
-        <img src="../figures/fig04_lamb_education_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig04_lamb_education_efficiency.png" data-caption="Fig 4 — Lamb/Education (Exp 4)">
+        <img src="data/fig04_lamb_education_efficiency.png" alt="Lamb/Education efficiency" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 4 — Lamb/Education</strong>Modest ~10–30% benefit</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig05_office_efficiency.png" data-caption="Fig 5 — Office / Hog (Exp 5)">
-        <img src="../figures/fig05_office_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig05_office_efficiency.png" data-caption="Fig 5 — Office / Hog (Exp 5)">
+        <img src="data/fig05_office_efficiency.png" alt="Office efficiency" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 5 — Office</strong>Transfer neutral at 8 wk</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig06_lodging_efficiency.png" data-caption="Fig 6 — Lodging / Robin (Exp 6)">
-        <img src="../figures/fig06_lodging_efficiency.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig06_lodging_efficiency.png" data-caption="Fig 6 — Lodging / Robin (Exp 6)">
+        <img src="data/fig06_lodging_efficiency.png" alt="Lodging efficiency" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 6 — Lodging</strong>+3% — marginal benefit</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig07_8week_snapshot.png" data-caption="Fig 7 — All 6 experiments at 8-week snapshot">
-        <img src="../figures/fig07_8week_snapshot.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig07_8week_snapshot.png" data-caption="Fig 7 — All 6 experiments at 8-week snapshot">
+        <img src="data/fig07_8week_snapshot.png" alt="8-week snapshot" loading="lazy" />
         <div class="gallery-caption"><strong>8-Week Snapshot</strong>All 6 experiments side by side</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig08_transfer_benefit_heatmap.png" data-caption="Fig 8 — Transfer benefit heatmap">
-        <img src="../figures/fig08_transfer_benefit_heatmap.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig08_transfer_benefit_heatmap.png" data-caption="Fig 8 — Transfer benefit heatmap">
+        <img src="data/fig08_transfer_benefit_heatmap.png" alt="Transfer benefit heatmap" loading="lazy" />
         <div class="gallery-caption"><strong>Transfer Benefit Heatmap</strong>% MAE improvement over Scratch</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig09_nsource_ablation.png" data-caption="Fig 9 — N-source ablation (N=3 optimal)">
-        <img src="../figures/fig09_nsource_ablation.png" alt="" loading="lazy" />
-        <div class="gallery-caption"><strong>N-Source Ablation</strong>N=3 optimal</div>
+      <div class="gallery-item" data-src="data/fig09_nsource_ablation.png" data-caption="Fig 9 — N-source ablation (N=3 optimal)">
+        <img src="data/fig09_nsource_ablation.png" alt="N-source ablation" loading="lazy" />
+        <div class="gallery-caption"><strong>N-Source Ablation</strong>N = 3 optimal</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig10_multi_transfer_eagle.png" data-caption="Fig 10 — Multi-Transfer vs single source">
-        <img src="../figures/fig10_multi_transfer_eagle.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig10_multi_transfer_eagle.png" data-caption="Fig 10 — Multi-Transfer vs single source">
+        <img src="data/fig10_multi_transfer_eagle.png" alt="Multi-Transfer Eagle" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 7 — Multi-Transfer</strong>Collapse persists; improves at 16+ wk</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig11_cross_type_transfer.png" data-caption="Fig 11 — Cross-type transfer comparison">
-        <img src="../figures/fig11_cross_type_transfer.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig11_cross_type_transfer.png" data-caption="Fig 11 — Cross-type transfer comparison">
+        <img src="data/fig11_cross_type_transfer.png" alt="Cross-type transfer" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 8 — Cross-Type</strong>Domain distance most critical at low data</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig12_generalisation.png" data-caption="Fig 12 — Multi-source generalisation">
-        <img src="../figures/fig12_generalisation.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig12_generalisation.png" data-caption="Fig 12 — Multi-source generalisation">
+        <img src="data/fig12_generalisation.png" alt="Multi-source generalisation" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 11 — Generalisation</strong>Multi-source hurts easy targets</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig13_switch_modelling.png" data-caption="Fig 13 — Auto-switch policy vs oracle">
-        <img src="../figures/fig13_switch_modelling.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig13_switch_modelling.png" data-caption="Fig 13 — Auto-switch policy vs oracle">
+        <img src="data/fig13_switch_modelling.png" alt="Switch modelling" loading="lazy" />
         <div class="gallery-caption"><strong>Exp 12 — Switch Policy</strong>0.09% gap to oracle</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig14_prime_comparison.png" data-caption="Fig 14 — PRIME framework comparison">
-        <img src="../figures/fig14_prime_comparison.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig14_prime_comparison.png" data-caption="Fig 14 — PRIME framework comparison">
+        <img src="data/fig14_prime_comparison.png" alt="PRIME comparison" loading="lazy" />
         <div class="gallery-caption"><strong>PRIME</strong>Fails &lt;16 wk; wins at 32+ wk</div>
       </div>
-      <div class="gallery-item" data-src="../figures/fig15_eagle_strategies_summary.png" data-caption="Fig 15 — Eagle/Brooke all-strategy summary">
-        <img src="../figures/fig15_eagle_strategies_summary.png" alt="" loading="lazy" />
+      <div class="gallery-item" data-src="data/fig15_eagle_strategies_summary.png" data-caption="Fig 15 — Eagle/Brooke all-strategy summary">
+        <img src="data/fig15_eagle_strategies_summary.png" alt="Eagle strategies summary" loading="lazy" />
         <div class="gallery-caption"><strong>Eagle/Brooke Summary</strong>All strategies, all experiments</div>
       </div>
     </div>
@@ -375,12 +427,13 @@
 
 <!-- ===== Footer ===== -->
 <footer>
-  <p>
-    Transfer Learning for Building Energy Forecasting — FYP &nbsp;|&nbsp;
-    <a href="https://github.com/cdfelixj/energy-transfer-learning" target="_blank" rel="noopener">GitHub</a>
-    &nbsp;|&nbsp;
-    Dataset: <a href="https://github.com/buds-lab/building-data-genome-project-2" target="_blank" rel="noopener">Building Data Genome Project 2</a>
-  </p>
+  <div class="footer-inner">
+    <span>Transfer Learning for Building Energy Forecasting — Final Year Project</span>
+    <div class="footer-links">
+      <a href="https://github.com/cdfelixj/energy-transfer-learning" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/buds-lab/building-data-genome-project-2" target="_blank" rel="noopener">Building Data Genome Project 2</a>
+    </div>
+  </div>
 </footer>
 
 <!-- ===== Lightbox ===== -->
