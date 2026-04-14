@@ -1228,3 +1228,82 @@ footer a:hover {
 }
 .method-table tr:last-child td { border-bottom: none; }
 .method-table tr:hover td { background: var(--bg-subtle); }
+
+/* =====================================================================
+   Methodology Header Cards
+   ===================================================================== */
+.method-grid-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+}
+
+.method-card-header {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+.method-card-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #60a5fa;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.method-card-header p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+.method-card-header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.method-card-header li {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.35rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.method-card-header li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #60a5fa;
+}
+
+@media (max-width: 1200px) {
+  .method-grid-header {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.9rem;
+  }
+  .method-card-header {
+    padding: 1rem;
+  }
+  .method-card-header h3 {
+    font-size: 0.9rem;
+  }
+  .method-card-header p {
+    font-size: 0.8rem;
+  }
+  .method-card-header li {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .method-grid-header {
+    grid-template-columns: 1fr;
+  }
+}

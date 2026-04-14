@@ -28,15 +28,55 @@
   </div>
 </nav>
 
-<!-- ===== Hero Header ===== -->
+<!-- ===== Methodology Header ===== -->
 <header id="page-header">
   <div class="header-inner">
-    <div class="header-eyebrow">Final Year Project · Building Energy Forecasting</div>
-    <h1>Few-Shot Transfer Learning<br>for <em>Building Energy</em> Forecasting</h1>
+    <div class="header-eyebrow">Framework Overview</div>
+    <h1>Transfer Learning for Building Energy Forecasting</h1>
     <p class="header-sub">
-      Pre-training LSTM networks on data-rich buildings to improve prediction accuracy for buildings with limited historical data.
-      Evaluated across 12 experiments and 4 fine-tuning strategies using the Building Data Genome Project 2 dataset.
+      This project implements a 4-strategy transfer learning framework for LSTM-based building energy consumption forecasting. 
+      Pre-trained on data-rich source buildings, each strategy is evaluated across 12 experiments to quantify the benefit of transfer learning in data-scarce regimes.
     </p>
+    
+    <div class="method-grid-header">
+      <div class="method-card-header">
+        <h3>Scratch (Control)</h3>
+        <p><strong>Train from scratch</strong> on limited target data. Baseline for comparison.</p>
+        <ul>
+          <li>Architecture: 2 layers × 64 hidden LSTM</li>
+          <li>Initialisation: Random weights</li>
+          <li>Trainable: ~88 K params</li>
+        </ul>
+      </div>
+      <div class="method-card-header">
+        <h3>Full Fine-Tuning</h3>
+        <p><strong>Warm-start</strong> fine-tuning on all parameters with reduced learning rate.</p>
+        <ul>
+          <li>Architecture: 2 layers × 64 hidden LSTM</li>
+          <li>Initialisation: Pre-trained weights</li>
+          <li>LR: 1e-4 (10× lower than Scratch)</li>
+        </ul>
+      </div>
+      <div class="method-card-header">
+        <h3>Frozen Backbone</h3>
+        <p><strong>Prevent forgetting</strong> by freezing the LSTM and training only the head.</p>
+        <ul>
+          <li>Architecture: LSTM frozen; MLP head trainable</li>
+          <li>Initialisation: Pre-trained weights</li>
+          <li>Trainable: ~8 K params</li>
+        </ul>
+      </div>
+      <div class="method-card-header">
+        <h3>Adapter Layers</h3>
+        <p><strong>Minimal-parameter</strong> transfer with a bottleneck adapter module.</p>
+        <ul>
+          <li>Architecture: 32-dim bottleneck; LSTM frozen</li>
+          <li>Initialisation: Pre-trained weights</li>
+          <li>Trainable: ~16 K params</li>
+        </ul>
+      </div>
+    </div>
+
     <div class="header-stats">
       <div class="stat-badge">
         <div class="sv">12</div>
