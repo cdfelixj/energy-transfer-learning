@@ -22,6 +22,7 @@
     <a class="nav-link" href="#live-inference">Live Demo</a>
     <a class="nav-link" href="#efficiency-race">Strategy Race</a>
     <a class="nav-link" href="#results">Results</a>
+    <a class="nav-link" href="#methodology">Methodology</a>
     <a class="nav-link" href="#gallery">Gallery</a>
     <a class="nav-cta" href="https://github.com/cdfelixj/energy-transfer-learning" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
@@ -215,6 +216,7 @@
       <button class="tab-btn" data-tab="tab-ablation">N-Source Ablation</button>
       <button class="tab-btn" data-tab="tab-advanced">PRIME &amp; Cross-Type</button>
       <button class="tab-btn" data-tab="tab-switch">Switch Policy</button>
+      <button class="tab-btn" data-tab="tab-methodology">Methodology</button>
     </div>
 
     <!-- Tab 1 — Data Efficiency -->
@@ -347,6 +349,87 @@
           <div class="sv">10.7%</div>
           <div class="sl">Gain vs always-transfer</div>
         </div>
+      </div>
+    </div>
+
+    <!-- Tab 6 — Methodology -->
+    <div id="tab-methodology" class="tab-panel">
+      <div class="section-header">
+        <div class="section-eyebrow">Framework</div>
+        <h2>4-Strategy Fine-Tuning</h2>
+        <p>All experiments compare four strategies on the same limited target-building data to isolate the effect of pre-training.</p>
+      </div>
+      
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>Scratch (Control)</h3>
+          <ul>
+            <li><strong>Purpose</strong>: Baseline control group trained from scratch.</li>
+            <li><strong>Architecture</strong>: 2 layers × 64 hidden LSTM.</li>
+            <li><strong>Initialisation</strong>: Random weights.</li>
+            <li><strong>Trainable Params</strong>: ~88 K (all).</li>
+          </ul>
+        </div>
+        <div class="method-card">
+          <h3>Full Fine-Tuning</h3>
+          <ul>
+            <li><strong>Purpose</strong>: Warm-start fine-tuning on all parameters.</li>
+            <li><strong>Architecture</strong>: 2 layers × 64 hidden LSTM.</li>
+            <li><strong>Initialisation</strong>: Pre-trained baseline weights.</li>
+            <li><strong>Learning Rate</strong>: 1e-4 (10× lower than Scratch).</li>
+          </ul>
+        </div>
+        <div class="method-card">
+          <h3>Frozen Backbone</h3>
+          <ul>
+            <li><strong>Purpose</strong>: Prevent catastrophic forgetting in low-data regimes.</li>
+            <li><strong>Architecture</strong>: LSTM frozen; only MLP head trainable.</li>
+            <li><strong>Initialisation</strong>: Pre-trained baseline weights.</li>
+            <li><strong>Trainable Params</strong>: ~8 K.</li>
+          </ul>
+        </div>
+        <div class="method-card">
+          <h3>Adapter Layers</h3>
+          <ul>
+            <li><strong>Purpose</strong>: Minimal-parameter transfer with added expressiveness.</li>
+            <li><strong>Architecture</strong>: 32-dim bottleneck adapter, LSTM frozen.</li>
+            <li><strong>Initialisation</strong>: Pre-trained baseline weights.</li>
+            <li><strong>Trainable Params</strong>: ~16 K.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-header" style="margin-top: 3rem;">
+        <div class="section-eyebrow">Experiments</div>
+        <h2>Experiment Roster</h2>
+        <p>The framework was validated across 12 distinct experiments covering various building clusters and research questions.</p>
+      </div>
+
+      <div class="method-table-wrap">
+        <table class="method-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Experiment</th>
+              <th>Source → Target</th>
+              <th>Key Research Question</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>rat_education</td><td>Rat/Colin → Rat/Denise</td><td>Does transfer learning work at all?</td></tr>
+            <tr><td>2</td><td>rat_education_new</td><td>Rat/Theo → Rat/Lee</td><td>Is the benefit replicable within the same cluster?</td></tr>
+            <tr><td>3</td><td>eagle_education</td><td>Samantha → Brooke</td><td>Does TL work at a different site?</td></tr>
+            <tr><td>4</td><td>lamb_education</td><td>Lucas → Mae</td><td>Does TL work at a third site?</td></tr>
+            <tr><td>5</td><td>office_any</td><td>Miriam → Denita</td><td>Is TL effective for office buildings?</td></tr>
+            <tr><td>6</td><td>lodging_any</td><td>Celia → Oliva</td><td>Is TL effective for lodging buildings?</td></tr>
+            <tr><td>7</td><td>multi_transfer</td><td>5-building pool → Brooke</td><td>Does multi-source pre-training fix collapse?</td></tr>
+            <tr><td>8</td><td>cross_type_transfer</td><td>Same-site / Same-type / Cross-type</td><td>What is the impact of domain distance?</td></tr>
+            <tr><td>9</td><td>ensemble_transfer</td><td>Model soup (5 baselines)</td><td>Joint training vs. weight averaging?</td></tr>
+            <tr><td>10</td><td>multitransfer_ablation</td><td>N=1…15 sources</td><td>How many source buildings are optimal? (N=3)</td></tr>
+            <tr><td>11</td><td>multitransfer_generalisation</td><td>5-building pool → Denise</td><td>Multi-source benefit on easy targets?</td></tr>
+            <tr><td>12</td><td>switch_modelling</td><td>Colin → Denise</td><td>Does auto-selection beat either strategy?</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

@@ -688,6 +688,7 @@ const TAB_INITS = {
   'tab-ablation':   initAblation,
   'tab-advanced':   initAdvanced,
   'tab-switch':     initSwitch,
+  'tab-methodology': () => { console.log('Methodology tab loaded'); },
 };
 const tabLoaded = {};
 

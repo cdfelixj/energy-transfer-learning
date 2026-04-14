@@ -160,19 +160,10 @@ a:hover { text-decoration: underline; }
 #page-header {
   background: var(--hero-bg);
   color: var(--text-on-dark);
-  padding: 4rem 2rem 3.5rem;
+  padding: 5rem 2rem 4.5rem;
   position: relative;
   overflow: hidden;
-}
-
-#page-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 60% 40%, rgba(37,99,235,.18) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(124,58,237,.12) 0%, transparent 60%);
-  pointer-events: none;
+  border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
 .header-inner {
@@ -215,10 +206,7 @@ a:hover { text-decoration: underline; }
 
 #page-header h1 em {
   font-style: normal;
-  background: linear-gradient(135deg, #60a5fa, #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #60a5fa;
 }
 
 .header-sub {
@@ -1169,3 +1157,74 @@ footer a:hover {
   .stat-badge     { min-width: 90px; padding: .6rem .8rem; }
   .stat-badge .sv { font-size: 1.3rem; }
 }
+
+/* =====================================================================
+   Methodology Content
+   ===================================================================== */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.method-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+.method-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text);
+}
+.method-card ul {
+  list-style: none;
+  padding: 0;
+}
+.method-card li {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  padding-left: 1.25rem;
+  position: relative;
+}
+.method-card li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
+}
+.method-table-wrap {
+  margin-top: 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+}
+.method-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  font-size: 0.85rem;
+}
+.method-table th {
+  background: var(--bg-subtle);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  color: var(--text);
+}
+.method-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.method-table tr:last-child td { border-bottom: none; }
+.method-table tr:hover td { background: var(--bg-subtle); }
