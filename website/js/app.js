@@ -6,12 +6,26 @@
 
 const EXPERIMENTS = {
   rat_education:      'Rat / Education (Exp 1)',
-  rat_education_new:  'Rat / Education — Replication (Exp 2)',
+  rat_education_new:  'Rat / Education - Replication (Exp 2)',
   eagle_education:    'Eagle / Education (Exp 3)',
   lamb_education:     'Lamb / Education (Exp 4)',
-  office_any:         'Office — Hog (Exp 5)',
-  lodging_any:        'Lodging — Robin (Exp 6)',
+  office_any:         'Office / Hog (Exp 5)',
+  lodging_any:        'Lodging / Robin (Exp 6)',
 };
+
+function initLearningPath() {
+  const buttons = document.querySelectorAll('.learning-step-btn');
+  const panels = document.querySelectorAll('.learning-step-panel');
+  if (!buttons.length || !panels.length) return;
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const target = button.dataset.step;
+      buttons.forEach(candidate => candidate.classList.toggle('active', candidate === button));
+      panels.forEach(panel => panel.classList.toggle('active', panel.id === target));
+    });
+  });
+}
 
 const STRATEGIES = {
   pretransfer: { label: 'Scratch',          color: '#6b7280' },
@@ -246,7 +260,7 @@ function updateInferenceStats(row) {
   setLiveStat('ls-actual',     row.actual_kwh?.toFixed(1),         'kWh');
   setLiveStat('ls-prediction', row.prediction_kwh?.toFixed(1),     'kWh blended');
   setLiveStat('ls-weight',     ((row.blend_weight_transfer ?? 0.5) * 100).toFixed(1) + '%', 'weight on transfer');
-  setLiveStat('ls-model',      row.active_model ?? '—',            '');
+  setLiveStat('ls-model',      row.active_model ?? 'N/A',          '');
 
   // MAE cards
   const maeTransfer = document.getElementById('mae-transfer');
@@ -260,7 +274,7 @@ function setLiveStat(id, value, sub) {
   if (!el) return;
   const valEl = el.querySelector('.ls-value');
   const subEl = el.querySelector('.ls-sub');
-  if (valEl) valEl.textContent = value ?? '—';
+  if (valEl) valEl.textContent = value ?? 'N/A';
   if (subEl) subEl.textContent = sub;
 }
 
@@ -269,7 +283,7 @@ function setLiveStat(id, value, sub) {
 // =====================================================================
 
 let raceData   = null;  // shared with effData if available
-let raceIdx    = 0;     // 0..7 — index into WEEKS
+let raceIdx    = 0;     // 0..7 - index into WEEKS
 let raceTimer  = null;
 let raceChart  = null;
 const RACE_TICK_MS = 900;
@@ -351,7 +365,7 @@ function renderRaceChart() {
     };
   });
 
-  // Stat cards — current week values
+  // Stat cards - current week values
   const currentWeek = WEEKS[raceIdx];
   const vals = {};
   strats.forEach(s => {
@@ -361,7 +375,7 @@ function renderRaceChart() {
     const el = document.getElementById(`rs-${s}`);
     if (!el) return;
     const vEl = el.querySelector('.ls-value');
-    if (vEl) vEl.textContent = vals[s] !== null ? vals[s].toFixed(isR2 ? 3 : 1) : '—';
+    if (vEl) vEl.textContent = vals[s] !== null ? vals[s].toFixed(isR2 ? 3 : 1) : 'N/A';
     el.classList.remove('race-leader');
   });
 
@@ -399,7 +413,7 @@ function renderRaceChart() {
 }
 
 // =====================================================================
-// TAB 1 — Data Efficiency
+// TAB 1 - Data Efficiency
 // =====================================================================
 
 let effData  = null;
@@ -447,7 +461,7 @@ function renderEfficiency() {
 }
 
 // =====================================================================
-// TAB 2 — 8-Week Snapshot
+// TAB 2 - 8-Week Snapshot
 // =====================================================================
 
 let snapChart = null;
@@ -463,7 +477,7 @@ async function initSnapshot() {
 function renderSnapshot(data, metric) {
   const strats  = ['pretransfer', 'transfer', 'frozen'];
   const expKeys = Object.keys(EXPERIMENTS);
-  const labels  = expKeys.map(k => EXPERIMENTS[k].replace(/ \(Exp \d+\)/, '').replace(' — Replication', ' (R)'));
+  const labels  = expKeys.map(k => EXPERIMENTS[k].replace(/ \(Exp \d+\)/, '').replace(' - Replication', ' (R)'));
 
   const datasets = strats.map(s => ({
     label: STRATEGIES[s].label,
@@ -495,7 +509,7 @@ function renderSnapshot(data, metric) {
 }
 
 // =====================================================================
-// TAB 3 — N-Source Ablation
+// TAB 3 - N-Source Ablation
 // =====================================================================
 
 let ablChart = null;
@@ -549,7 +563,7 @@ function renderAblation(all, metric) {
 }
 
 // =====================================================================
-// TAB 4 — Advanced: PRIME + Cross-Type
+// TAB 4 - Advanced: PRIME + Cross-Type
 // =====================================================================
 
 let primeChart = null;
@@ -647,7 +661,7 @@ function renderCrossType({ ssData, stData, ctData }, metric) {
 }
 
 // =====================================================================
-// TAB 5 — Switch Policy
+// TAB 5 - Switch Policy
 // =====================================================================
 
 let switchChart = null;
@@ -730,6 +744,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.tab-btn').forEach(btn =>
     btn.addEventListener('click', () => switchTab(btn.dataset.tab))
   );
+  initLearningPath();
   switchTab('tab-efficiency');
   initGallery();
   initLiveInference();

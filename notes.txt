@@ -48,3 +48,26 @@ python scripts/evaluate_all_models.py
 Results saved to:
   results/experiments/{experiment_name}/  for Experiments 1–12
   results/prime/                          for PRIME experiment
+
+
+WEBSITE RUN INSTRUCTIONS
+========================
+
+1. Open a terminal at the project root:
+   c:\Users\j_fel\Desktop\projects\fyp\energy-transfer-learning
+
+2. Start a local web server from the website folder:
+   cd website
+   python -m http.server 8000
+
+3. Open the website in your browser:
+   http://127.0.0.1:8000/index.html
+
+4. Stop the server:
+   Ctrl + C
+
+Notes:
+- If port 8000 is busy, use another port, for example:
+  python -m http.server 8080
+- Then open:
+  http://127.0.0.1:8080/index.html
